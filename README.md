@@ -1,3 +1,3 @@
 # Homefix Project repo
 
-this is the readme for Homefix
+This is the readme for Homefix
