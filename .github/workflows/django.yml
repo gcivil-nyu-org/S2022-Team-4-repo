@@ -14,12 +14,10 @@ jobs:
       with:
         fetch-depth: 0
     - name: login
-      uses: actions/heroku@master
-      env:
-        HEROKU_API_KEY: d9fd30af-92c8-4394-81dd-ed92100791f2
+      uses: yakaz73/heroku-django-deploy@v0.68 
       with:
-        args: container:login
-    - name: set remote
-      run: git remote set-url origin https://heroku:d9fd30af-92c8-4394-81dd-ed92100791f2@git.heroku.com/homefix-dev.git
-    - name: push and deploy
-      run: git push origin HEAD:master -f
+        heroku_app_name : homefix-dev
+        heroku_api_key: d9fd30af-92c8-4394-81dd-ed92100791f2
+        heroku_email_address: 'yz7726@nyu.edu'
+        use_git: true
+        git_branch: master
