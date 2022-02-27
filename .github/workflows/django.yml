@@ -14,7 +14,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: login
-      uses: yakaz73/heroku-django-deploy@v0.68 
+      uses: nyakaz73/heroku-django-deploy@v0.68 
       with:
         heroku_app_name : homefix-dev
         heroku_api_key: d9fd30af-92c8-4394-81dd-ed92100791f2
