@@ -1,6 +1,6 @@
 # Homefix Project repo
 
-This is the readme for Homefix
+https://homefix-dev.herokuapp.com/auth/
 
 Group Memebrs:
 
