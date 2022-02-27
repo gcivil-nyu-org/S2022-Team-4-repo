@@ -4,4 +4,8 @@ This is the readme for Homefix
 
 Group Memebrs:
 
-Yuhao Zhang
+- Bharath Sai Reddy Chinthapanti
+- Jash Merchant
+- Pruthviraj Patil
+- Vijay Krishnaa
+- Yuhao Zhang
