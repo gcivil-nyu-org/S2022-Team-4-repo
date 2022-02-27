@@ -20,4 +20,4 @@ jobs:
         heroku_api_key: d9fd30af-92c8-4394-81dd-ed92100791f2
         heroku_email_address: 'yz7726@nyu.edu'
         use_git: true
-        git_branch: master
+        git_branch: develop
