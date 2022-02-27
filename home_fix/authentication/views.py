@@ -3,8 +3,8 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-def index_view(request):
-    return render(request, "authentication/index.html")
+def auth(request):
+    return render(request, "authentication/auth.html")
 
 
 def login_view(request):

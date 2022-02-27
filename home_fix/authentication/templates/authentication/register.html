@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>register</title>
-</head>
-<body>
+{% extends "authentication/layout.html" %}
+{% block title %}Register{% endblock %} 
+{% block body %}
 <h1>Register Page</h1>
-<a href="{% url 'authentication:index'%}">return to the home page</a>
-</body>
-</html>
+<a href="{% url 'authentication:auth'%}">return to the home page</a>
+{% endblock %}
