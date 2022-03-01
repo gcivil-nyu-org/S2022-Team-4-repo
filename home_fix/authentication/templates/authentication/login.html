@@ -1,52 +1,56 @@
 {% extends "authentication/layout.html" %}
 {% load static %}
-{% block title %}Login | Homefix{% endblock %} 
+{% block title %}Login | Homefix{% endblock %}
 {% block body %}
-<section class="vh-100">
-    <div class="container py-5 h-100">
-      <div class="row d-flex align-items-center justify-content-center h-100">
-        <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid" alt="Phone image">
-        </div>
-        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-            <h1 class="mb-4"><strong>Welcome Back!</strong></h1>
-          <form  method="POST" action="">
-            {% csrf_token %}
-            <!-- Email -->
-            <div class="form-outline mb-4">
-              <label class="form-label" for="email">Email</label>
-              <input type="email" placeholder="Enter Email" name="email" id="email" class="form-control form-control" />
-            </div>
-  
-            <!-- Password -->
-            <div class="form-outline mb-4">
-              <label class="form-label" for="password">Password</label>
-              <input type="password" placeholder="Enter Password" name="password" id="password" class="form-control form-control" />
-            </div>
-            <div class="text-center">
-              {% if form.errors %}
-              <p>Username or password not correct</p>
-              {% endif %}
-            </div>
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-outline-primary mb-4 shadow">Login</button>
-          </form> 
-            
-            <a href="#!">Forgot password?</a>
-            <p>Don't have an account? <a href="{% url 'authentication:register'%}">Register</a></p>
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex align-items-center justify-content-center h-100">
+                <div class="col-md-8 col-lg-7 col-xl-6">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                         class="img-fluid" alt="Phone image">
+                </div>
+                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                    <h1 class="mb-4"><strong>Welcome Back!</strong></h1>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <!-- Email -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="email">Email</label>
+                            <input type="email" placeholder="Enter Email" name="email" id="email"
+                                   class="form-control form-control"/>
+                        </div>
 
-            <hr class="my-3">
-            
-            <div class="d-grid gap-3 col-6 mx-auto">
-            <a class="btn btn-primary btn-lg btn-block shadow" style="background-color: #3b5998" href="#!" role="button">
-              <i class="fab fa-facebook-f me-2"></i>Login with Meta
-            </a>
-            <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
-                <i class="fa-brands fa-google"></i> Login with Google</a>
+                        <!-- Password -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="password">Password</label>
+                            <input type="password" placeholder="Enter Password" name="password" id="password"
+                                   class="form-control form-control"/>
+                        </div>
+                        <div class="text-center">
+                            {% if form.errors %}
+                                <p>Username or password not correct</p>
+                            {% endif %}
+                        </div>
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-outline-primary mb-4 shadow">Login</button>
+                    </form>
+
+                    <a href="#!">Forgot password?</a>
+                    <p>Don't have an account? <a href="{% url 'authentication:register' %}">Register</a></p>
+
+                    <hr class="my-3">
+
+                    <div class="d-grid gap-3 col-6 mx-auto">
+                        <a class="btn btn-primary btn-lg btn-block shadow" style="background-color: #3b5998" href="#!"
+                           role="button">
+                            <i class="fab fa-facebook-f me-2"></i>Login with Meta
+                        </a>
+                        <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
+                            <i class="fa-brands fa-google"></i> Login with Google</a>
+                    </div>
+
+                </div>
             </div>
-  
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 {% endblock %}
