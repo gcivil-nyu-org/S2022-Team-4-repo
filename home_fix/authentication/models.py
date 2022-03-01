@@ -8,16 +8,16 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     #  delete username file
-    email = models.EmailField('email address', unique=True)
-    first_name = models.CharField('first name', max_length=128, blank=True)
-    last_name = models.CharField('last name', max_length=128, blank=True)
-    gender = models.CharField('gen.scder', max_length=32, blank=True)
-    location = models.CharField('location', max_length=128, blank=True)
+    email = models.EmailField("email address", unique=True)
+    first_name = models.CharField("first name", max_length=128, blank=True)
+    last_name = models.CharField("last name", max_length=128, blank=True)
+    gender = models.CharField("gen.scder", max_length=32, blank=True)
+    location = models.CharField("location", max_length=128, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     # set email as primary key
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     objects = CustomUserManager()
     REQUIRED_FIELDS = []
 
