@@ -21,7 +21,6 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect("authentication:index")
     if request.method == "POST":
-        # redirect(request,'authentication/register.html')
         username = request.POST.get("email")
         password = request.POST.get("password")
 
@@ -38,9 +37,9 @@ def login_view(request):
             # else:
             #     return redirect(settings.LOGIN_REDIRECT_URL)
         else:
-            messages.info(request, "Username OR password is incorrect")
+            err = "Username or password is incorrect"
+            return render(request, "authentication/login.html", {"error": err})
 
-    context = {}
     return render(request, "authentication/login.html")
 
 
@@ -64,9 +63,15 @@ def register_view(request):
             return redirect("authentication:login")
         else:
             # can show up message
-            messages.error(request, "Unsuccessful registration. Invalid information.")
+            return render(
+                request,
+                "authentication/register.html",
+                {'form': form}
+            )
     else:
+        form = CustomUserCreationForm()
         return render(
             request,
             "authentication/register.html",
+            {'form': form}
         )

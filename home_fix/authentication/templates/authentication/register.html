@@ -26,13 +26,27 @@
                             </div>
                         </div>
                     </div>
-
+                    {% if form.errors.first_name.data.0 %}
+                    <div class="btn-outline-warning">
+                        {{ form.errors.first_name.data.0|join:" // " }}
+                    </div>
+                    {% endif %}
+                    {% if form.errors.last_name.data.0 %}
+                    <div class="btn-outline-warning">
+                        {{ form.errors.last_name.data.0|join:" // " }}
+                    </div>
+                    {% endif %}
                     <!-- Email -->
                     <div class="form-outline mb-3">
-                        <input type="email" placeholder="Enter Email" id="email" name="email" class="form-control form-control"/>
+                        <input type="email" placeholder="Enter Email" id="email" name="email"
+                               class="form-control form-control"/>
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                        {% if form.errors.email.data.0 %}
+                        <div class="btn-outline-warning">
+                            {{ form.errors.email.data.0|join:" // " }}
+                        </div>
+                        {% endif %}
                     </div>
-
                     <!-- Gender -->
                     <div class="form-outline mb-3">
                         <div class="form-check form-check-inline">
@@ -48,25 +62,31 @@
                             <label class="form-check-label" for="inlineRadio3">Other</label>
                         </div>
                     </div>
-
+                    {% if form.errors.gender.data.0 %}
+                    <div class="btn-outline-warning">
+                        {{ form.errors.gender.data.0|join:" // " }}
+                    </div>
+                    {% endif %}
                     <!-- Password -->
                     <div class="form-outline mb-4">
                         <input type="password" placeholder="Enter Password" id="password1" name="password1"
                                class="form-control form-control"/>
                     </div>
-
                     <div class="form-outline mb-3">
                         <input type="password" placeholder="Re-type Password" id="password2" name="password2"
                                class="form-control form-control"/>
                         <div id="passwordHelpBlock" class="form-text">
                             Your password must be 8-20 characters long, contain letters and numbers.
                         </div>
+                        {% if form.errors.password2.data.0 %}
+                        <div class="btn-outline-warning">
+                            {{ form.errors.password2.data.0|join:" // " }}
+                        </div>
+                        {% endif %}
                     </div>
-
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-outline-warning mb-3 shadow">Register</button>
                 </form>
-
                 <p>Already have an account? <a href="{% url 'authentication:login'%}">Login</a></p>
 
                 <hr class="my-3">
