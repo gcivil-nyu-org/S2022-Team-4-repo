@@ -28,7 +28,9 @@ class CustomUserAdmin(UserAdmin):
             None,
             {
                 "classes": ("wide",),
-                "fields": ("email", "password1", "password2", "is_staff", "is_active"),
+                "fields": (
+                "email", "password1", "password2", "is_staff", "is_active", "street", "state", "country", "latitude",
+                "longitude"),
             },
         ),
     )
