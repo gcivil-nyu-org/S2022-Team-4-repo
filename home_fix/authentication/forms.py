@@ -18,24 +18,24 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_gender(self):
         gender = self.data.get("gender")
         if gender is None:
-            self.add_error("gender", "please select a gender")
+            self.add_error("gender", "Please select a gender")
             return None
         return gender
 
     def clean_first_name(self):
-        first_name = self.data.get('first_name')
+        first_name = self.data.get("first_name")
         pattern = r"[a-zA-Z]+"
         if re.match(pattern, first_name):
             return self.data.get("first_name")
         else:
-            self.add_error("first_name", "please input a legal first_name")
+            self.add_error("first_name", "Please enter First Name")
             return None
 
     def clean_last_name(self):
-        last_name = self.data.get('last_name')
+        last_name = self.data.get("last_name")
         pattern = r"[a-zA-Z]+"
         if re.match(pattern, last_name) is None:
-            self.add_error("last_name", "please select a legal last_name")
+            self.add_error("last_name", "Please enter Last Name")
             return None
         return self.data.get("last_name")
 

@@ -1,6 +1,6 @@
 from atexit import register
-from django.http import HttpResponse
-from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import login, authenticate, logout
@@ -11,7 +11,7 @@ from django.contrib import messages
 
 
 def auth(request):
-    return render(request, "authentication/auth.html")
+    return HttpResponseRedirect(reverse("authentication:index"))
 
 
 def login_view(request):
@@ -26,13 +26,6 @@ def login_view(request):
         if user is not None:
             login(request, user)
             redirect("authentication:index")
-            # print(request.get_full_path())
-            # print("url: ", request.GET.get("next"))
-            # next_url = request.GET.get("next")
-            # if next_url:
-            #     return redirect(next_url)
-            # else:
-            #     return redirect(settings.LOGIN_REDIRECT_URL)
         else:
             err = "Username or password is incorrect"
             return render(request, "authentication/login.html", {"error": err})
@@ -64,15 +57,7 @@ def register_view(request):
             return redirect("authentication:login")
         else:
             # can show up message
-            return render(
-                request,
-                "authentication/register.html",
-                {'form': form}
-            )
+            return render(request, "authentication/register.html", {"form": form})
     else:
         form = CustomUserCreationForm()
-        return render(
-            request,
-            "authentication/register.html",
-            {'form': form}
-        )
+        return render(request, "authentication/register.html", {"form": form})
