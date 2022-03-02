@@ -24,7 +24,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            redirect("authentication:index")
+            return redirect("authentication:index")
         else:
             err = "Username or password is incorrect"
             return render(request, "authentication/login.html", {"error": err})
@@ -33,7 +33,7 @@ def login_view(request):
 
 
 def set_location(request, user_id):
-    context = {'user_id': user_id}
+    context = {"user_id": user_id}
     if request.method == "POST":
         if request.user.id == user_id and request.user.is_authenticated:
             form = LocationForm(request.POST, instance=request.user)

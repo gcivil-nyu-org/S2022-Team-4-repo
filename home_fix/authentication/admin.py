@@ -20,7 +20,21 @@ class CustomUserAdmin(UserAdmin):
         "is_active",
     )
     fieldsets = (
-        (None, {"fields": ("email", "password")}),
+        (
+            None,
+            {
+                "fields": (
+                    "email",
+                    "password",
+                    "gender",
+                    "street",
+                    "state",
+                    "country",
+                    "lat",
+                    "long",
+                )
+            },
+        ),
         ("Permissions", {"fields": ("is_staff", "is_active")}),
     )
     add_fieldsets = (
@@ -29,8 +43,18 @@ class CustomUserAdmin(UserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                "email", "password1", "password2", "is_staff", "is_active", "street", "state", "country", "latitude",
-                "longitude"),
+                    "email",
+                    "password1",
+                    "gender",
+                    "password2",
+                    "is_staff",
+                    "is_active",
+                    "street",
+                    "state",
+                    "country",
+                    "lat",
+                    "long",
+                ),
             },
         ),
     )
