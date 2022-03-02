@@ -6,44 +6,56 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0002_customuser_groups_customuser_is_superuser_and_more'),
+        ("authentication", "0002_customuser_groups_customuser_is_superuser_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='customuser',
-            name='location',
+            model_name="customuser",
+            name="location",
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='country',
-            field=models.CharField(blank=True, max_length=64, verbose_name='country'),
+            model_name="customuser",
+            name="country",
+            field=models.CharField(blank=True, max_length=64, verbose_name="country"),
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='lat',
-            field=models.DecimalField(blank=True, decimal_places=16, default=0.0, max_digits=22, verbose_name='latitude'),
+            model_name="customuser",
+            name="lat",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=16,
+                default=0.0,
+                max_digits=22,
+                verbose_name="latitude",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='long',
-            field=models.DecimalField(blank=True, decimal_places=16, default=0.0, max_digits=22, verbose_name='longitude'),
+            model_name="customuser",
+            name="long",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=16,
+                default=0.0,
+                max_digits=22,
+                verbose_name="longitude",
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='state',
-            field=models.CharField(blank=True, max_length=64, verbose_name='state'),
+            model_name="customuser",
+            name="state",
+            field=models.CharField(blank=True, max_length=64, verbose_name="state"),
         ),
         migrations.AddField(
-            model_name='customuser',
-            name='street',
-            field=models.CharField(blank=True, max_length=64, verbose_name='street'),
+            model_name="customuser",
+            name="street",
+            field=models.CharField(blank=True, max_length=64, verbose_name="street"),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='gender',
-            field=models.CharField(blank=True, max_length=32, verbose_name='gender'),
+            model_name="customuser",
+            name="gender",
+            field=models.CharField(blank=True, max_length=32, verbose_name="gender"),
         ),
     ]

@@ -6,38 +6,56 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0004_customuser_zip'),
+        ("authentication", "0004_customuser_zip"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='customuser',
-            name='country',
-            field=models.CharField(blank=True, max_length=64, null=True, verbose_name='country'),
+            model_name="customuser",
+            name="country",
+            field=models.CharField(
+                blank=True, max_length=64, null=True, verbose_name="country"
+            ),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='lat',
-            field=models.DecimalField(blank=True, decimal_places=16, max_digits=22, null=True, verbose_name='latitude'),
+            model_name="customuser",
+            name="lat",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=16,
+                max_digits=22,
+                null=True,
+                verbose_name="latitude",
+            ),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='long',
-            field=models.DecimalField(blank=True, decimal_places=16, max_digits=22, null=True, verbose_name='longitude'),
+            model_name="customuser",
+            name="long",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=16,
+                max_digits=22,
+                null=True,
+                verbose_name="longitude",
+            ),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='state',
-            field=models.CharField(blank=True, max_length=64, null=True, verbose_name='state'),
+            model_name="customuser",
+            name="state",
+            field=models.CharField(
+                blank=True, max_length=64, null=True, verbose_name="state"
+            ),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='street',
-            field=models.CharField(blank=True, max_length=64, null=True, verbose_name='street'),
+            model_name="customuser",
+            name="street",
+            field=models.CharField(
+                blank=True, max_length=64, null=True, verbose_name="street"
+            ),
         ),
         migrations.AlterField(
-            model_name='customuser',
-            name='zip',
-            field=models.IntegerField(blank=True, null=True, verbose_name='zip'),
+            model_name="customuser",
+            name="zip",
+            field=models.IntegerField(blank=True, null=True, verbose_name="zip"),
         ),
     ]

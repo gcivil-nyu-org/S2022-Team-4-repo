@@ -16,8 +16,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     state = models.CharField("state", max_length=64, blank=True, null=True)
     country = models.CharField("country", max_length=64, blank=True, null=True)
     zip = models.CharField("zip", max_length=64, blank=True, null=True)
-    long = models.DecimalField("longitude", max_digits=22, decimal_places=16, blank=True, null=True)
-    lat = models.DecimalField("latitude", max_digits=22, decimal_places=16, blank=True, null=True)
+    long = models.DecimalField(
+        "longitude", max_digits=22, decimal_places=16, blank=True, null=True
+    )
+    lat = models.DecimalField(
+        "latitude", max_digits=22, decimal_places=16, blank=True, null=True
+    )
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)

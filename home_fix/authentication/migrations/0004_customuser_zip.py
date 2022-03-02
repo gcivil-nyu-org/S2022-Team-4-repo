@@ -6,14 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0003_remove_customuser_location_customuser_country_and_more'),
+        (
+            "authentication",
+            "0003_remove_customuser_location_customuser_country_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
-            name='zip',
-            field=models.IntegerField(blank=True, default=100010, verbose_name='zip'),
+            model_name="customuser",
+            name="zip",
+            field=models.IntegerField(blank=True, default=100010, verbose_name="zip"),
             preserve_default=False,
         ),
     ]

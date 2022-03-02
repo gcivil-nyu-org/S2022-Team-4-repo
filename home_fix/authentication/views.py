@@ -33,7 +33,7 @@ def login_view(request):
 
 
 def set_location(request, user_id):
-    context = {'user_id': user_id}
+    context = {"user_id": user_id}
     if request.method == "POST":
         if request.user.id == user_id and request.user.is_authenticated:
             form = LocationForm(request.POST, instance=request.user)
