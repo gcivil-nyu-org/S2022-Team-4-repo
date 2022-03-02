@@ -40,6 +40,20 @@ class CustomUserCreationForm(UserCreationForm):
         return self.data.get("last_name")
 
 
+class LocationForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ("country", "lat", "long", "state", "street", "zip")
+
+    def clean_zip(self):
+        zip = self.data.get("zip")
+        pattern = r"(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)"
+        if re.match(pattern, zip) is None:
+            self.add_error("zip", "Please enter valid zip code")
+            return None
+        return zip
+
+
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
