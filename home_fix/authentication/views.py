@@ -13,6 +13,7 @@ from django.contrib import messages
 def auth(request):
     return HttpResponseRedirect(reverse("authentication:index"))
 
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("authentication:index")
@@ -56,15 +57,7 @@ def register_view(request):
             return redirect("authentication:login")
         else:
             # can show up message
-            return render(
-                request,
-                "authentication/register.html",
-                {'form': form}
-            )
+            return render(request, "authentication/register.html", {"form": form})
     else:
         form = CustomUserCreationForm()
-        return render(
-            request,
-            "authentication/register.html",
-            {'form': form}
-        )
+        return render(request, "authentication/register.html", {"form": form})
