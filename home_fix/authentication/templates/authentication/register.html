@@ -17,23 +17,23 @@
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <input type="text" placeholder="First Name" id="first_name" name="first_name"
-                                           class="form-control form-control"/>
+                                           class="form-control form-control" required/>
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="form-outline">
                                     <input type="text" placeholder="Last Name" id="last_name" name="last_name"
-                                           class="form-control form-control"/>
+                                           class="form-control form-control" required/>
                                 </div>
                             </div>
                         </div>
                         {% if form.errors.first_name.data.0 %}
-                            <div class="btn-outline-warning">
+                            <div class="btn-outline-danger">
                                 {{ form.errors.first_name.data.0|join:" // " }}
                             </div>
                         {% endif %}
                         {% if form.errors.last_name.data.0 %}
-                            <div class="btn-outline-warning">
+                            <div class="btn-outline-danger">
                                 {{ form.errors.last_name.data.0|join:" // " }}
                             </div>
                         {% endif %}
@@ -43,7 +43,7 @@
                                    class="form-control form-control"/>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                             {% if form.errors.email.data.0 %}
-                                <div class="btn-outline-warning">
+                                <div class="btn-outline-danger">
                                     {{ form.errors.email.data.0|join:" // " }}
                                 </div>
                             {% endif %}
@@ -51,36 +51,36 @@
                         <!-- Gender -->
                         <div class="form-outline mb-3">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="male" required>
                                 <label class="form-check-label" for="inlineRadio1">Male</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+                                <input class="form-check-input" type="radio" name="gender" id="female" value="female" required>
                                 <label class="form-check-label" for="inlineRadio2">Female</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+                                <input class="form-check-input" type="radio" name="gender" id="other" value="other" required>
                                 <label class="form-check-label" for="inlineRadio3">Other</label>
                             </div>
                         </div>
                         {% if form.errors.gender.data.0 %}
-                            <div class="btn-outline-warning">
+                            <div class="btn-outline-danger">
                                 {{ form.errors.gender.data.0|join:" // " }}
                             </div>
                         {% endif %}
                         <!-- Password -->
                         <div class="form-outline mb-4">
-                            <input type="password" placeholder="Enter Password" id="password1" name="password1"
-                                   class="form-control form-control"/>
+                            <input type="password" placeholder="Enter Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password1" name="password1"
+                                   class="form-control form-control" required/>
                         </div>
                         <div class="form-outline mb-3">
-                            <input type="password" placeholder="Re-type Password" id="password2" name="password2"
-                                   class="form-control form-control"/>
+                            <input type="password" placeholder="Re-type Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"  id="password2" name="password2"
+                                   class="form-control form-control" required/>
                             <div id="passwordHelpBlock" class="form-text">
                                 Your password must be 8-20 characters long, contain letters and numbers.
                             </div>
                             {% if form.errors.password2.data.0 %}
-                                <div class="btn-outline-warning">
+                                <div class="btn-outline-danger">
                                     {{ form.errors.password2.data.0|join:" // " }}
                                 </div>
                             {% endif %}
@@ -100,84 +100,9 @@
                         <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
                             <i class="fa-brands fa-google"></i> Continue with Google</a>
                     </div>
-                    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <h1 class="mb-4"><strong>Create an account</strong></h1>
-                        <form action="{% url 'authentication:register' %}" method="post">
-                            {% csrf_token %}
-                            <div class="row">
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-outline">
-                                        <input type="text" placeholder="First Name" id="first_name" name="first_name"
-                                               class="form-control form-control"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <div class="form-outline">
-                                        <input type="text" placeholder="Last Name" id="last_name" name="last_name"
-                                               class="form-control form-control"/>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <!-- Email -->
-                            <div class="form-outline mb-3">
-                                <input type="email" placeholder="Enter Email" id="email" name="email"
-                                       class="form-control form-control"/>
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.
-                                </div>
-                            </div>
-
-                            <!-- Gender -->
-                            <div class="form-outline mb-3">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                                    <label class="form-check-label" for="inlineRadio1">Male</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female"
-                                           value="female">
-                                    <label class="form-check-label" for="inlineRadio2">Female</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
-                                    <label class="form-check-label" for="inlineRadio3">Other</label>
-                                </div>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="form-outline mb-4">
-                                <input type="password" placeholder="Enter Password" id="password1" name="password1"
-                                       class="form-control form-control"/>
-                            </div>
-
-                            <div class="form-outline mb-3">
-                                <input type="password" placeholder="Re-type Password" id="password2" name="password2"
-                                       class="form-control form-control"/>
-                                <div id="passwordHelpBlock" class="form-text">
-                                    Your password must be 8-20 characters long, contain letters and numbers.
-                                </div>
-                            </div>
-
-                            <!-- Submit button -->
-                            <button type="submit" class="btn btn-outline-warning mb-3 shadow">Register</button>
-                        </form>
-
-                        <p>Already have an account? <a href="{% url 'authentication:login' %}">Login</a></p>
-
-                        <hr class="my-3">
-
-                        <div class="d-grid gap-3 col-6 mx-auto">
-                            <a class="btn btn-primary btn-lg btn-block shadow" style="background-color: #3b5998"
-                               href="#!"
-                               role="button">
-                                <i class="fab fa-facebook-f me-2"></i>Continue with Meta
-                            </a>
-                            <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
-                                <i class="fa-brands fa-google"></i> Continue with Google</a>
-                        </div>
-
-                    </div>
                 </div>
             </div>
+        </div>
     </section>
 {% endblock %}
