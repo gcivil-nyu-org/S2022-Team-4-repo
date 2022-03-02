@@ -24,7 +24,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            redirect("authentication:index")
+            return redirect("authentication:index")
         else:
             err = "Username or password is incorrect"
             return render(request, "authentication/login.html", {"error": err})
