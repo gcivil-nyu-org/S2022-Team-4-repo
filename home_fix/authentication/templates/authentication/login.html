@@ -26,11 +26,11 @@
                             <input type="password" placeholder="Enter Password" name="password" id="password"
                                    class="form-control form-control"/>
                         </div>
-                        <div class="text-center">
-                            {% if form.errors %}
-                                <p>Username or password not correct</p>
-                            {% endif %}
-                        </div>
+                        {% if error %}
+                            <div class="btn-outline-primary mb-4">
+                                {{ error }}
+                            </div>
+                        {% endif %}
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-outline-primary mb-4 shadow">Login</button>
                     </form>
