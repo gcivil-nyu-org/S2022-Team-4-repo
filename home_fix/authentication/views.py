@@ -1,8 +1,5 @@
 from atexit import register
-from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
@@ -41,6 +38,10 @@ def login_view(request):
             return render(request, "authentication/login.html", {"error": err})
 
     return render(request, "authentication/login.html")
+
+
+def set_location(request):
+    return render(request, "authentication/search_location.html")
 
 
 def homepage_view(request):
