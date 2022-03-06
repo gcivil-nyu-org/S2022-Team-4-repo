@@ -13,6 +13,23 @@ def auth(request):
     return HttpResponseRedirect(reverse("authentication:index"))
 
 
+# Regitration / Sign Up
+def register_view(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("authentication:set_location", user_id=user.id)
+        else:
+            # can show up message
+            return render(request, "authentication/register.html", {"form": form})
+    else:
+        form = CustomUserCreationForm()
+        return render(request, "authentication/register.html", {"form": form})
+
+
+# Login
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("authentication:index")
@@ -32,6 +49,7 @@ def login_view(request):
     return render(request, "authentication/login.html")
 
 
+#   Set location
 def set_location(request, user_id):
     context = {"user_id": user_id}
     if request.method == "POST":
@@ -55,26 +73,18 @@ def set_location(request, user_id):
         return render(request, "authentication/set_location.html", context)
 
 
+# Pricing
+def pricing_view(request):
+    return render(request, "authentication/pricing.html")
+
+
+# Homepage
 def homepage_view(request):
     return render(request, "authentication/homepage.html")
 
 
+# Logout
 def logout_view(request):
     logout(request)
     # messages.info(request, "You have successfully logged out.")
     return redirect("authentication:index")
-
-
-def register_view(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("authentication:set_location", user_id=user.id)
-        else:
-            # can show up message
-            return render(request, "authentication/register.html", {"form": form})
-    else:
-        form = CustomUserCreationForm()
-        return render(request, "authentication/register.html", {"form": form})
