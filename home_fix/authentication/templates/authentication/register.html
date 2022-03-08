@@ -1,6 +1,7 @@
 {% extends "authentication/layout.html" %}
 {% block title %}Register | Homefix{% endblock %}
 {% block body %}
+{% load socialaccount %}
     <section class="vh-100">
         <div class="container py-5 h-100">
             <div class="row d-flex align-items-center justify-content-center h-100">
@@ -108,7 +109,7 @@
                            role="button">
                             <i class="fab fa-facebook-f me-2"></i>Continue with Meta
                         </a>
-                        <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
+                        <a class="btn btn-light btn-lg btn-block shadow" href="{% provider_login_url 'google' %}" role="button">
                             <i class="fa-brands fa-google"></i> Continue with Google</a>
                     </div>
 

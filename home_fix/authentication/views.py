@@ -13,6 +13,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
+import logging
 
 # Create your views here.
 
@@ -23,7 +24,10 @@ def auth(request):
 
 # Regitration / Sign Up
 def register_view(request):
+    logging.warning(request.POST)
+    print(request)
     if request.method == "POST":
+        logging.warning("First")
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -45,11 +49,22 @@ def register_view(request):
             email.send()
             return redirect ("authentication:activationlinkpage")
             #return render(request, "authentication/activation_link_sent.html")
+            logging.warning("Second")
+            user = form.save()
+            login(request, user)
+            return redirect("authentication:set_location", user_id=user.id)
         else:
             # can show up message
+            logging.warning("Third")
             return render(request, "authentication/register.html", {"form": form})
     else:
+        logging.warning("Fourth")
         form = CustomUserCreationForm()
+        logging.warning(request.user)
+        if request.user.is_authenticated and request.user.country==None:
+            return redirect("authentication:set_location", user_id=request.user.id)
+        if request.user.is_authenticated and request.user.country:
+            return redirect("authentication:index")
         return render(request, "authentication/register.html", {"form": form})
 
 
