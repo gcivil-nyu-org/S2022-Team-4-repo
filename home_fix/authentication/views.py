@@ -141,7 +141,7 @@ def logout_view(request):
 
 # Email Verification
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
     User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -151,7 +151,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user, backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('home')
         #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
         return redirect("authentication:set_location", user_id=user.id)
