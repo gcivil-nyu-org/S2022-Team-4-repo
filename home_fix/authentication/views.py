@@ -16,7 +16,7 @@ from django.contrib.auth import get_user_model
 import logging
 
 # Create your views here.
-
+from .models import CustomUser
 
 def auth(request):
     return HttpResponseRedirect(reverse("authentication:index"))
@@ -98,7 +98,7 @@ def set_location(request, user_id):
                 user = form.save(commit=False)
                 print(user)
                 user.save()
-                return redirect("authentication:index")
+                return redirect("authentication:pricing")
             else:
                 # add alert in future
                 render(request, "authentication/set_location.html")
@@ -114,7 +114,18 @@ def set_location(request, user_id):
 
 # Pricing
 def pricing_view(request):
-    return render(request, "authentication/pricing.html")
+    if request.method == "POST":
+        tier = int(request.POST.get("tier"))
+        if tier not in [0, 1, 2]:
+            # wrong params
+            return render(request, "authentication/pricing.html")
+        else:
+            user = CustomUser.objects.get(id=request.user.id)
+            user.tier = tier
+            user.save()
+            return redirect("authentication:index")
+    else:
+        return render(request, "authentication/pricing.html")
 
 
 # Homepage
