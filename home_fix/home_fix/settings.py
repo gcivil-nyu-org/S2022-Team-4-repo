@@ -27,6 +27,15 @@ SECRET_KEY = "django-insecure-dmzllzcgkw2&#1-a-p8p!wx4u)8a9&m!vun5u%_#7b(hw-qk1c
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# SMTP Details
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'homefixitservice@gmail.com' 
+EMAIL_HOST_PASSWORD = 'homefix@123'
+
+DEFAULT_FROM_EMAIL = 'homefixitservice@gmail.com'
 
 # Application definition
 
@@ -38,7 +47,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
 ]
+
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -122,3 +134,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 django_heroku.settings(locals())
 
 AUTH_USER_MODEL = "authentication.CustomUser"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'homefixitservice@gmail.com'
+EMAIL_HOST_PASSWORD = 'homefix@123'
+EMAIL_PORT = 587
