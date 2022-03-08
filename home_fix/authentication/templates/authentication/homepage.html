@@ -1,40 +1,62 @@
 {% extends "authentication/layout.html" %}
-{% block title %}Auth | Homefix{% endblock %}
+{% block title %}Home | Homefix{% endblock %}
 {% block body %}
 
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <header class="p-3 bg-dark text-white shadow p-3 mb-5">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'authentication:index' %}"><i
-                    class="fa-solid fa-screwdriver-wrench"></i> Homefix</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    {% if user.is_authenticated %}
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="navbar-brand" href="{% url 'authentication:index' %}" style="color: white;">
+                    <strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong>
+                </a>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:logout' %}">Logout</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Welcome, {{ user.first_name }}</a>
-                        </li>
-
-                    {% else %}
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:register' %}">Register</a>
-                        </li>
-
-                    {% endif %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
                 </ul>
+
+                {% if user.is_authenticated %}
+
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                        <input type="search" class="form-control form-control-dark" placeholder="Search..."
+                               aria-label="Search">
+                    </form>
+
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                                 class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">
+                                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                {% else %}
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-light me-2"
+                                onclick="location.href='{% url 'authentication:login' %}'">Login
+                        </button>
+                        <button type="button" class="btn btn-warning"
+                                onclick="location.href='{% url 'authentication:register' %}'">Sign-up
+                        </button>
+                    </div>
+
+                {% endif %}
             </div>
         </div>
-    </nav>
+    </header>
     <h1 style="text-align:center; vertical-align: middle;">Welcome to our Home Page!</h1>
 {% endblock %}
