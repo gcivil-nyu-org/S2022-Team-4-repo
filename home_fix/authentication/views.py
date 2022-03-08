@@ -49,10 +49,10 @@ def register_view(request):
             email.send()
             return redirect ("authentication:activationlinkpage")
             #return render(request, "authentication/activation_link_sent.html")
-            logging.warning("Second")
-            user = form.save()
-            login(request, user)
-            return redirect("authentication:set_location", user_id=user.id)
+#             logging.warning("Second")
+#             user = form.save()
+#             login(request, user)
+#             return redirect("authentication:set_location", user_id=user.id)
         else:
             # can show up message
             logging.warning("Third")
