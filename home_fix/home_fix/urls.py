@@ -20,4 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("authentication.urls")),
     re_path("", include("authentication.urls")),
+    #path('verification/', include('verify_email.urls')),
 ]

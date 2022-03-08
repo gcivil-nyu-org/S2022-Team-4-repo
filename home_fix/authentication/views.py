@@ -4,7 +4,15 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, LocationForm
 from django.contrib.auth import login, authenticate, logout
-
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import EmailMessage
+from .tokens import account_activation_token
+from django.utils.encoding import force_bytes, force_str
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 
@@ -18,9 +26,25 @@ def register_view(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect("authentication:set_location", user_id=user.id)
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            #login(request, user)
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your blog account.'
+            message = render_to_string('authentication/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return redirect ("authentication:activationlinkpage")
+            #return render(request, "authentication/activation_link_sent.html")
         else:
             # can show up message
             return render(request, "authentication/register.html", {"form": form})
@@ -88,3 +112,24 @@ def logout_view(request):
     logout(request)
     # messages.info(request, "You have successfully logged out.")
     return redirect("authentication:index")
+
+# Email Verification
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return redirect("authentication:set_location", user_id=user.id)
+    else:
+        return HttpResponse('Activation link is invalid!')
+def actilink(request):
+    return HttpResponse("Please Verify your Email!!")
