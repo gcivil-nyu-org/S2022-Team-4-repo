@@ -14,9 +14,10 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 import logging
-
+from django.contrib.auth import get_user_model
+import json
 # Create your views here.
-
+from .models import CustomUser
 
 def auth(request):
     return HttpResponseRedirect(reverse("authentication:index"))
@@ -49,10 +50,10 @@ def register_view(request):
             email.send()
             return redirect ("authentication:activationlinkpage")
             #return render(request, "authentication/activation_link_sent.html")
-            logging.warning("Second")
-            user = form.save()
-            login(request, user)
-            return redirect("authentication:set_location", user_id=user.id)
+#             logging.warning("Second")
+#             user = form.save()
+#             login(request, user)
+#             return redirect("authentication:set_location", user_id=user.id)
         else:
             # can show up message
             logging.warning("Third")
@@ -98,7 +99,7 @@ def set_location(request, user_id):
                 user = form.save(commit=False)
                 print(user)
                 user.save()
-                return redirect("authentication:index")
+                return redirect("authentication:pricing")
             else:
                 # add alert in future
                 render(request, "authentication/set_location.html")
@@ -114,7 +115,18 @@ def set_location(request, user_id):
 
 # Pricing
 def pricing_view(request):
-    return render(request, "authentication/pricing.html")
+    if request.method == "POST":
+        tier = int(request.POST.get("tier"))
+        if tier not in [0, 1, 2]:
+            # wrong params
+            return render(request, "authentication/pricing.html")
+        else:
+            user = CustomUser.objects.get(id=request.user.id)
+            user.tier = tier
+            user.save()
+            return redirect("authentication:index")
+    else:
+        return render(request, "authentication/pricing.html")
 
 
 # Homepage
@@ -130,7 +142,7 @@ def logout_view(request):
 
 # Email Verification
 
-def activate(request, uidb64, token):
+def activate(request, uidb64, token, backend='django.contrib.auth.backends.ModelBackend'):
     User = get_user_model()
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -140,7 +152,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('home')
         #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
         return redirect("authentication:set_location", user_id=user.id)
@@ -148,3 +160,17 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 def actilink(request):
     return HttpResponse("Please Verify your Email!!")
+
+def search(request):
+    User = get_user_model()
+    users = User.objects.all()
+    locations=[]
+    for i in users:
+        temp=[]
+        if(i.lat==None or i.long==None):
+            continue
+        temp.append(float(i.lat))
+        temp.append(float(i.long))
+        locations.append(temp)
+
+    return render(request,'authentication/locs.html',context={'users':locations})
