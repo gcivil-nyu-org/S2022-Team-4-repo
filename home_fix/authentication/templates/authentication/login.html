@@ -1,5 +1,6 @@
 {% extends "authentication/layout.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}Login | Homefix{% endblock %}
 {% block body %}
     <section class="vh-100">
@@ -21,13 +22,16 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="password">Password</label>
+                        <label class="form-label" for="password">Password</label>
+                        <div class="input-group form-outline mb-4">
                             <input type="password" placeholder="Enter Password" name="password" id="password"
                                    class="form-control form-control" required/>
+                            <button class="btn btn-outline-primary" type="button" onclick="toggle()">
+                                <i class="fa-solid fa-eye-slash" id="eye"></i>
+                            </button>
                         </div>
                         {% if error %}
-                            <div class="btn-outline-primary mb-4">
+                            <div class="btn-outline-danger mb-4">
                                 {{ error }}
                             </div>
                         {% endif %}
@@ -35,7 +39,7 @@
                         <button type="submit" class="btn btn-outline-primary mb-4 shadow">Login</button>
                     </form>
 
-                    <a href="#!">Forgot password?</a>
+                    <a href="{% url 'password_reset' %}">Forgot password?</a>
                     <p>Don't have an account? <a href="{% url 'authentication:register' %}">Register</a></p>
 
                     <hr class="my-3">
@@ -45,7 +49,7 @@
                            role="button">
                             <i class="fab fa-facebook-f me-2"></i>Login with Meta
                         </a>
-                        <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
+                        <a class="btn btn-light btn-lg btn-block shadow" href="{% provider_login_url 'google' %}" role="button">
                             <i class="fa-brands fa-google"></i> Login with Google</a>
                     </div>
 
@@ -53,4 +57,21 @@
             </div>
         </div>
     </section>
+    <script>
+        var state = false;
+        function toggle() {
+            eye_icon = document.getElementById("eye");
+            if(state) {
+                document.getElementById("password").setAttribute("type", "password");
+                eye_icon.classList.remove("fa-eye");
+                eye_icon.classList.add("fa-eye-slash");
+                state = false;
+            } else {
+                document.getElementById("password").setAttribute("type", "text");
+                eye_icon.classList.remove("fa-eye-slash");
+                eye_icon.classList.add("fa-eye");
+                state = true;
+            }
+        }
+    </script>
 {% endblock %}

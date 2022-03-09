@@ -1,40 +1,620 @@
 {% extends "authentication/layout.html" %}
-{% block title %}Auth | Homefix{% endblock %}
+{% block title %}Home | Homefix{% endblock %}
 {% block body %}
 
     <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <header class="p-3 bg-dark text-white shadow p-3 mb-5">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'authentication:index' %}"><i
-                    class="fa-solid fa-screwdriver-wrench"></i> Homefix</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                    aria-controls="navbarText" aria-expanded="False" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav mr-auto">
-                    {% if user.is_authenticated %}
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="navbar-brand" href="{% url 'authentication:index' %}" style="color: white;">
+                    <strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong>
+                </a>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:logout' %}">Logout</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Welcome, {{ user.first_name }}</a>
-                        </li>
-
-                    {% else %}
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:login' %}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'authentication:register' %}">Register</a>
-                        </li>
-
-                    {% endif %}
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
+                    <li><a href="#" class="nav-link px-2 text-white">About</a></li>
                 </ul>
+
+                {% if user.is_authenticated %}
+
+                    <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                        <input type="search" class="form-control form-control-dark" placeholder="Search..."
+                               aria-label="Search">
+                    </form>
+
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                                 class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="{% url 'authentication:profile' %}">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                            </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                {% else %}
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-light me-2"
+                                onclick="location.href='{% url 'authentication:login' %}'">Login
+                        </button>
+                        <button type="button" class="btn btn-warning"
+                                onclick="location.href='{% url 'authentication:register' %}'">Sign-up
+                        </button>
+                    </div>
+
+                {% endif %}
             </div>
         </div>
-    </nav>
-    <h1 style="text-align:center; vertical-align: middle;">Welcome to our Home Page!</h1>
+    </header>
+
+
+    {% if user.is_authenticated %}
+        <center>
+
+            <h1 style="text-align: center; background-color: white;">WELCOME {{ request.user.first_name }}!! </h1>
+            <br><br>
+            <div style="border-collapse: collapse;display: table;width: 100%;background-color: lightyellow; padding-top: 100px;">
+                <div class="u-col u-col-50"
+                     style="padding-top: 35px; padding-bottom: 35px; padding-left: 190px; background-color: lightyellow; max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top;">
+                    <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0"
+                           cellspacing="0" width="100%" border="0">
+                        <tbody>
+                        <tr>
+                            <td class="v-container-padding-padding"
+                                style="overflow-wrap:break-word;word-break:break-word;padding:20px;font-family:'Montserrat',sans-serif;"
+                                align="left">
+                                <div style="color: #000000; line-height: 140%; text-align: left; word-wrap: break-word;">
+                                    <p style="font-size: 30px; line-height: 140%;"><strong>NOW IT IS SO EASY TO GET A
+                                        HELP FOR YOUR HOUSEHOLD WORK!</strong></p>
+                                    <ul>
+                                        <li style="font-size: 22px; line-height: 30px;">Search for service you want</li>
+                                        <br>
+                                        <li style="font-size: 22px; line-height: 30px;">Select a Homefixer to get help
+                                            from
+                                        </li>
+                                        <br>
+                                        <li style="font-size: 22px; line-height: 30px;">Pay the Homefix points</li>
+                                        <br>
+                                        <li style="font-size: 22px; line-height: 30px;">Sit back, &nbsp;get the work
+                                            done, and perhaps have a drink with your new friend!
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="u-col u-col-50"
+                     style="padding-top: 150px; max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top;">
+                    <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0"
+                           cellspacing="0" width="100%" border="0">
+                        <tbody>
+                        <tr>
+                            <td class="v-container-padding-padding"
+                                style="overflow-wrap:break-word;word-break:break-word;padding:72px;font-family:'Montserrat',sans-serif;"
+                                align="left">
+                                <!-- ADD GET SERVICE LINK BELOW -->
+                                <a href="#" target="_self"
+                                   style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #000000; border-radius: 13px;-webkit-border-radius: 13px; -moz-border-radius: 13px; width:auto; max-width:150%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word;">
+                                    <span style="display:block;padding:20px 90px;line-height:120%;"><span
+                                            style="font-size: 20px; line-height: 120%;">GET SERVICES</span></span>
+                                </a>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </center>
+
+
+
+
+        <div class="u-col u-col-50"
+             style="padding-right: 40px; padding-top: 100px; max-width: 700px;min-width: 500px;display: table-cell;vertical-align: top;">
+            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="100" cellspacing="0"
+                   width="150%" border="0">
+                <tbody>
+                <tr>
+                    <td class="v-container-padding-padding"
+                        style="overflow-wrap:break-word;word-break:break-word;padding:65px;font-family:'Montserrat',sans-serif;"
+                        align="left">
+                        <div align="center">
+                            <!-- PUT THE REFERENCE TO PROVIDE SERVICE HERE -->
+                            <a href="#" target="_self"
+                               style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #000000; border-radius: 13px;-webkit-border-radius: 13px; -moz-border-radius: 13px; width:auto; max-width:150%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word;">
+                                <span style="display:block;padding:20px 60px;line-height:120%;"><span
+                                        style="font-size: 20px; line-height: 120%;">PROVIDE SERVICES</span></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="u-col u-col-50"
+             style="max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top; padding-left: 40px; padding-top: 35px; padding-bottom: 35px;">
+            <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+
+                <table style="font-family:'Montserrat',sans-serif; padding-left: 10px;" role="presentation"
+                       cellpadding="20" cellspacing="0" width="150%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word; padding-left :30px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+                            <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
+                                <p style="font-size: 30px; line-height: 140%;"><strong> YOU CAN ALSO EARN BY OFFERING
+                                    SERVICES!</strong></p>
+                                <ul>
+                                    <li style="font-size: 22px; line-height: 30px;">Fill up the service form and
+                                        allocate charge points for your service.
+                                    </li>
+                                    <br>
+                                    <li style="font-size: 22px; line-height: 30px;">Get Notified when you get the
+                                        Service request.
+                                    </li>
+                                    <br>
+                                    <li style="font-size: 22px; line-height: 30px;">Earn HomeFix points from every
+                                        service you provide to redeem other services.
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="u-row-container" style="padding-top: 35px;background-color: lightyellow;">
+            <div class="u-row"
+                 style="Margin: 0 auto;min-width: 800px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: lightyellow;">
+                <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
+                    <div class="u-col u-col-100"
+                         style="max-width: 800px;min-width: 800px;display: table-cell;vertical-align: top;">
+                        <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                            <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+
+                                <table id="u_content_text_5" style="font-family:'Montserrat',sans-serif;"
+                                       role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                    <tbody>
+                                    <tr>
+                                        <td class="v-container-padding-padding"
+                                            style="overflow-wrap:break-word;word-break:break-word;padding:40px 30px 20px 40px;font-family:'Montserrat',sans-serif;"
+                                            align="left">
+
+                                            <div style="align-items:center; color: #4b4a4a; line-height: 190%; text-align: left; word-wrap: break-word;">
+                                                <p style="line-height: 190%; font-size: 14px;"><span
+                                                        style="font-size: 32px; line-height: 35px;"><strong>YOU CAN ALSO USE OUR FORUMS!</strong></span>
+                                                </p>
+                                                <p style="font-size: 14px; line-height: 200%;"><span
+                                                        style="font-size: 26px; line-height: 30.4px;">You are just one step away to talk to Homefixers online directly!</span>
+                                                </p>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <center>
+        <div class="u-row"
+             style="Margin: 0 auto; width: 100%; overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: lightyellow;">
+
+            <div class="u-col u-col-50"
+                 style="padding-right: 20px; max-width: 600px;min-width: 600px;display: table-cell;vertical-align: top;">
+                <table id="u_content_text_3" style="font-family:'Montserrat',sans-serif;" role="presentation"
+                       cellpadding="0" cellspacing="0" width="100%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+                            <div style="color: #27187e; line-height: 200%; text-align: center; word-wrap: break-word;">
+                                <p style="font-size: 14px; line-height: 200%;"><span
+                                        style="font-size: 26px; line-height: 36px;"><strong>WHY WAIT?</strong></span>
+                                </p>
+                                <p style="font-size: 14px; line-height: 200%;"><span
+                                        style="font-size: 26px; line-height: 36px;"><strong>Click below our social forums now!</strong></span>
+                                </p>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0"
+                       width="100%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px 30px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+                            <div align="center">
+                                <!-- SOCIAL FORUMS LINK HERE -->
+                                <a href="#" target="_blank"
+                                   style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #ff8600; border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
+                                    <span style="display:block;padding:16px 50px;line-height:120%;"><strong><span
+                                            style="font-size: 14px; line-height: 16.8px;">E X P L O R E&nbsp; &nbsp;F O R U M S </span></strong></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="u-col u-col-50"
+                 style="padding-left: 40px; max-width: 600px;min-width: 500px;display: table-cell;vertical-align: top;">
+                <center>
+                    <table style=" padding-left: 200px; font-family:'Montserrat',sans-serif;" role="presentation"
+                           cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                        <tr>
+                            <td class="v-container-padding-padding"
+                                style="padding-right: 100px; overflow-wrap:break-word;word-break:break-word;font-family:'Montserrat',sans-serif;"
+                                align="left">
+
+                                <h4 class="v-font-size"
+                                    style="margin: 0px; color: #27187e; line-height: 140%; text-align: left; word-wrap: break-word; font-weight: normal; font-family: arial,helvetica,sans-serif; font-size: 28px;">
+                                    <strong>Please Remember</strong>
+                                </h4>
+
+                                <div style="line-height: 180%; text-align: left; word-wrap: break-word;">
+                                    <ul style="list-style-type: circle;">
+                                        <li style="font-size: 20px; line-height: 40px;">Be Respectful - Any kind of ill
+                                            speech can get you banned from the domain.
+                                        </li>
+                                        <li style="font-size: 20px; line-height: 40px;">Be Safe - Please do not commit
+                                            any kind of crime/fall for one.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </div>
+
+            <!-- FOOTER -->
+
+            <div style="padding-top: 100px">
+                <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0"
+                       width="100%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+
+                            <div style="color: #908f8f; line-height: 190%; text-align: center; word-wrap: break-word;">
+                                <p style="font-size: 18px; line-height: 190%;">Want to contact us? Write us at: <a
+                                        rel="noopener" href="mailto:homefix@google.com" target="_blank">homefix@google.com</a>
+                                </p>
+                                <p style="font-size: 18px; line-height: 190%;">&copy; 2022 Homefix. All Rights
+                                    Reserved.</p>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+
+
+
+    {% else %}
+        <center>
+
+            <h1 style="text-align: middle; background-color: white;">WELCOME TO HOME FIX!!</h1>
+            <br><br>
+            <div style="border-collapse: collapse;display: table;width: 100%;background-color: lightyellow; padding-top: 100px;">
+                <div class="u-col u-col-50"
+                     style="padding-top: 35px; padding-bottom: 35px; padding-left: 190px; background-color: lightyellow; max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top;">
+                    <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0"
+                           cellspacing="0" width="100%" border="0">
+                        <tbody>
+                        <tr>
+                            <td class="v-container-padding-padding"
+                                style="overflow-wrap:break-word;word-break:break-word;padding:20px;font-family:'Montserrat',sans-serif;"
+                                align="left">
+                                <div style="color: #000000; line-height: 140%; text-align: left; word-wrap: break-word;">
+                                    <p style="font-size: 30px; line-height: 140%;"><strong>NOW IT IS SO EASY TO GET A
+                                        HELP FOR YOUR HOUSEHOLD WORK!</strong></p>
+                                    <ul>
+                                        <li style="font-size: 22px; line-height: 30px;">Search for service you want</li>
+                                        <br>
+                                        <li style="font-size: 22px; line-height: 30px;">Select a Homefixer to get help
+                                            from
+                                        </li>
+                                        <br>
+                                        <li style="font-size: 22px; line-height: 30px;">Pay the Homefix points</li>
+                                        <br>
+                                        <li style="font-size: 22px; line-height: 30px;">Sit back, &nbsp;get the work
+                                            done, and perhaps have a drink with your new friend!
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="u-col u-col-50"
+                     style="padding-top: 150px; max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top;">
+                    <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0"
+                           cellspacing="0" width="100%" border="0">
+                        <tbody>
+                        <tr>
+                            <td class="v-container-padding-padding"
+                                style="overflow-wrap:break-word;word-break:break-word;padding:72px;font-family:'Montserrat',sans-serif;"
+                                align="left">
+                                <a href="{% url 'authentication:login' %}" target="_self"
+                                   style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #000000; border-radius: 13px;-webkit-border-radius: 13px; -moz-border-radius: 13px; width:auto; max-width:150%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word;">
+                                    <span style="display:block;padding:20px 90px;line-height:120%;"><span
+                                            style="font-size: 20px; line-height: 120%;">GET SERVICES</span></span>
+                                </a>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </center>
+
+
+
+
+        <div class="u-col u-col-50"
+             style="padding-right: 40px; padding-top: 100px; max-width: 700px;min-width: 500px;display: table-cell;vertical-align: top;">
+            <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="100" cellspacing="0"
+                   width="150%" border="0">
+                <tbody>
+                <tr>
+                    <td class="v-container-padding-padding"
+                        style="overflow-wrap:break-word;word-break:break-word;padding:65px;font-family:'Montserrat',sans-serif;"
+                        align="left">
+                        <div align="center">
+                            <!-- PUT THE REFERENCE TO PROVIDE SERVICE HERE -->
+                            <a href="{% url 'authentication:login' %}" target="_self"
+                               style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #000000; border-radius: 13px;-webkit-border-radius: 13px; -moz-border-radius: 13px; width:auto; max-width:150%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word;">
+                                <span style="display:block;padding:20px 60px;line-height:120%;"><span
+                                        style="font-size: 20px; line-height: 120%;">PROVIDE SERVICES</span></span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="u-col u-col-50"
+             style="max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top; padding-left: 40px; padding-top: 35px; padding-bottom: 35px;">
+            <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+
+                <table style="font-family:'Montserrat',sans-serif; padding-left: 10px;" role="presentation"
+                       cellpadding="20" cellspacing="0" width="150%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word; padding-left :30px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+                            <div style="line-height: 140%; text-align: left; word-wrap: break-word;">
+                                <p style="font-size: 30px; line-height: 140%;"><strong> YOU CAN ALSO EARN BY OFFERING
+                                    SERVICES!</strong></p>
+                                <ul>
+                                    <li style="font-size: 22px; line-height: 30px;">Fill up the service form and
+                                        allocate charge points for your service.
+                                    </li>
+                                    <br>
+                                    <li style="font-size: 22px; line-height: 30px;">Get Notified when you get the
+                                        Service request.
+                                    </li>
+                                    <br>
+                                    <li style="font-size: 22px; line-height: 30px;">Earn HomeFix points from every
+                                        service you provide to redeem other services.
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div class="u-row-container" style="padding-top: 35px;background-color: lightyellow;">
+            <div class="u-row"
+                 style="Margin: 0 auto;min-width: 800px;max-width: 800px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: lightyellow;">
+                <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
+                    <div class="u-col u-col-100"
+                         style="max-width: 800px;min-width: 800px;display: table-cell;vertical-align: top;">
+                        <div style="width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+                            <div style="padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
+
+                                <table id="u_content_text_5" style="font-family:'Montserrat',sans-serif;"
+                                       role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+                                    <tbody>
+                                    <tr>
+                                        <td class="v-container-padding-padding"
+                                            style="overflow-wrap:break-word;word-break:break-word;padding:40px 30px 20px 40px;font-family:'Montserrat',sans-serif;"
+                                            align="left">
+
+                                            <div style="align-items:center; color: #4b4a4a; line-height: 190%; text-align: left; word-wrap: break-word;">
+                                                <p style="line-height: 190%; font-size: 14px;"><span
+                                                        style="font-size: 32px; line-height: 35px;"><strong>YOU CAN ALSO USE OUR FORUMS!</strong></span>
+                                                </p>
+                                                <p style="font-size: 14px; line-height: 200%;"><span
+                                                        style="font-size: 26px; line-height: 30.4px;">You are just one step away to talk to Homefixers online directly!</span>
+                                                </p>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <center>
+        <div class="u-row"
+             style="Margin: 0 auto; width: 100%; overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: lightyellow;">
+            <div class="u-col u-col-50"
+                 style="padding-right: 20px; max-width: 600px;min-width: 600px;display: table-cell;vertical-align: top;">
+                <table id="u_content_text_3" style="font-family:'Montserrat',sans-serif;" role="presentation"
+                       cellpadding="0" cellspacing="0" width="100%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+                            <div style="color: #27187e; line-height: 200%; text-align: center; word-wrap: break-word;">
+                                <p style="font-size: 14px; line-height: 200%;"><span
+                                        style="font-size: 26px; line-height: 36px;"><strong>WHY WAIT?</strong></span>
+                                </p>
+                                <p style="font-size: 14px; line-height: 200%;"><span
+                                        style="font-size: 26px; line-height: 36px;"><strong>Click below our social forums now!</strong></span>
+                                </p>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0"
+                       width="100%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word;padding:15px 10px 30px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+                            <div align="center">
+                                <a href="{% url 'authentication:login' %}" target="_blank"
+                                   style="box-sizing: border-box;display: inline-block;font-family:'Montserrat',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #ff8600; border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
+                                    <span style="display:block;padding:16px 50px;line-height:120%;"><strong><span
+                                            style="font-size: 14px; line-height: 16.8px;">E X P L O R E&nbsp; &nbsp;F O R U M S </span></strong></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="u-col u-col-50"
+                 style="padding-left: 40px; max-width: 600px;min-width: 500px;display: table-cell;vertical-align: top;">
+                <center>
+                    <table style=" padding-left: 200px; font-family:'Montserrat',sans-serif;" role="presentation"
+                           cellpadding="0" cellspacing="0" width="100%" border="0">
+                        <tbody>
+                        <tr>
+                            <td class="v-container-padding-padding"
+                                style="padding-right: 100px; overflow-wrap:break-word;word-break:break-word;font-family:'Montserrat',sans-serif;"
+                                align="left">
+
+                                <h4 class="v-font-size"
+                                    style="margin: 0px; color: #27187e; line-height: 140%; text-align: left; word-wrap: break-word; font-weight: normal; font-family: arial,helvetica,sans-serif; font-size: 28px;">
+                                    <strong>Please Remember</strong>
+                                </h4>
+
+                                <div style="line-height: 180%; text-align: left; word-wrap: break-word;">
+                                    <ul style="list-style-type: circle;">
+                                        <li style="font-size: 20px; line-height: 40px;">Be Respectful - Any kind of ill
+                                            speech can get you banned from the domain.
+                                        </li>
+                                        <li style="font-size: 20px; line-height: 40px;">Be Safe - Please do not commit
+                                            any kind of crime/fall for one.
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </center>
+            </div>
+
+            <!-- FOOTER -->
+
+            <div style="padding-top: 100px">
+                <table style="font-family:'Montserrat',sans-serif;" role="presentation" cellpadding="0" cellspacing="0"
+                       width="100%" border="0">
+                    <tbody>
+                    <tr>
+                        <td class="v-container-padding-padding"
+                            style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Montserrat',sans-serif;"
+                            align="left">
+
+                            <div style="color: #908f8f; line-height: 190%; text-align: center; word-wrap: break-word;">
+                                <p style="font-size: 18px; line-height: 190%;">Want to contact us? Write us at: <a
+                                        rel="noopener" href="mailto:homefix@google.com" target="_blank">homefix@google.com</a>
+                                </p>
+                                <p style="font-size: 18px; line-height: 190%;">&copy; 2022 Homefix. All Rights
+                                    Reserved.</p>
+                            </div>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    {% endif %}
+
 {% endblock %}
