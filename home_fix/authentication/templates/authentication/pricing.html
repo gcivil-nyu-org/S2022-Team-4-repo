@@ -58,7 +58,10 @@
                                 <li>Email support</li>
                                 <li>Help center access</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-outline-primary" onclick="location.href='{% url 'authentication:index' %}'">Sign up for free</button>
+                              <form action="{% url 'authentication:pricing' %}" method="post">
+                                  {% csrf_token %}
+                            <button type="submit" class="w-100 btn btn-lg btn-outline-primary" value="0" name="tier">Sign up for free</button>
+                              </form>
                         </div>
                     </div>
                 </div>
@@ -76,7 +79,10 @@
                                 <li>Priority email support</li>
                                 <li>Help center access</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-primary">Get started</button>
+                              <form action="{% url 'authentication:pricing' %}" method="post">
+                                  {% csrf_token %}
+                            <button type="submit" value="1" class="w-100 btn btn-lg btn-primary"  name="tier">Get started</button>
+                              </form>
                         </div>
                     </div>
                 </div>
@@ -94,12 +100,14 @@
                                 <li>Phone and email support</li>
                                 <li>Help center access</li>
                             </ul>
-                            <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
+                              <form action="{% url 'authentication:pricing' %}" method="post">
+                                  {% csrf_token %}
+                            <button type="button" value="2" class="w-100 btn btn-lg btn-primary"  name="tier">Contact us</button>
+                              </form>
                         </div>
                     </div>
                 </div>
             </div>
-
             <h2 class="display-6 text-center mb-4">Compare plans</h2>
 
             <div class="table-responsive">
@@ -208,4 +216,5 @@
                 </table>
             </div>
         </main>
+    </div>
 {% endblock %}

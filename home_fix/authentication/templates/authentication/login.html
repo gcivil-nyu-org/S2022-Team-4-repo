@@ -1,5 +1,6 @@
 {% extends "authentication/layout.html" %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}Login | Homefix{% endblock %}
 {% block body %}
     <section class="vh-100">
@@ -48,7 +49,7 @@
                            role="button">
                             <i class="fab fa-facebook-f me-2"></i>Login with Meta
                         </a>
-                        <a class="btn btn-light btn-lg btn-block shadow" href="#!" role="button">
+                        <a class="btn btn-light btn-lg btn-block shadow" href="{% provider_login_url 'google' %}" role="button">
                             <i class="fa-brands fa-google"></i> Login with Google</a>
                     </div>
 

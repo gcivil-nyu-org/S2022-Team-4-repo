@@ -27,6 +27,15 @@ SECRET_KEY = "django-insecure-dmzllzcgkw2&#1-a-p8p!wx4u)8a9&m!vun5u%_#7b(hw-qk1c
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# SMTP Details
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'homefixitservice@gmail.com' 
+EMAIL_HOST_PASSWORD = 'homefix@123'
+
+DEFAULT_FROM_EMAIL = 'homefixitservice@gmail.com'
 
 # Application definition
 
@@ -38,7 +47,15 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    'django.contrib.sites', 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -55,7 +72,7 @@ ROOT_URLCONF = "home_fix.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ['templates/'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -121,4 +138,45 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 django_heroku.settings(locals())
 
+GOOGLE_MAPS_API_KEY = 'AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE'
+
 AUTH_USER_MODEL = "authentication.CustomUser"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'homefixitservice@gmail.com'
+EMAIL_HOST_PASSWORD = 'homefix@123'
+EMAIL_PORT = 587
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+]
+
+SITE_ID = 3
+LOGIN_REDIRECT_URL = '/register/'
+
+# Additional configuration settings
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET= True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
