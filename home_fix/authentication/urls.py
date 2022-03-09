@@ -12,6 +12,7 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     path("", views.auth, name="auth"),
     path("activate/<uidb64>/<token>/",views.activate,name='activate'),
-    path("actvi/",views.actilink,name="activationlinkpage")
+    path("actvi/",views.actilink,name="activationlinkpage"),
+    path("search/",views.search,name="search"),
     #re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
 ]

@@ -14,7 +14,8 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 import logging
-
+from django.contrib.auth import get_user_model
+import json
 # Create your views here.
 from .models import CustomUser
 
@@ -151,7 +152,7 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        login(request, user,backend='django.contrib.auth.backends.ModelBackend')
         # return redirect('home')
         #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
         return redirect("authentication:set_location", user_id=user.id)
@@ -159,3 +160,17 @@ def activate(request, uidb64, token, backend='django.contrib.auth.backends.Model
         return HttpResponse('Activation link is invalid!')
 def actilink(request):
     return HttpResponse("Please Verify your Email!!")
+
+def search(request):
+    User = get_user_model()
+    users = User.objects.all()
+    locations=[]
+    for i in users:
+        temp=[]
+        if(i.lat==None or i.long==None):
+            continue
+        temp.append(float(i.lat))
+        temp.append(float(i.long))
+        locations.append(temp)
+
+    return render(request,'authentication/locs.html',context={'users':locations})

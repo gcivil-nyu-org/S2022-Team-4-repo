@@ -138,6 +138,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 django_heroku.settings(locals())
 
+GOOGLE_MAPS_API_KEY = 'AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE'
+
 AUTH_USER_MODEL = "authentication.CustomUser"
 
 EMAIL_USE_TLS = True

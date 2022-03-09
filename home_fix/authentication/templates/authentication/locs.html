@@ -1,0 +1,52 @@
+{% extends "authentication/layout.html" %}
+{% block title %}Auth | Homefix{% endblock %}
+{% block body %}
+<style>
+#map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 100%;
+  /* The width is the width of the web page */
+}
+
+</style>
+<script>
+    function initMap() {
+  // The location of Uluru
+  //const uluru = { lat: {{Latitute}}, lng: {{Longitute}}};
+  var uluru = { lat: 40.7248172, lng: -73.9978925 };
+  // The map, centered at Uluru
+  console.log(uluru)
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: uluru,
+  });
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+      });
+  var locations = eval("{{users|safe}}")
+  console.log(locations)
+  for( var i=0;i<locations.length;i++){
+    console.log(locations[i])
+    uluru = { lat: locations[i][0], lng: locations[i][1] };
+    var marker = new google.maps.Marker({
+    position: uluru,
+    map: map,
+      });
+  }
+  //console.log(locations)
+   
+     
+
+    }
+</script>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script
+
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
+    async
+  ></script>
+{% endblock %}
