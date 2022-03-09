@@ -147,6 +147,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'homefixitservice@gmail.com'
 EMAIL_HOST_PASSWORD = 'homefix@123'
 EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
