@@ -1,11 +1,12 @@
 {% extends "authentication/layout.html" %}
 {% block title %}Set Location | Homefix{% endblock %}
 {% block body %}
+    <!-- Push Notification -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
             <div class="toast-header">
                 <img src="..." class="rounded me-2" alt="...">
-                <strong class="me-auto">Bootstrap</strong>
+                <strong class="me-auto">Homefix</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
@@ -13,6 +14,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Location Searchbar -->
     <div class="container my-5">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
