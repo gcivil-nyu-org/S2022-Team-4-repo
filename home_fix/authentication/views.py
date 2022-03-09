@@ -150,7 +150,7 @@ def logout_view(request):
 
 
 def activate(
-        request, uidb64, token, backend="django.contrib.auth.backends.ModelBackend"
+    request, uidb64, token, backend="django.contrib.auth.backends.ModelBackend"
 ):
     User = get_user_model()
     try:
@@ -209,6 +209,8 @@ def profile_editor_view(request):
                 form.save()
             return redirect("authentication:profile")
         else:
-            return render(request, "authentication/profile_editor.html", context={"user": user})
+            return render(
+                request, "authentication/profile_editor.html", context={"user": user}
+            )
     else:
         return redirect("authentication:index")
