@@ -63,7 +63,7 @@
     {% if user.is_authenticated %}
         <center>
 
-            <h1 style="text-align: middle; background-color: white;">WELCOME TO YOUR HOME PAGE!! </h1>
+            <h1 style="text-align: middle; background-color: white;">WELCOME {{ request.user.first_name }}!! </h1>
         <br><br>
         <div style="border-collapse: collapse;display: table;width: 100%;background-color: lightyellow; padding-top: 100px;">
             <div class="u-col u-col-50" style="padding-top: 35px; padding-bottom: 35px; padding-left: 190px; background-color: lightyellow; max-width: 500px;min-width: 500px;display: table-cell;vertical-align: top;">

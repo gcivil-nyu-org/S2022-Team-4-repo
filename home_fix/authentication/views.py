@@ -115,6 +115,8 @@ def set_location(request, user_id):
 
 # Pricing
 def pricing_view(request):
+    if not request.user.is_authenticated:
+        return redirect("authentication:index")
     if request.method == "POST":
         tier = int(request.POST.get("tier"))
         if tier not in [0, 1, 2]:
