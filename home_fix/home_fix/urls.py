@@ -20,8 +20,13 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("authentication.urls")),
     re_path("", include("authentication.urls")),
+<<<<<<< HEAD
+    # path('verification/', include('verify_email.urls')),
+    path("accounts/", include("allauth.urls")),
+=======
 
     #path('verification/', include('verify_email.urls')),
     path('accounts/', include('allauth.urls')),
     path('', include('django.contrib.auth.urls'))
+>>>>>>> 67f0ed75827ef70f0ea5b57fe53860031465c938
 ]
