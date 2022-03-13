@@ -2,7 +2,7 @@ from atexit import register
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm, LocationForm
+from .forms import CustomUserCreationForm, LocationForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -186,3 +186,34 @@ def search(request):
         locations.append(temp)
 
     return render(request, "authentication/locs.html", context={"users": locations})
+<<<<<<< HEAD
+=======
+
+
+def profile_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        user.password = None
+        return render(request, "authentication/profile.html", context={"user": user})
+    else:
+        return redirect("authentication:index")
+
+
+def profile_editor_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        user.password = None
+        if request.method == "POST":
+            form = CustomUserChangeForm(request.POST, instance=request.user)
+            if form.is_valid():
+                form.save()
+            return redirect("authentication:profile")
+        else:
+            return render(
+                request, "authentication/profile_editor.html", context={"user": user}
+            )
+    else:
+        return redirect("authentication:index")
+>>>>>>> 67f0ed75827ef70f0ea5b57fe53860031465c938

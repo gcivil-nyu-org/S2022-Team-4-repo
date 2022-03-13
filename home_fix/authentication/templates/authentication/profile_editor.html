@@ -1,0 +1,81 @@
+{% extends "authentication/layout.html" %}
+{% block title %}Editor | Homefix{% endblock %}
+{% block body %}
+<section>
+    <div id="content-main">
+        <form method="post" id="customuser_form" action="{% url 'authentication:profile_editor'%}">
+            {% csrf_token %}
+            <div>
+                <fieldset class="module aligned ">
+                    <div class="form-row field-first_name">
+                        <div>
+                            <label for="first_name">First name:</label>
+                            <input type="text" name="first_name" value="{{user.first_name}}" class="vTextField"
+                                   maxlength="128"
+                                   id="first_name">
+                        </div>
+                    </div>
+                    <div class="form-row field-last_name">
+                        <div>
+                            <label for="last_name">Last name:</label>
+                            <input type="text" name="last_name" value="{{user.last_name}}" class="vTextField"
+                                   maxlength="128"
+                                   id="last_name">
+                        </div>
+                    </div>
+                    <div class="form-row field-email">
+                        <div>
+                            <label class="required" for="email">Email address:</label>
+                            <input type="email" name="email" value="{{user.email}}" class="vTextField"
+                                   maxlength="254" required="" id="email" disabled>
+                        </div>
+                    </div>
+                    <div class="form-row field-gender">
+                        <div>
+                            <label for="gender">Gender:</label>
+                            <select name="gender" id="gender">
+                                {% if user.gender == 'male' %}
+                                <option value="male" selected>male</option>
+                                <option value="female">female</option>
+                                {% elif user.gender == 'female' %}
+                                <option value="male">male</option>
+                                <option value="female" selected>female</option>
+                                {% else %}
+                                <option value="" selected disabled hidden>Choose Here</option>
+                                <option value="male">male</option>
+                                <option value="female">female</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row field-street">
+                        <div>
+                            <label for="id_street">Street:</label>
+                            <input type="text" name="street"  value="{{user.street}}" class="vTextField" maxlength="64" id="id_street">
+                        </div>
+                    </div>
+                    <div class="form-row field-state">
+                        <div>
+                            <label for="id_state">State:</label>
+                            <input type="text" name="state" value="{{user.state}}" class="vTextField" maxlength="64" id="id_state">
+                        </div>
+                    </div>
+                    <div class="form-row field-country">
+                        <div>
+                            <label for="id_country">Country:</label>
+                            <input type="text" name="country" value="{{user.country}}" class="vTextField" maxlength="64" id="id_country">
+                        </div>
+                    </div>
+                     <div class="form-row field-zip">
+                        <div>
+                            <label for="id_zip">Zip Code:</label>
+                            <input type="text" name="zip" class="vTextField" value="{{user.zip}}" maxlength="64" id="id_zip">
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <button type="submit">submit</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
