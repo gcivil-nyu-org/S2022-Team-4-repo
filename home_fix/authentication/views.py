@@ -186,8 +186,6 @@ def search(request):
         locations.append(temp)
 
     return render(request, "authentication/locs.html", context={"users": locations})
-<<<<<<< HEAD
-=======
 
 
 def profile_view(request):
@@ -216,4 +214,3 @@ def profile_editor_view(request):
             )
     else:
         return redirect("authentication:index")
->>>>>>> 67f0ed75827ef70f0ea5b57fe53860031465c938
