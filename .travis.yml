@@ -1,0 +1,21 @@
+language: python
+python:
+  - "3.8"
+install:
+  - pip install -r requirements.txt
+  - pip install black
+  - pip install flake8
+  - pip install coveralls
+
+before_script:
+  - cd home_fix
+  - python manage.py migrate
+  - python manage.py collectstatic --noinput
+
+script:
+  - black --check .
+  - flake8 .
+  - coverage run --source=. manage.py test
+
+after_script:
+  - coveralls
