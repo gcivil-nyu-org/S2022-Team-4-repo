@@ -1,4 +1,3 @@
-from atexit import register
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render, redirect
@@ -11,11 +10,8 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse
-from django.contrib.auth.models import User
-from django.contrib.auth import get_user_model
 import logging
 from django.contrib.auth import get_user_model
-import json
 
 # Create your views here.
 from .models import CustomUser
@@ -65,7 +61,7 @@ def register_view(request):
         logging.warning("Fourth")
         form = CustomUserCreationForm()
         logging.warning(request.user)
-        if request.user.is_authenticated and request.user.country == None:
+        if request.user.is_authenticated and request.user.country is None:
             return redirect("authentication:set_location", user_id=request.user.id)
         if request.user.is_authenticated and request.user.country:
             return redirect("authentication:index")
@@ -111,7 +107,7 @@ def set_location(request, user_id):
             logout(request)
             redirect("authentication:index")
     else:
-        re = request
+        # re = request
         # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
         return render(request, "authentication/set_location.html", context)
 
@@ -150,7 +146,7 @@ def logout_view(request):
 
 
 def activate(
-    request, uidb64, token, backend="django.contrib.auth.backends.ModelBackend"
+        request, uidb64, token, backend="django.contrib.auth.backends.ModelBackend"
 ):
     User = get_user_model()
     try:
@@ -179,7 +175,7 @@ def search(request):
     locations = []
     for i in users:
         temp = []
-        if i.lat == None or i.long == None:
+        if i.lat is None or i.long is None:
             continue
         temp.append(float(i.lat))
         temp.append(float(i.long))
