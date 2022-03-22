@@ -3,7 +3,8 @@
 Develop Branch:
 
 [![Build Status](https://app.travis-ci.com/gcivil-nyu-org/S2022-Team-4-repo.svg?branch=develop)](https://app.travis-ci.com/hazenoeasy/S2022-Team-4-repo)
-[![Coverage Status](https://coveralls.io/repos/github/gcivil-nyu-org/S2022-Team-4-repo/badge.svg?branch=develop)](https://coveralls.io/github/gcivil-nyu-org/S2022-Team-4-repo?branch=develop)
+<a href='https://coveralls.io/github/gcivil-nyu-org/S2022-Team-4-repo'><img src='https://coveralls.io/repos/github/gcivil-nyu-org/S2022-Team-4-repo/badge.svg' alt='Coverage Status' /></a>
+
 
 Main Branch:
 
