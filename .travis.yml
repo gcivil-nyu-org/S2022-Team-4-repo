@@ -13,9 +13,12 @@ before_script:
   - python manage.py collectstatic --noinput
 
 script:
+  - cd ..
   - black --check .
   - flake8 .
+  - cd home_fix
   - coverage run --source=. manage.py test
 
 after_script:
+  - cd ..
   - coveralls
