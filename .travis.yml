@@ -8,8 +8,8 @@ install:
   - pip install coveralls
 
 before_script:
-  - python manage.py migrate
-  - python manage.py collectstatic --noinput
+  - python home_fix/manage.py migrate
+  - python home_fix/manage.py collectstatic --noinput
 
 script:
   - cd home_fix
