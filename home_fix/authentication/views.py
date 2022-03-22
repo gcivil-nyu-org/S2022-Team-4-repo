@@ -146,7 +146,7 @@ def logout_view(request):
 
 
 def activate(
-        request, uidb64, token, backend="django.contrib.auth.backends.ModelBackend"
+    request, uidb64, token, backend="django.contrib.auth.backends.ModelBackend"
 ):
     User = get_user_model()
     try:
