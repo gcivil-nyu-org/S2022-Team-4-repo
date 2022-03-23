@@ -24,7 +24,6 @@ def auth(request):
 # Regitration / Sign Up
 def register_view(request):
     logging.warning(request.POST)
-    print(request)
     if request.method == "POST":
         logging.warning("First")
         form = CustomUserCreationForm(request.POST)
@@ -72,7 +71,9 @@ def register_view(request):
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("authentication:index")
+    print(request.POST)
     if request.method == "POST":
+        print("xxxx")
         username = request.POST.get("email")
         password = request.POST.get("password")
 
