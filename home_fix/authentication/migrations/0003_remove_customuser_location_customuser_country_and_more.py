@@ -4,13 +4,15 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("authentication", "0002_customuser_groups_customuser_is_superuser_and_more"),
     ]
 
     operations = [
-        migrations.RemoveField(model_name="customuser", name="location",),
+        migrations.RemoveField(
+            model_name="customuser",
+            name="location",
+        ),
         migrations.AddField(
             model_name="customuser",
             name="country",

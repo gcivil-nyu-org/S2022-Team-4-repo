@@ -4,13 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("authentication", "0006_alter_customuser_zip"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name="customuser", name="tier", field=models.IntegerField(default=0),
+            model_name="customuser",
+            name="tier",
+            field=models.IntegerField(default=0),
         ),
     ]
