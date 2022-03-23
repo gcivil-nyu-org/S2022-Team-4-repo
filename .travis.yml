@@ -13,10 +13,6 @@ before_script:
   - python manage.py collectstatic --noinput
 
 script:
-<<<<<<< HEAD
-#  - black --check .
-=======
->>>>>>> 075d860ced94b90347afbd221e292ffd6ba1c218
   - flake8 .
   - coverage run --source=authentication manage.py test
 
