@@ -97,7 +97,7 @@ class TestViews(TestCase):
         response = self.client.get(reverse("authentication:index"))
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, "authentication:index")
+        self.assertTemplateUsed(response, "authentication/homepage.html")
 
     def test_search_view(self):
         response = self.client.get(reverse("authentication:search"))
