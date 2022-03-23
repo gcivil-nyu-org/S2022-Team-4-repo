@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
 ]
 
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -134,8 +133,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-django_heroku.settings(locals())
-
 GOOGLE_MAPS_API_KEY = "AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE"
 
 AUTH_USER_MODEL = "authentication.CustomUser"
@@ -146,9 +143,9 @@ EMAIL_HOST_USER = "homefixitservice@gmail.com"
 EMAIL_HOST_PASSWORD = "homefix@123"
 EMAIL_PORT = 587
 
-DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_FROM_EMAIL = "TestSite Team <noreply@example.com>"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -167,7 +164,6 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 
-
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": [
@@ -179,3 +175,4 @@ SOCIALACCOUNT_PROVIDERS = {
         },
     }
 }
+django_heroku.settings(locals(), test_runner=False)
