@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("authentication", "0002_customuser_groups_customuser_is_superuser_and_more"),
     ]
