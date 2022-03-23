@@ -210,3 +210,13 @@ def profile_editor_view(request):
             )
     else:
         return redirect("authentication:index")
+
+def request_service_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        user.password = None
+        return render(request, "authentication/request_services.html", context={"user": user})
+    else:
+        return redirect("authentication:index")
+        

@@ -142,8 +142,8 @@
                 buffalo. Chislic chicken short loin tongue, buffalo landjaeger leberkas. Burgdoggen sausage cupim
                 meatball pastrami beef.</p>
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Offer Services</button>
-                <button type="button" class="btn btn-outline-dark btn-lg px-4">Request Services</button>
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='#'">Offer Services</button>
+                <button type="button" class="btn btn-outline-dark btn-lg px-4"  onclick="location.href='{% url 'authentication:requestServices' %}'">Request Services</button>
             </div>
         </div>
     </div>
@@ -198,7 +198,7 @@
     <section class="py-5">
         <div class="container px-5">
             <h3 class="pb-2 border-bottom mb-4"><strong>Featured Posts</strong></h3>
-            {#            <h2 class="fw-bolder fs-5 mb-4">Featured Stories</h2>#}
+            {#<h2 class="fw-bolder fs-5 mb-4">Featured Stories</h2>#}
             <div class="row gx-5">
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0">
