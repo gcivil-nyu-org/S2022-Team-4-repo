@@ -10,10 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="customuser",
-            name="location",
-        ),
+        migrations.RemoveField(model_name="customuser", name="location",),
         migrations.AddField(
             model_name="customuser",
             name="country",
