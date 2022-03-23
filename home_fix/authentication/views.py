@@ -184,6 +184,23 @@ def search(request):
     return render(request, "authentication/locs.html", context={"users": locations})
 
 
+def search_hardware(request):
+    User = get_user_model()
+    users = User.objects.all()
+    locations = []
+    for i in users:
+        temp = []
+        if i.lat is None or i.long is None:
+            continue
+        temp.append(float(i.lat))
+        temp.append(float(i.long))
+        locations.append(temp)
+
+    return render(
+        request, "authentication/locs_hardware.html", context={"users": locations}
+    )
+
+
 def profile_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
@@ -208,5 +225,17 @@ def profile_editor_view(request):
             return render(
                 request, "authentication/profile_editor.html", context={"user": user}
             )
+    else:
+        return redirect("authentication:index")
+
+
+def request_service_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        user.password = None
+        return render(
+            request, "authentication/request_services.html", context={"user": user}
+        )
     else:
         return redirect("authentication:index")
