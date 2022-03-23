@@ -54,7 +54,6 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
 ]
 
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -128,8 +127,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-django_heroku.settings(locals())
-
 GOOGLE_MAPS_API_KEY = "AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE"
 
 AUTH_USER_MODEL = "authentication.CustomUser"
@@ -161,10 +158,10 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 
-
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "SCOPE": ["profile", "email",],
         "AUTH_PARAMS": {"access_type": "online",},
     }
 }
+django_heroku.settings(locals(), test_runner=False)
