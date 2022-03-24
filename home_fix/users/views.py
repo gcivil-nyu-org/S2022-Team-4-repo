@@ -18,7 +18,7 @@ from .models import CustomUser
 
 
 def auth(request):
-    return HttpResponseRedirect(reverse("authentication:index"))
+    return HttpResponseRedirect(reverse("users:index"))
 
 
 # Regitration / Sign Up
@@ -36,7 +36,7 @@ def register_view(request):
             current_site = get_current_site(request)
             mail_subject = "Activate your HomeFix account."
             message = render_to_string(
-                "authentication/acc_active_email.html",
+                "users/acc_active_email.html",
                 {
                     "user": user,
                     "domain": current_site.domain,
@@ -47,7 +47,7 @@ def register_view(request):
             to_email = form.cleaned_data.get("email")
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return redirect("authentication:activationlinkpage")
+            return redirect("users:activationlinkpage")
             # return render(request, "authentication/activation_link_sent.html")
         #             logging.warning("Second")
         #             user = form.save()
@@ -56,22 +56,22 @@ def register_view(request):
         else:
             # can show up message
             logging.warning("Third")
-            return render(request, "authentication/register.html", {"form": form})
+            return render(request, "users/register.html", {"form": form})
     else:
         logging.warning("Fourth")
         form = CustomUserCreationForm()
         logging.warning(request.user)
         if request.user.is_authenticated and request.user.country is None:
-            return redirect("authentication:set_location", user_id=request.user.id)
+            return redirect("users:set_location", user_id=request.user.id)
         if request.user.is_authenticated and request.user.country:
-            return redirect("authentication:index")
-        return render(request, "authentication/register.html", {"form": form})
+            return redirect("users:index")
+        return render(request, "users/register.html", {"form": form})
 
 
 # Login
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("authentication:index")
+        return redirect("users:index")
     if request.method == "POST":
         username = request.POST.get("email")
         password = request.POST.get("password")
@@ -80,12 +80,12 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("authentication:index")
+            return redirect("users:index")
         else:
             err = "Username or password is incorrect"
-            return render(request, "authentication/login.html", {"error": err})
+            return render(request, "users/login.html", {"error": err})
 
-    return render(request, "authentication/login.html")
+    return render(request, "users/login.html")
 
 
 #   Set location
@@ -98,48 +98,48 @@ def set_location(request, user_id):
                 user = form.save(commit=False)
                 print(user)
                 user.save()
-                return redirect("authentication:pricing")
+                return redirect("users:pricing")
             else:
                 # add alert in future
-                render(request, "authentication/set_location.html")
+                render(request, "users/set_location.html")
         #   illegal request. this user should not visit this page
         else:
             logout(request)
-            redirect("authentication:index")
+            redirect("users:index")
     else:
         # re = request
         # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
-        return render(request, "authentication/set_location.html", context)
+        return render(request, "users/set_location.html", context)
 
 
 # Pricing
 def pricing_view(request):
     if not request.user.is_authenticated:
-        return redirect("authentication:index")
+        return redirect("users:index")
     if request.method == "POST":
         tier = int(request.POST.get("tier"))
         if tier not in [0, 1, 2]:
             # wrong params
-            return render(request, "authentication/pricing.html")
+            return render(request, "users/pricing.html")
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
             user.save()
-            return redirect("authentication:index")
+            return redirect("users:index")
     else:
-        return render(request, "authentication/pricing.html")
+        return render(request, "users/pricing.html")
 
 
 # Homepage
 def homepage_view(request):
-    return render(request, "authentication/homepage.html")
+    return render(request, "users/homepage.html")
 
 
 # Logout
 def logout_view(request):
     logout(request)
     # messages.info(request, "You have successfully logged out.")
-    return redirect("authentication:index")
+    return redirect("users:index")
 
 
 # Email Verification
@@ -160,7 +160,7 @@ def activate(
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
         # return redirect('home')
         # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
-        return redirect("authentication:set_location", user_id=user.id)
+        return redirect("users:set_location", user_id=user.id)
     else:
         return HttpResponse("Activation link is invalid!")
 
@@ -181,7 +181,7 @@ def search(request):
         temp.append(float(i.long))
         locations.append(temp)
 
-    return render(request, "authentication/locs.html", context={"users": locations})
+    return render(request, "users/locs.html", context={"users": locations})
 
 
 def profile_view(request):
@@ -189,9 +189,9 @@ def profile_view(request):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         user.password = None
-        return render(request, "authentication/profile.html", context={"user": user})
+        return render(request, "users/profile.html", context={"user": user})
     else:
-        return redirect("authentication:index")
+        return redirect("users:index")
 
 
 def profile_editor_view(request):
@@ -203,10 +203,8 @@ def profile_editor_view(request):
             form = CustomUserChangeForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
-            return redirect("authentication:profile")
+            return redirect("users:profile")
         else:
-            return render(
-                request, "authentication/profile_editor.html", context={"user": user}
-            )
+            return render(request, "users/profile_editor.html", context={"user": user})
     else:
-        return redirect("authentication:index")
+        return redirect("users:index")

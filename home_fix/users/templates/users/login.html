@@ -1,4 +1,4 @@
-{% extends "authentication/layout.html" %}
+{% extends "users/layout.html" %}
 {% load static %}
 {% load socialaccount %}
 {% block title %}Login | Homefix{% endblock %}
@@ -40,7 +40,7 @@
                     </form>
 
                     <a href="{% url 'password_reset' %}">Forgot password?</a>
-                    <p>Don't have an account? <a href="{% url 'authentication:register' %}">Register</a></p>
+                    <p>Don't have an account? <a href="{% url 'users:register' %}">Register</a></p>
 
                     <hr class="my-3">
 

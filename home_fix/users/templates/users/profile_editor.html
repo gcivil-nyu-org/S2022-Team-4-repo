@@ -1,7 +1,7 @@
-{% extends "authentication/layout.html" %}
+{% extends "users/layout.html" %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'authentication/features.css' %}"/>
+    <link rel="stylesheet" href="{% static 'users/features.css' %}"/>
 {% endblock %}
 {% block title %}Editor | Homefix{% endblock %}
 {% block body %}
@@ -9,7 +9,7 @@
     <header class="p-3 bg-dark text-white shadow p-3 mb-5">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a class="navbar-brand" href="{% url 'authentication:index' %}" style="color: white;">
+                <a class="navbar-brand" href="{% url 'users:index' %}" style="color: white;">
                     <strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong>
                 </a>
 
@@ -35,11 +35,11 @@
                         </a>
                         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="{% url 'authentication:profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'users:profile' %}">Profile</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="{% url 'authentication:logout' %}">
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                             </a>
                             </li>
@@ -50,10 +50,10 @@
 
                     <div class="text-end">
                         <button type="button" class="btn btn-outline-light me-2"
-                                onclick="location.href='{% url 'authentication:login' %}'">Login
+                                onclick="location.href='{% url 'users:login' %}'">Login
                         </button>
                         <button type="button" class="btn btn-warning"
-                                onclick="location.href='{% url 'authentication:register' %}'">Sign-up
+                                onclick="location.href='{% url 'users:register' %}'">Sign-up
                         </button>
                     </div>
 

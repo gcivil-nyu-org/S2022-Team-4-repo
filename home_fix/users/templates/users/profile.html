@@ -1,4 +1,4 @@
-{% extends "authentication/layout.html" %}
+{% extends "users/layout.html" %}
 {% block title %}Profile | Homefix{% endblock %}
 {% block body %}
 <section>
@@ -60,7 +60,7 @@
             </div>
             {% endif %}
         </div>
-        <a class="btn btn-light btn-lg btn-block shadow" href="{% url 'authentication:profile_editor' %}" role="button">
+        <a class="btn btn-light btn-lg btn-block shadow" href="{% url 'users:profile_editor' %}" role="button">
             Edit your information
         </a>
     </div>

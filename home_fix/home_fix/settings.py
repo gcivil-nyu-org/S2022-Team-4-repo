@@ -40,7 +40,7 @@ DEFAULT_FROM_EMAIL = "homefixitservice@gmail.com"
 # Application definition
 
 INSTALLED_APPS = [
-    "authentication.apps.AuthenticationConfig",
+    "users.apps.AuthenticationConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -138,7 +138,7 @@ django_heroku.settings(locals())
 
 GOOGLE_MAPS_API_KEY = "AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE"
 
-AUTH_USER_MODEL = "authentication.CustomUser"
+AUTH_USER_MODEL = "users.CustomUser"
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
@@ -155,7 +155,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-SITE_ID = 3
+SITE_ID = 4
 LOGIN_REDIRECT_URL = "/register/"
 
 # Additional configuration settings
