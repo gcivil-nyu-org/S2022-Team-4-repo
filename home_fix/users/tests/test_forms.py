@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from authentication.forms import CustomUserCreationForm, LocationForm
+from users.forms import CustomUserCreationForm, LocationForm
 
 
 class TestForms(TestCase):

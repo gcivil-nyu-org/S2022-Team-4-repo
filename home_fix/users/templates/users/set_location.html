@@ -1,4 +1,4 @@
-{% extends "authentication/layout.html" %}
+{% extends "users/layout.html" %}
 {% block title %}Set Location | Homefix{% endblock %}
 {% block body %}
     <!-- Push Notification -->
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <form id="switcher" style="margin: 0 auto; width: 500px" action="{% url 'authentication:set_location' user_id %}"
+    <form id="switcher" style="margin: 0 auto; width: 500px" action="{% url 'users:set_location' user_id %}"
           method="post">
         <input hidden id="lat" name="lat">
         <input hidden id="long" name="long">

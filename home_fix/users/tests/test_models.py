@@ -1,5 +1,5 @@
 from django.test import TestCase
-from authentication.models import CustomUser
+from users.models import CustomUser
 
 
 class TestModels(TestCase):

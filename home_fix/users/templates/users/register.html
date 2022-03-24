@@ -1,4 +1,4 @@
-{% extends "authentication/layout.html" %}
+{% extends "users/layout.html" %}
 {% block title %}Register | Homefix{% endblock %}
 {% block body %}
 {% load socialaccount %}
@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <h1 class="mb-4"><strong>Create an account</strong></h1>
-                    <form action="{% url 'authentication:register' %}" method="post">
+                    <form action="{% url 'users:register' %}" method="post">
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -100,7 +100,7 @@
                         <!-- Submit button -->
                         <button type="submit" class="btn btn-outline-warning mb-3 shadow">Register</button>
                     </form>
-                    <p>Already have an account? <a href="{% url 'authentication:login' %}">Login</a></p>
+                    <p>Already have an account? <a href="{% url 'users:login' %}">Login</a></p>
 
                     <hr class="my-3">
 
