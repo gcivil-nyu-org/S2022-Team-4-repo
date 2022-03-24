@@ -1,7 +1,6 @@
 {% extends "users/layout.html" %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'users/features.css' %}"/>
 {% endblock %}
 {% block title %}Home | Homefix{% endblock %}
 {% block body %}
@@ -59,9 +58,9 @@
         <symbol id="tools" viewBox="0 0 16 16">
             <path d="M1 0L0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.356 3.356a1 1 0 0 0 1.414 0l1.586-1.586a1 1 0 0 0 0-1.414l-3.356-3.356a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-2.14 2.141L12 4l-.364-1.757L13.777.102a3 3 0 0 0-3.675 3.68L7.462 6.46 4.793 3.793a1 1 0 0 1-.293-.707v-.071a1 1 0 0 0-.419-.814L1 0zm9.646 10.646a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708zM3 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026L3 11z"/>
         </symbol>
-{#        <symbol id="bi-currency" viewBox="0 0 16 16">#}
-{#            <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>#}
-{#        </symbol>#}
+        <symbol id="bi-currency" viewBox="0 0 16 16">
+            <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718H4zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.05zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73l.348.086z"/>
+        </symbol>
         <symbol id="chevron-right" viewBox="0 0 16 16">
             <path fill-rule="evenodd"
                   d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -129,158 +128,134 @@
         </div>
     </header>
 
-    <!-- Hero Section  -->
-    <div class="px-4 py-5 my-5 text-center">
-        {% if user.is_authenticated %}
-            <h1 class="display-5 fw-bold">Welcome, {{ request.user.first_name }}!</h1>
-        {% else %}
-            <h1 class="display-5 fw-bold">A better way to fix home</h1>
-        {% endif %}
-        <div class="col-lg-6 mx-auto">
-            <p class="lead mb-4">Bacon ipsum dolor amet kevin flank tail andouille venison shank, ham shoulder sirloin.
-                Strip steak ground round filet mignon short ribs capicola, t-bone boudin jerky meatloaf burgdoggen
-                buffalo. Chislic chicken short loin tongue, buffalo landjaeger leberkas. Burgdoggen sausage cupim
-                meatball pastrami beef.</p>
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='#'">Offer Services</button>
-                <button type="button" class="btn btn-outline-dark btn-lg px-4"  onclick="location.href='{% url 'users:requestServices' %}'">Request Services</button>
+<!-- Hero Section  -->
+<style>
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 60%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+</style>
+
+<center>
+    <h1 class="display-5 fw-bold lead mb-4">SEARCH SERVICES</h1>
+    <input type="text" id="myInput" onkeyup="mySearchFunction()" placeholder="Search for service.." title="Type Some Services" style="border-radius: 20px;">
+</center>
+
+
+<!-- HARD CODED THE POSTS THAT HAVE TO BE CREATED DYNAMICALLY LATER USING JS/PY-->
+  <a class="service" style="text-decoration: None; color: black; padding:1%" name="Plumbing">
+    <div class="card shadow border-0 col-md-8 offset-md-2" onclick="alert('YET TO BUILD')" style="width: 65%">
+        <div class="card-body p-4">
+            <div class="badge bg-success bg-gradient rounded-pill mb-2 offset-md-1">PLUMBING</div>
+                <div class="h5 card-title mb-3 col-md-8 offset-md-2">Plumbing Service for 20 coins!</div>
+            <p class="card-text mb-0 col-md-8 offset-md-2">
+                Hi, I am here to offer the service this month in the weekends for anything around 20-30 coins (depending on the distance to travel).
+             </p>
+        </div>
+        <div class="card-footer p-4 pt-0 bg-transparent border-top-0 col-md-4 offset-md-1">
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                         alt="..."/>
+                    <div class="small">
+                        <div class="fw-bold">Kelly Rowan</div>
+                        <div class="text-muted">March 12, 2022</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+  </a>
 
-    {# Featurette #}
-    <section class="py-5">
-        <div class="container px-5" id="hanging-icons">
-            <h3 class="pb-2 border-bottom"><strong>Features</strong></h3>
-            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-                <div class="col d-flex align-items-start">
-                    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                        <svg class="bi" width="1em" height="1em">
-                            <use xlink:href="#toggles2"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Get Services</h2>
-                        <p>Search for services you want. Select a homefixer to get help from. Pay with Homefix points.
-                            Sit back, get the work done. </p>
-                    </div>
-                </div>
-                <div class="col d-flex align-items-start">
-                    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                        <svg class="bi" width="1em" height="1em">
-                            <use xlink:href="#tools"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Offer Services</h2>
-                        <p>Fill up the service form and allocate charge points for your service. Get Notified when you
-                            get the Service request. Earn HomeFix points from every service you provide to redeem other
-                            services. </p>
-                    </div>
-                </div>
-                <div class="col d-flex align-items-start">
-                    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
-                        <svg class="bi" width="1em" height="1em">
-                            <use xlink:href="#tools"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h2>Earn Points</h2>
-                        <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another
-                            sentence and probably just keep going until we run out of words.</p>
+  <a class="service" style="text-decoration: None; color: black; padding:1%" name="wall fixing">
+      <div class="card shadow border-0 col-md-8 offset-md-2" onclick="alert('YET TO BUILD')" style="width: 65%">
+        <div class="card-body p-4">
+            <div class="badge bg-success bg-gradient rounded-pill mb-2 offset-md-1">WALL FIXING</div>
+                <div class="h5 card-title mb-3 col-md-8 offset-md-2">Painting/Fixing the wall for 40 coins!</div>
+            <p class="card-text mb-0 col-md-8 offset-md-2">I have some leftover white paints. If you need them, please hit me up. Only 40 coins for the service!</p>
+        </div>
+        <div class="card-footer p-4 pt-0 bg-transparent border-top-0 col-md-4 offset-md-1">
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                         alt="..."/>
+                    <div class="small">
+                        <div class="fw-bold">John Dawn</div>
+                        <div class="text-muted">March 03, 2022</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+      </div>
+  </a>
 
-    {# Posts #}
-    <section class="py-5">
-        <div class="container px-5">
-            <h3 class="pb-2 border-bottom mb-4"><strong>Featured Posts</strong></h3>
-            {#<h2 class="fw-bolder fs-5 mb-4">Featured Stories</h2>#}
-            <div class="row gx-5">
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..."/>
-                        <div class="card-body p-4">
-                            <div class="badge bg-success bg-gradient rounded-pill mb-2">Fix Wall</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                <div class="h5 card-title mb-3">Post title</div>
-                            </a>
-                            <p class="card-text mb-0">Some quick example text to build on the card title and make up the
-                                bulk of the card's content.</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
-                                         alt="..."/>
-                                    <div class="small">
-                                        <div class="fw-bold">Kelly Rowan</div>
-                                        <div class="text-muted">March 12, 2022</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..."/>
-                        <div class="card-body p-4">
-                            <div class="badge bg-success bg-gradient rounded-pill mb-2">Plumbing</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                <div class="h5 card-title mb-3">Another post title</div>
-                            </a>
-                            <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of
-                                each card. Some quick example text to build on the card title and make up the bulk of
-                                the card's content.</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
-                                         alt="..."/>
-                                    <div class="small">
-                                        <div class="fw-bold">Josiah Barclay</div>
-                                        <div class="text-muted">March 23, 2022</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0">
-                        <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..."/>
-                        <div class="card-body p-4">
-                            <div class="badge bg-primary bg-success rounded-pill mb-2">Broken door</div>
-                            <a class="text-decoration-none link-dark stretched-link" href="#!">
-                                <div class="h5 card-title mb-3">The last post title is a little bit longer than the
-                                    others
-                                </div>
-                            </a>
-                            <p class="card-text mb-0">Some more quick example text to build on the card title and make
-                                up the bulk of the card's content.</p>
-                        </div>
-                        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                            <div class="d-flex align-items-end justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
-                                         alt="..."/>
-                                    <div class="small">
-                                        <div class="fw-bold">Evelyn Martinez</div>
-                                        <div class="text-muted">April 2, 2022</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+  <a class="service" style="text-decoration: None; color: black; padding:1%" name="wall fixing">
+      <div class="card col-md-8 offset-md-2 shadow border-0" onclick="alert('YET TO BUILD')" style="width: 65%">
+        <div class="card-body p-4">
+            <div class="badge bg-success bg-gradient rounded-pill mb-2 offset-md-1">WALL FIXING</div>
+                <div class="h5 card-title mb-3 col-md-8 offset-md-2">Wall Painting for 50 coins!</div>
+            <p class="card-text mb-0 col-md-8 offset-md-2">Over here to fix some walls with a brand new unused paints. Multicolors available. 50 Coins for the service!</p>
+        </div>
+        <div class="card-footer p-4 pt-0 bg-transparent border-top-0 col-md-4 offset-md-1">
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                         alt="..."/>
+                    <div class="small">
+                        <div class="fw-bold">Bob Stanley</div>
+                        <div class="text-muted">Feb 22, 2022</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+      </div>
+  </a>
+
+  <a class="service" style="text-decoration: None; color: black; padding:1%" name="household">
+      <div class="card col-md-8 offset-md-2 shadow border-0" onclick="alert('YET TO BUILD')" style="width: 65%">
+        <div class="card-body p-4">
+            <div class="badge bg-success bg-gradient rounded-pill mb-2 offset-md-1">HOUSEHOLD APPLIANCES</div>
+                <div class="h5 card-title mb-3 col-md-8 offset-md-2">Any small appliance for 30 coins!</div>
+            <p class="card-text mb-0 col-md-8 offset-md-2">I am a part time electrician. I can come around in weekends and help you in fixing your household appliances.</p>
+        </div>
+        <div class="card-footer p-4 pt-0 bg-transparent border-top-0 col-md-4 offset-md-1">
+            <div class="d-flex align-items-end justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
+                         alt="..."/>
+                    <div class="small">
+                        <div class="fw-bold">Cindy Romans</div>
+                        <div class="text-muted">March 20, 2022</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+  </a>
+
+<!-- JS FOR DYNAMIC SEARCH -->
+    <script>
+    function mySearchFunction() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();    
+        var elements = document.getElementsByClassName("service");
+        for(var i = 0; i < elements.length; i++) {
+            txtValue=elements[i].name;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                elements[i].style.display = "";
+            } else {
+                elements[i].style.display = "none";
+            }
+        }
+    }
+    </script>
 
     {#  Footer #}
     <footer class="bg-dark py-4 mt-auto">
