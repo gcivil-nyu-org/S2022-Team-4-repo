@@ -1,4 +1,8 @@
-from django.http import HttpResponseRedirect
+import stripe
+import logging
+from django.http import HttpResponseRedirect, JsonResponse
+from django.views import View
+from django.conf import settings
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, LocationForm, CustomUserChangeForm
@@ -10,11 +14,22 @@ from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse
-import logging
 from django.contrib.auth import get_user_model
+from .models import CustomUser
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+# stripe.Coupon.create(percent_off=20, duration="once")
+stripe.TaxRate.create(
+    display_name="Sales Tax",
+    inclusive=False,
+    percentage=7.25,
+    country="US",
+    state="NY",
+    jurisdiction="US - NY",
+    description="NY Sales Tax",
+)
 
 # Create your views here.
-from .models import CustomUser
 
 
 def auth(request):
@@ -128,6 +143,39 @@ def pricing_view(request):
             return redirect("users:index")
     else:
         return render(request, "users/pricing.html")
+
+
+# Stripe Integration
+class CreateCheckoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "unit_amount": 10000,
+                        "product_data": {
+                            "name": "Level 1 Subscription",
+                            # 'images': [
+                            #     'https://images.unsplash.com/20/cambridge.JPG?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1030&q=80'],
+                        },
+                    },
+                    "quantity": 1,
+                    "tax_rates": ["txr_1Ki0PYHgOFOjKM17qZ1TP5Um"],
+                },
+            ],
+            mode="payment",
+            # discounts=[{
+            #     'coupon': 'lpnrN54N',
+            # }],
+            allow_promotion_codes=True,
+            # success_url= 'http://127.0.0.1:8000/',
+            success_url="https://homefix-dev.herokuapp.com/",
+            # cancel_url='http://127.0.0.1:8000/pricing',
+            cancel_url="https://homefix-dev.herokuapp.com/pricing",
+        )
+        return JsonResponse({"id": checkout_session.id})
 
 
 # Homepage

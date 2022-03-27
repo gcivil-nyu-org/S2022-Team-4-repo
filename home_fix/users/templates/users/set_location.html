@@ -71,39 +71,39 @@
             let toastExample = document.getElementById('toast');
             let toast = new bootstrap.Toast(toastExample)
             toast.show()
-        }
 
-        document.getElementById("switcher").style.display = "none";
 
-        //Google Location Autosearch
-        function initMap() {
-            var input = document.getElementById('search_location');
-            var autocomplete = new google.maps.places.Autocomplete(input)
-        }
+            document.getElementById("switcher").style.display = "none";
 
-        //Fetch address components from the selected location
-        var search_button = document.getElementById("search")
-        search_button.addEventListener("click", function () {
-            axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
-                params: {
-                    address: document.getElementById("search_location").value,
-                    key: 'AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno'
-                }
-            }).then(function (response) {
-                var address_components = response.data.results[0].address_components
-                var geo = response.data.results[0].geometry
-                document.getElementById('address').value = address_components[0].long_name + ' ' + address_components[1].long_name
-                document.getElementById('state').value = address_components[5].long_name
-                document.getElementById('postalcode').value = address_components[7].long_name
-                document.getElementById('country').value = address_components[6].long_name
-                document.getElementById('lat').value = geo.location.lat
-                document.getElementById('long').value = geo.location.lng
+            //Google Location Autosearch
+            function initMap() {
+                var input = document.getElementById('search_location');
+                var autocomplete = new google.maps.places.Autocomplete(input)
+            }
 
-            }).catch(function (error) {
-                console.log(error);
+            //Fetch address components from the selected location
+            var search_button = document.getElementById("search")
+            search_button.addEventListener("click", function () {
+                axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
+                    params: {
+                        address: document.getElementById("search_location").value,
+                        key: 'AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno'
+                    }
+                }).then(function (response) {
+                    var address_components = response.data.results[0].address_components
+                    var geo = response.data.results[0].geometry
+                    document.getElementById('address').value = address_components[0].long_name + ' ' + address_components[1].long_name
+                    document.getElementById('state').value = address_components[5].long_name
+                    document.getElementById('postalcode').value = address_components[7].long_name
+                    document.getElementById('country').value = address_components[6].long_name
+                    document.getElementById('lat').value = geo.location.lat
+                    document.getElementById('long').value = geo.location.lng
+
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                document.getElementById("switcher").style.display = "block";
             });
-            document.getElementById("switcher").style.display = "block";
-        });
     </script>
     <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>

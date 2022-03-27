@@ -49,7 +49,8 @@
                            role="button">
                             <i class="fab fa-facebook-f me-2"></i>Login with Meta
                         </a>
-                        <a class="btn btn-light btn-lg btn-block shadow" href="{% provider_login_url 'google' %}" role="button">
+                        <a class="btn btn-light btn-lg btn-block shadow" href="{% provider_login_url 'google' %}"
+                           role="button">
                             <i class="fa-brands fa-google"></i> Login with Google</a>
                     </div>
 
@@ -57,11 +58,31 @@
             </div>
         </div>
     </section>
+
+    {#  Footer #}
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright &copy; Homefix 2022</div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script>
         var state = false;
+
         function toggle() {
             eye_icon = document.getElementById("eye");
-            if(state) {
+            if (state) {
                 document.getElementById("password").setAttribute("type", "password");
                 eye_icon.classList.remove("fa-eye");
                 eye_icon.classList.add("fa-eye-slash");
