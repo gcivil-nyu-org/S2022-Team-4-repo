@@ -16,10 +16,6 @@ class TestViews(TestCase):
         self.long = 1
         self.lat = 1
 
-    def test_auth_view_get(self):
-        response = self.client.get(reverse("users:auth"))
-        self.assertEquals(response.status_code, 302)
-
     def test_register_view_get(self):
         response = self.client.get(reverse("users:register"))
         self.assertEquals(response.status_code, 200)
