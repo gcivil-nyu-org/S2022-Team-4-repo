@@ -222,6 +222,7 @@ def search(request):
     for i in users:
         temp = []
         if i.lat is None or i.long is None:
+            print(i)
             continue
         temp.append(float(i.lat))
         temp.append(float(i.long))
@@ -237,6 +238,7 @@ def search_hardware(request):
     for i in users:
         temp = []
         if i.lat is None or i.long is None:
+            print(i)
             continue
         temp.append(float(i.lat))
         temp.append(float(i.long))
