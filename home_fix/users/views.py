@@ -29,18 +29,19 @@ stripe.TaxRate.create(
     description="NY Sales Tax",
 )
 
+
 # Create your views here.
 
 
-def auth(request):
-    return HttpResponseRedirect(reverse("users:index"))
+# def auth(request):
+#     return HttpResponseRedirect(reverse("users:index"))
 
 
 # Regitration / Sign Up
 def register_view(request):
-    logging.warning(request.POST)
+    # logging.warning(request.POST)
     if request.method == "POST":
-        logging.warning("First")
+        # logging.warning("First")
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
@@ -62,19 +63,14 @@ def register_view(request):
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
             return redirect("users:activationlinkpage")
-            # return render(request, "authentication/activation_link_sent.html")
-        #             logging.warning("Second")
-        #             user = form.save()
-        #             login(request, user)
-        #             return redirect("authentication:set_location", user_id=user.id)
         else:
             # can show up message
-            logging.warning("Third")
+            # logging.warning("Third")
             return render(request, "users/register.html", {"form": form})
     else:
-        logging.warning("Fourth")
+        # logging.warning("Fourth")
         form = CustomUserCreationForm()
-        logging.warning(request.user)
+        # logging.warning(request.user)
         if request.user.is_authenticated and request.user.country is None:
             return redirect("users:set_location", user_id=request.user.id)
         if request.user.is_authenticated and request.user.country:
@@ -87,7 +83,6 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect("users:index")
     if request.method == "POST":
-        print("xxxx")
         username = request.POST.get("email")
         password = request.POST.get("password")
 
@@ -107,20 +102,20 @@ def login_view(request):
 def set_location(request, user_id):
     context = {"user_id": user_id}
     if request.method == "POST":
+        print(request.user)
         if request.user.id == user_id and request.user.is_authenticated:
             form = LocationForm(request.POST, instance=request.user)
             if form.is_valid():
                 user = form.save(commit=False)
-                print(user)
                 user.save()
                 return redirect("users:pricing")
             else:
                 # add alert in future
-                render(request, "users/set_location.html")
+                return render(request, "users/set_location.html", context)
         #   illegal request. this user should not visit this page
         else:
             logout(request)
-            redirect("users:index")
+            return redirect("users:index")
     else:
         # re = request
         # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
@@ -132,7 +127,10 @@ def pricing_view(request):
     if not request.user.is_authenticated:
         return redirect("users:index")
     if request.method == "POST":
-        tier = int(request.POST.get("tier"))
+        try:
+            tier = int(request.POST.get("tier"))
+        except ValueError:
+            return render(request, "users/pricing.html")
         if tier not in [0, 1, 2]:
             # wrong params
             return render(request, "users/pricing.html")
