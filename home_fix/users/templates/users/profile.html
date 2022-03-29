@@ -1,0 +1,68 @@
+{% extends "users/layout.html" %}
+{% block title %}Profile | Homefix{% endblock %}
+{% block body %}
+<section>
+    <p> {{user.first_name}}'s User Center</p>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>first name</p>
+            <p>{{user.first_name}}</p>
+        </div>
+    </div>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>last name</p>
+            <p>{{user.last_name}}</p>
+        </div>
+    </div>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>email</p>
+            <p>{{user.email}}</p>
+        </div>
+    </div>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>gender</p>
+            <p>{{user.gender}}</p>
+        </div>
+    </div>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>country</p>
+            <p>{{user.country}}</p>
+        </div>
+    </div>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>street</p>
+            <p>{{user.street}}</p>
+        </div>
+    </div>
+    <div style="margin: 0 auto; width: 500px">
+        <div class="form-outline mb-4">
+            <p>membership</p>
+            {% if user.tier == 0 %}
+            <p>
+                Regular
+            </p>
+            {% endif %}
+
+            {% if user.tier == 1 %}
+            <div>
+                Primer
+            </div>
+            {% endif %}
+
+            {% if user.tier == 2 %}
+            <div class="btn-outline-danger">
+                Unlimited
+            </div>
+            {% endif %}
+        </div>
+        <a class="btn btn-light btn-lg btn-block shadow" href="{% url 'users:profile_editor' %}" role="button">
+            Edit your information
+        </a>
+    </div>
+</section>
+{% endblock %}

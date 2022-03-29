@@ -18,6 +18,7 @@ pycares==4.1.2
 pycparser==2.21
 six==1.16.0
 sqlparse==0.4.2
+stripe==2.68.0
 tomli==2.0.1
 verify-email==2.4.3
 whitenoise==6.0.0
