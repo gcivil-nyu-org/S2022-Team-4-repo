@@ -281,3 +281,13 @@ def request_service_view(request):
         return render(request, "users/request_services.html", context={"user": user})
     else:
         return redirect("users:index")
+
+
+def offer_service_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        user.password = None
+        return render(request, "users/offer_services.html", context={"user": user})
+    else:
+        return redirect("users:index")
