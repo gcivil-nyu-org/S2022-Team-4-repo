@@ -26,6 +26,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     tier = models.IntegerField(default=0)
+    # coins = models.IntegerField(default=0)
     # set email as primary key
     USERNAME_FIELD = "email"
     objects = CustomUserManager()
@@ -34,3 +35,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         # return self.user.__str__()
         return "{}".format(self.email.__str__())
+
+
+#
+# class Transaction(models.Model):
+#     service_id = models.IntegerField()
+#     sender = models.EmailField("sender email address")
+#     receiver = models.EmailField("receiver email address")
+#     amount = models.DecimalField(
+#         "amount", max_digits=22, decimal_places=16, blank=True, null=True
+#     )
+#     commission_fee = models.DecimalField(
+#         "commission_fee", max_digits=22, decimal_places=16, blank=True, null=True
+#     )
+#     service_type = models.CharField("type", max_length=64, blank=True, null=True)
