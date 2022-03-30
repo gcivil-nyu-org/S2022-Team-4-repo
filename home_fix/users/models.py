@@ -26,6 +26,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     tier = models.IntegerField(default=0)
+    # coins = models.IntegerField(default=0)
     # set email as primary key
     USERNAME_FIELD = "email"
     objects = CustomUserManager()
@@ -34,3 +35,35 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         # return self.user.__str__()
         return "{}".format(self.email.__str__())
+
+
+#
+# class Transaction(models.Model):
+#     service_id = models.IntegerField()
+#     sender = models.EmailField("sender email address")
+#     receiver = models.EmailField("receiver email address")
+#     amount = models.DecimalField(
+#         "amount", max_digits=22, decimal_places=16, blank=True, null=True
+#     )
+#     commission_fee = models.DecimalField(
+#         "commission_fee", max_digits=22, decimal_places=16, blank=True, null=True
+#     )
+#     service_type = models.CharField("type", max_length=64, blank=True, null=True)
+class Services(models.Model):
+    service_category = models.CharField("service category", max_length=128, blank=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    service_description = models.TextField("service_description", blank=True)
+    coins_charged = models.IntegerField("coins_charged", default=0)
+    street = models.CharField("street", max_length=64, blank=True, null=True)
+    state = models.CharField("state", max_length=64, blank=True, null=True)
+    country = models.CharField("country", max_length=64, blank=True, null=True)
+    zip = models.CharField("zip", max_length=64, blank=True, null=True)
+    long = models.DecimalField(
+        "longitude", max_digits=22, decimal_places=16, blank=True, null=True
+    )
+    lat = models.DecimalField(
+        "latitude", max_digits=22, decimal_places=16, blank=True, null=True
+    )
+
+    def _str_(self):
+        return "{}".format(self.service_category._str_())
