@@ -1,8 +1,9 @@
 {% extends "users/layout.html" %}
 {% block title %}Profile | Homefix{% endblock %}
 {% block body %}
-<section>
-    <p> {{user.first_name}}'s User Center</p>
+<section class="container">
+    <h1 style="margin: 0 auto; width: 500px"> {{user.first_name}}'s User Center</h1>
+    <hr>
     <div style="margin: 0 auto; width: 500px">
         <div class="form-outline mb-4">
             <p>first name</p>
