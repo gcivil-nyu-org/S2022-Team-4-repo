@@ -216,6 +216,8 @@ def actilink(request):
 
 
 def search(request):
+    if not request.user.is_authenticated:
+        return redirect("users:login")
     User = get_user_model()
     users = User.objects.all()
     userloc = []
@@ -242,6 +244,8 @@ def search(request):
 
 
 def search_hardware(request):
+    if not request.user.is_authenticated:
+        return redirect("users:login")
     User = get_user_model()
     users = User.objects.all()
     locations = []
@@ -253,8 +257,6 @@ def search_hardware(request):
         temp.append(float(i.lat))
         temp.append(float(i.long))
         locations.append(temp)
-    # User = get_user_model()
-    # users = User.objects.all()
     userloc = []
     userloc.append(float(request.user.lat))
     userloc.append(float(request.user.long))
