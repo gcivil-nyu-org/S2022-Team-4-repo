@@ -1,14 +1,17 @@
 {% extends "users/layout.html" %}
 {% block title %}Offer Services | Homefix{% endblock %}
 {% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <center>
     <h1 class="display-5 fw-bold lead mb-4">CREATE SERVICES</h1>
 </center>
     <!-- Include Editor style. -->
 <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
-<!-- Create a tag that we will use as the editable area. -->
-<!-- You can use a div tag as well. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 <div class="container my-5">
     <div class="row height d-flex justify-content-center align-items-center">
         <div class="col-md-6">
@@ -100,11 +103,44 @@
         </div>
     </div>
     <script>
+        function initMap() {
+                var input = document.getElementById('search_location');
+                var autocomplete = new google.maps.places.Autocomplete(input)
+            }
         function createService() {
                 var description=editor.html.get();
                 var category=document.getElementById('category').value;
                 var coins=document.getElementById('coins').value;
-                console.log(category+" "+description+" "+coins);
+                var address=document.getElementById('address').value;
+                var state=document.getElementById('state').value;
+                var postalcode=document.getElementById('postalcode').value;
+                var country=document.getElementById('country').value;
+                var lat = 12.12;
+                var long= 21.14;
+                $.ajax({
+                    type: "POST",
+                    url: "/offer_service/",
+                    data: {
+                        "description": description,
+                        "category":category,
+                        "coins":coins,
+                        "address":address,
+                        "state":state,
+                        "postalcode":postalcode,
+                        "country":country,
+                        "lat":lat,
+                        "long":long
+                    },
+                    success: function (data) {
+                        window.location.href="/request_service/";
+                        console.log("success");
+                        console.log(data);
+                    },
+                    failure: function (data) {
+                        console.log("failure");
+                        console.log(data);
+                    },
+                });
             }
     </script>
     <center><button type="submit" class="btn btn-outline-primary btn-block mb-4 shadow" onclick="createService()">Create</button>   </center>
@@ -119,10 +155,7 @@
             document.getElementById("switcher").style.display = "none";
 
             //Google Location Autosearch
-            function initMap() {
-                var input = document.getElementById('search_location');
-                var autocomplete = new google.maps.places.Autocomplete(input)
-            }
+            
 
             //Fetch address components from the selected location
             var search_button = document.getElementById("search")
@@ -148,6 +181,6 @@
                 document.getElementById("switcher").style.display = "block";
             });
     </script>
-    <script async
+    <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>
 {% endblock %}

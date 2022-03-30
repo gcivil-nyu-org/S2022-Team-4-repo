@@ -16,6 +16,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from .models import CustomUser
+from .models import Services
+from django.views.decorators.csrf import csrf_exempt
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 # stripe.Coupon.create(percent_off=20, duration="once")
@@ -298,17 +300,43 @@ def request_service_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
+        services = Services.objects.all()
         user.password = None
-        return render(request, "users/request_services.html", context={"user": user})
+        return render(
+            request,
+            "users/request_services.html",
+            context={"user": user, "services": services},
+        )
     else:
         return redirect("users:index")
 
 
+@csrf_exempt
 def offer_service_view(request):
-    if request.user.is_authenticated:
+    if request.method == "POST":
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         user.password = None
-        return render(request, "users/offer_services.html", context={"user": user})
+        logging.warning(request.POST["category"])
+        Services.objects.create(
+            service_category=request.POST["category"],
+            user=request.user,
+            service_description=request.POST["description"],
+            coins_charged=request.POST["coins"],
+            street=request.POST["address"],
+            state=request.POST["state"],
+            country=request.POST["country"],
+            zip=request.POST["postalcode"],
+            long=request.POST["long"],
+            lat=request.POST["lat"],
+        )
+        return redirect("users:request_service")
+    #        return render(request, "users/request_services.html", context={"user": user, "services": services})
     else:
-        return redirect("users:index")
+        if request.user.is_authenticated:
+            user_id = request.user.id
+            user = CustomUser.objects.get(id=user_id)
+            user.password = None
+            return render(request, "users/offer_services.html", context={"user": user})
+        else:
+            return redirect("users:index")
