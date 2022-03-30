@@ -69,15 +69,15 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">Starter</h4>
+                            <h4 class="my-0 fw-normal">Golden Hammer</h4>
                         </div>
                         <div class="card-body">
                             <h1 class="card-title pricing-card-title">$100<small class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>Get 100 coins every month</li>
-                                <li>5% commission fee</li>
-                                <li>Priority support</li>
+                                <li>Waiver commission fee</li>
+                                 <li>Discount in Hardware Stores</li>
+                                 <li>Priority support</li>
                             </ul>
                             {#                            <form action="{% url 'users:pricing' %}" method="post">#}
                             {#                                {% csrf_token %}#}
@@ -94,15 +94,15 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm border-primary">
                         <div class="card-header py-3 text-white bg-primary border-primary">
-                            <h4 class="my-0 fw-normal">Professional</h4>
+                            <h4 class="my-0 fw-normal">Loyal Customer</h4>
                         </div>
                         <div class="card-body">
                             <h1 class="card-title pricing-card-title">$150<small class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>Get 200 coins every month</li>
-                                <li>Waive commission fee</li>
-                                <li>Discount in Hardware Stores</li>
+                                 <li>Discount in Hardware Stores</li>
+                                <li>Priority support</li>
                             </ul>
                             {#                            <form action="{% url 'users:pricing' %}" method="post">#}
                             {#                                {% csrf_token %}#}
@@ -115,6 +115,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <h2 class="display-6 text-center mb-4">Compare plans</h2>
 
@@ -124,8 +125,8 @@
                     <tr>
                         <th style="width: 34%;"></th>
                         <th style="width: 22%;">Free</th>
-                        <th style="width: 22%;">Starter</th>
-                        <th style="width: 22%;">Professional</th>
+                        <th style="width: 22%;">Golden Hammer</th>
+                        <th style="width: 22%;">Loyal Customer</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -170,7 +171,7 @@
                             100 coins
                         </td>
                         <td>
-                            100 coins / Month
+                            100 coins
                         </td>
                         <td>
                            200 coins / Month
@@ -182,8 +183,7 @@
                         <td>
                            5%
                         </td>
-                        <td>
-                           -
+                        <td>20%
                         </td>
                     </tr>
                     <tr>
@@ -203,7 +203,9 @@
                     <tr>
                         <th scope="row" class="text-start">Discount in Hardware Stores</th>
                         <td></td>
-                        <td></td>
+                        <td> <svg class="bi" width="24" height="24">
+                                <use xlink:href="#check"/>
+                            </svg></td>
                         <td>
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
