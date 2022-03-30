@@ -239,8 +239,16 @@ class TestViews(TestCase):
         # self.assertTemplateUsed(response, "users/homepage.html")
 
     def test_search_view(self):
+        # not login
         response = self.client.get(reverse("users:search"))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
+
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+
         #  if a user doesn't have lat or long
         CustomUser.objects.create_user(
             email="demo@demo.com",
@@ -257,8 +265,16 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_search_hardware_view(self):
+        # not login
         response = self.client.get(reverse("users:search_hardware"))
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 302)
+
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+
         #  if a user doesn't have lat or long
         CustomUser.objects.create_user(
             email="demo@demo.com",
@@ -271,8 +287,7 @@ class TestViews(TestCase):
             country=self.country,
             zip=self.zip,
         )
-        print(CustomUser.objects.get(email="demo@demo.com").lat)
-        print(CustomUser.objects.get(email="demo@demo.com").long)
+
         response = self.client.get(reverse("users:search_hardware"))
         self.assertEquals(response.status_code, 200)
 

@@ -37,9 +37,7 @@
         <header>
             <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
                 <h1 class="display-6 fw-normal">Choose the plan that's right for you</h1>
-                <p class="fs-5 text-muted">Quickly build an effective pricing table for your potential customers with
-                    this Bootstrap example. It’s built with default Bootstrap components and utilities with little
-                    customization.</p>
+
             </div>
         </header>
 
@@ -54,10 +52,9 @@
                             <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>10 users included</li>
-                                <li>2 GB of storage</li>
-                                <li>Email support</li>
-                                <li>Help center access</li>
+                                <li>Initialize 100 coins</li>
+                                <li>20% commission fee</li>
+                                <li>Available to request service</li>
                             </ul>
                             <form action="{% url 'users:pricing' %}" method="post">
                                 {% csrf_token %}
@@ -72,20 +69,20 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">Pro</h4>
+                            <h4 class="my-0 fw-normal">Golden Hammer</h4>
                         </div>
                         <div class="card-body">
                             <h1 class="card-title pricing-card-title">$100<small class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>20 users included</li>
-                                <li>10 GB of storage</li>
-                                <li>Priority email support</li>
-                                <li>Help center access</li>
+                                <li>Waiver commission fee</li>
+                                 <li>Discount in Hardware Stores</li>
+                                 <li>Priority support</li>
                             </ul>
                             {#                            <form action="{% url 'users:pricing' %}" method="post">#}
                             {#                                {% csrf_token %}#}
-                            <button type="button" id="checkout-button" class="w-100 btn btn-lg btn-primary">Select
+                            <button type="button" onclick="location.href='https://buy.stripe.com/test_14k4j5gwW0b6aSk4gh'"
+                                    class="w-100 btn btn-lg btn-primary">Select
                             </button>
                             {#                                <button type="submit" value="1" class="w-100 btn btn-lg btn-primary" name="tier">Get#}
                             {#                                    started#}
@@ -97,26 +94,28 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm border-primary">
                         <div class="card-header py-3 text-white bg-primary border-primary">
-                            <h4 class="my-0 fw-normal">Professional</h4>
+                            <h4 class="my-0 fw-normal">Loyal Customer</h4>
                         </div>
                         <div class="card-body">
                             <h1 class="card-title pricing-card-title">$150<small class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>30 users included</li>
-                                <li>15 GB of storage</li>
-                                <li>Phone and email support</li>
-                                <li>Help center access</li>
+                                <li>Get 200 coins every month</li>
+                                 <li>Discount in Hardware Stores</li>
+                                <li>Priority support</li>
                             </ul>
-                            <form action="{% url 'users:pricing' %}" method="post">
-                                {% csrf_token %}
-                                {#                                <button type="button" class="checkout-button w-100 btn btn-lg btn-primary">Select</button>#}
-                                <button type="button" value="2" class="w-100 btn btn-lg btn-primary" name="tier">Select
-                                </button>
-                            </form>
+                            {#                            <form action="{% url 'users:pricing' %}" method="post">#}
+                            {#                                {% csrf_token %}#}
+                            <button type="button" onclick="location.href='https://buy.stripe.com/test_eVabLxfsS7Dy7G86oo'"
+                                    class="w-100 btn btn-lg btn-primary">Select
+                            </button>
+                            {#                                <button type="button" value="2" class="w-100 btn btn-lg btn-primary" name="tier">Select#}
+                            {#                                </button>#}
+                            {#                            </form>#}
                         </div>
                     </div>
                 </div>
+
             </div>
             <h2 class="display-6 text-center mb-4">Compare plans</h2>
 
@@ -126,13 +125,13 @@
                     <tr>
                         <th style="width: 34%;"></th>
                         <th style="width: 22%;">Free</th>
-                        <th style="width: 22%;">Pro</th>
-                        <th style="width: 22%;">Professional</th>
+                        <th style="width: 22%;">Golden Hammer</th>
+                        <th style="width: 22%;">Loyal Customer</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row" class="text-start">Public</th>
+                        <th scope="row" class="text-start">Request Service</th>
                         <td>
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
@@ -150,7 +149,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="text-start">Private</th>
+                        <th scope="row" class="text-start">Provide Service</th>
                         <td></td>
                         <td>
                             <svg class="bi" width="24" height="24">
@@ -167,39 +166,28 @@
 
                     <tbody>
                     <tr>
-                        <th scope="row" class="text-start">Permissions</th>
+                        <th scope="row" class="text-start">Coins</th>
                         <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
+                            100 coins
                         </td>
                         <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
+                            100 coins
                         </td>
                         <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
+                           200 coins / Month
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="text-start">Sharing</th>
-                        <td></td>
+                        <th scope="row" class="text-start">Commission Fee</th>
+                        <td>20%</td>
                         <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
+                           5%
                         </td>
-                        <td>
-                            <svg class="bi" width="24" height="24">
-                                <use xlink:href="#check"/>
-                            </svg>
+                        <td>20%
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="text-start">Unlimited members</th>
+                        <th scope="row" class="text-start">Priority Support</th>
                         <td></td>
                         <td>
                             <svg class="bi" width="24" height="24">
@@ -213,9 +201,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row" class="text-start">Extra security</th>
+                        <th scope="row" class="text-start">Discount in Hardware Stores</th>
                         <td></td>
-                        <td></td>
+                        <td> <svg class="bi" width="24" height="24">
+                                <use xlink:href="#check"/>
+                            </svg></td>
                         <td>
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
@@ -246,36 +236,33 @@
         </div>
     </footer>
 
-    <script type="text/javascript">
-        const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]")
-            .value;
-        // Create an instance of the Stripe object with your publishable API key
-        var stripe = Stripe("pk_test_51KhkjnHgOFOjKM17Kvs8VZysMnxPrTWwhexv5g4lgq1hOlb1n4X1txtXzwUBaXVxdDKXmOxWIAv5di4i1oQNcJUL00AjqBdVSr");
-        var checkoutButton = document.getElementById("checkout-button");
-        checkoutButton.addEventListener("click", function () {
-            fetch("{% url 'create-checkout-session' %}", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                },
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (session) {
-                    return stripe.redirectToCheckout({sessionId: session.id});
-                })
-                .then(function (result) {
-                    // If redirectToCheckout fails due to a browser or network
-                    // error, you should display the localized error message to your
-                    // customer using error.message.
-                    if (result.error) {
-                        alert(result.error.message);
-                    }
-                })
-                .catch(function (error) {
-                    console.error("Error:", error);
-                });
-        });
-    </script>
+{#    <script type="text/javascript">#}
+{#        (function () {#}
+{#            var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;#}
+{#            // Create an instance of the Stripe object with your publishable API key#}
+{#            var stripe = Stripe("pk_test_51KhkjnHgOFOjKM17Kvs8VZysMnxPrTWwhexv5g4lgq1hOlb1n4X1txtXzwUBaXVxdDKXmOxWIAv5di4i1oQNcJUL00AjqBdVSr");#}
+{#            var checkoutButton = document.getElementById("checkout-button");#}
+{#            checkoutButton.addEventListener("click", function () {#}
+{#                fetch("{% url 'create-checkout-session' %}", {#}
+{#                    method: "POST",#}
+{#                    headers: {#}
+{#                        "X-CSRFToken": csrftoken,#}
+{#                    },#}
+{#                }).then(function (response) {#}
+{#                    return response.json();#}
+{#                })#}
+{#                    .then(function (session) {#}
+{#                        return stripe.redirectToCheckout({sessionId: session.id});#}
+{#                    })#}
+{#                    .then(function (result) {#}
+{#                        if (result.error) {#}
+{#                            alert(result.error.message);#}
+{#                        }#}
+{#                    })#}
+{#                    .catch(function (error) {#}
+{#                        console.error("Error:", error);#}
+{#                    });#}
+{#            });#}
+{#        })();#}
+{#    </script>#}
 {% endblock %}
