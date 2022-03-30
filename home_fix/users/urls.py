@@ -16,6 +16,7 @@ urlpatterns = [
     path("searchhard/", views.search_hardware, name="search_hardware"),
     path("profile/", views.profile_view, name="profile"),
     path("profile_editor/", views.profile_editor_view, name="profile_editor"),
-    path("request_service/", views.request_service_view, name="request_service")
+    path("request_service/", views.request_service_view, name="request_service"),
+    path("offer_service/", views.offer_service_view, name="offer_service")
     # re_path(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='activate'),
 ]
