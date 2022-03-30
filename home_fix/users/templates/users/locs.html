@@ -11,9 +11,12 @@
 </style>
 <script>
   function initMap() {
+    var directionsService = new google.maps.DirectionsService();
+  var directionsRenderer = new google.maps.DirectionsRenderer();
     // The location of Uluru
+    var userloc = eval("{{user|safe}}");
     //const uluru = { lat: {{Latitute}}, lng: {{Longitute}}};
-    var uluru = { lat: 40.7248172, lng: -73.9978925 };
+    var uluru = { lat: userloc[0], lng: userloc[1] };
     // The map, centered at Uluru
     console.log(uluru)
     const map = new google.maps.Map(document.getElementById("map"), {

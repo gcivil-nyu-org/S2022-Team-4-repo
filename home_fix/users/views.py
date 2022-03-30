@@ -218,6 +218,9 @@ def actilink(request):
 def search(request):
     User = get_user_model()
     users = User.objects.all()
+    userloc = []
+    userloc.append(float(request.user.lat))
+    userloc.append(float(request.user.long))
     locations = []
     for i in users:
         temp = []
@@ -228,7 +231,14 @@ def search(request):
         temp.append(float(i.long))
         locations.append(temp)
 
-    return render(request, "users/locs.html", context={"users": locations})
+    return render(
+        request,
+        "users/locs.html",
+        context={
+            "users": locations,
+            "user": userloc,
+        },
+    )
 
 
 def search_hardware(request):
@@ -243,8 +253,17 @@ def search_hardware(request):
         temp.append(float(i.lat))
         temp.append(float(i.long))
         locations.append(temp)
+    # User = get_user_model()
+    # users = User.objects.all()
+    userloc = []
+    userloc.append(float(request.user.lat))
+    userloc.append(float(request.user.long))
 
-    return render(request, "users/locs_hardware.html", context={"users": locations})
+    return render(
+        request,
+        "users/locs_hardware.html",
+        context={"users": locations, "user": userloc},
+    )
 
 
 def profile_view(request):
