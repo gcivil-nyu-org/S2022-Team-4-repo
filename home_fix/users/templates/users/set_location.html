@@ -66,22 +66,28 @@
     </form>
 
     <script>
-        // Push notification
+        //Google Location Autosearch
+        function initMap() {
+            var input = document.getElementById('search_location');
+            var autocomplete = new google.maps.places.Autocomplete(input)
+        }
+
         window.onload = (event) => {
+            // Push notification
             let toastExample = document.getElementById('toast');
             let toast = new bootstrap.Toast(toastExample)
             toast.show()
 
-
+            // Making the form hidden when window loads
             document.getElementById("switcher").style.display = "none";
 
             //Google Location Autosearch
-            function initMap() {
-                var input = document.getElementById('search_location');
-                var autocomplete = new google.maps.places.Autocomplete(input)
-            }
+            {#function initMap() {#}
+            {#    var input = document.getElementById('search_location');#}
+            {#    var autocomplete = new google.maps.places.Autocomplete(input)#}
+            //}
 
-            //Fetch address components from the selected location
+            //Fetch address components from the selected location on clicking of search button
             var search_button = document.getElementById("search")
             search_button.addEventListener("click", function () {
                 axios.get('https://maps.googleapis.com/maps/api/geocode/json', {
@@ -107,5 +113,6 @@
         }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>
 {% endblock %}
