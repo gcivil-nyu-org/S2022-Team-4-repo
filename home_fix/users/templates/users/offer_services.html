@@ -1,43 +1,44 @@
 {% extends "users/layout.html" %}
+{% block head %}
+    <!-- Include Editor style. -->
+    <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
+          type="text/css"/>
+{% endblock %}
 {% block title %}Offer Services | Homefix{% endblock %}
 {% block body %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<center>
-    <h1 class="display-5 fw-bold lead mb-4">CREATE SERVICES</h1>
-</center>
-    <!-- Include Editor style. -->
-<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <center>
+        <h1 class="display-7 fw-bold lead mb-4">CREATE SERVICES</h1>
+    </center>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<div class="container my-5">
-    <div class="row height d-flex justify-content-center align-items-center">
-        <div class="col-md-6">
-            <div class="form">
-                <label class="form-label" for="category">Category</label>
-                <div class="input-group mb-3 shadow">
-                    
-                    <input type="text" id="category" class="form-control form-input"
-                           placeholder="Enter the type of Service">
-                           
+    <div class="container my-5">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="form">
+                    <label class="form-label" for="category">Category</label>
+                    <div class="input-group mb-3">
+                        <input type="text" id="category" class="form-control form-input"
+                               placeholder="Enter the type of Service">
+                    </div>
                 </div>
+                <label class="form-label">Description</label>
+                <textarea></textarea>
             </div>
-            <label class="form-label">Description</label>
-            <textarea></textarea>
         </div>
     </div>
-</div>
 
 
-<!-- Include Editor JS files. -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
 
-<!-- Initialize the editor. -->
-<script>
-  let editor=new FroalaEditor('textarea');
-</script>
+    <!-- Initialize the editor. -->
+    <script>
+        let editor = new FroalaEditor('textarea');
+    </script>
 
     <!-- Location Searchbar -->
     <div class="container my-5">
@@ -45,7 +46,7 @@
             <div class="col-md-6">
                 <div class="form">
                     <label class="form-label">Location</label>
-                    <div class="input-group mb-3 shadow">
+                    <div class="input-group mb-3">
                         <input type="text" id="search_location" class="form-control form-input"
                                placeholder="Search location">
                         <button class="btn btn-outline-primary" type="button" id="search"><i class="fas fa-search"></i>
@@ -92,70 +93,67 @@
             <div class="col-md-6">
                 <div class="form">
                     <label class="form-label" for="category">Service Charge</label>
-                    <div class="input-group mb-3 shadow">
-                        
+                    <div class="input-group mb-3">
+
                         <input type="number" id="coins" class="form-control form-input"
                                placeholder="Enter the no of coins">
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
     <script>
+        //Google Location Autosearch
         function initMap() {
-                var input = document.getElementById('search_location');
-                var autocomplete = new google.maps.places.Autocomplete(input)
-            }
-        function createService() {
-                var description=editor.html.get();
-                var category=document.getElementById('category').value;
-                var coins=document.getElementById('coins').value;
-                var address=document.getElementById('address').value;
-                var state=document.getElementById('state').value;
-                var postalcode=document.getElementById('postalcode').value;
-                var country=document.getElementById('country').value;
-                var lat = 12.12;
-                var long= 21.14;
-                $.ajax({
-                    type: "POST",
-                    url: "/offer_service/",
-                    data: {
-                        "description": description,
-                        "category":category,
-                        "coins":coins,
-                        "address":address,
-                        "state":state,
-                        "postalcode":postalcode,
-                        "country":country,
-                        "lat":lat,
-                        "long":long
-                    },
-                    success: function (data) {
-                        window.location.href="/request_service/";
-                        console.log("success");
-                        console.log(data);
-                    },
-                    failure: function (data) {
-                        console.log("failure");
-                        console.log(data);
-                    },
-                });
-            }
-    </script>
-    <center><button type="submit" class="btn btn-outline-primary btn-block mb-4 shadow" onclick="createService()">Create</button>   </center>
-    <script>
-        // Push notification
-        window.onload = (event) => {
-            let toastExample = document.getElementById('toast');
-            let toast = new bootstrap.Toast(toastExample)
-            toast.show()
+            var input = document.getElementById('search_location');
+            var autocomplete = new google.maps.places.Autocomplete(input)
+        }
 
+        function createService() {
+            var description = editor.html.get();
+            var category = document.getElementById('category').value;
+            var coins = document.getElementById('coins').value;
+            var address = document.getElementById('address').value;
+            var state = document.getElementById('state').value;
+            var postalcode = document.getElementById('postalcode').value;
+            var country = document.getElementById('country').value;
+            var lat = 12.12;
+            var long = 21.14;
+            $.ajax({
+                type: "POST",
+                url: "/offer_service/",
+                data: {
+                    "description": description,
+                    "category": category,
+                    "coins": coins,
+                    "address": address,
+                    "state": state,
+                    "postalcode": postalcode,
+                    "country": country,
+                    "lat": lat,
+                    "long": long
+                },
+                success: function (data) {
+                    window.location.href = "/request_service/";
+                    console.log("success");
+                    console.log(data);
+                },
+                failure: function (data) {
+                    console.log("failure");
+                    console.log(data);
+                },
+            });
+        }
+    </script>
+    <center>
+        <button type="submit" class="btn btn-outline-primary btn-block mb-4 shadow" onclick="createService()">Create
+        </button>
+    </center>
+    <script>
+        window.onload = (event) => {
 
             document.getElementById("switcher").style.display = "none";
-
-            //Google Location Autosearch
-            
 
             //Fetch address components from the selected location
             var search_button = document.getElementById("search")
@@ -180,7 +178,8 @@
                 });
                 document.getElementById("switcher").style.display = "block";
             });
+        }
     </script>
-    <script async defer
+    <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>
 {% endblock %}
