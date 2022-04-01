@@ -41,6 +41,9 @@ DEFAULT_FROM_EMAIL = "homefixitservice@gmail.com"
 
 INSTALLED_APPS = [
     "users.apps.AuthenticationConfig",
+    "map.apps.MapConfig",
+    "basic.apps.BasicConfig",
+    "service.apps.ServiceConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

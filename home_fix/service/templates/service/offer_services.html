@@ -122,7 +122,7 @@
             var long = 21.14;
             $.ajax({
                 type: "POST",
-                url: "/offer_service/",
+                url: "/service/offer_service/",
                 data: {
                     "description": description,
                     "category": category,
@@ -135,7 +135,7 @@
                     "long": long
                 },
                 success: function (data) {
-                    window.location.href = "/request_service/";
+                    window.location.href = "/service/request_service/";
                     console.log("success");
                     console.log(data);
                 },
