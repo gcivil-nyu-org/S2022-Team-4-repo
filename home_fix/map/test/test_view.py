@@ -65,7 +65,7 @@ class TestViews(TestCase):
 
         # login
         self.client.post(
-            reverse("base:login"),
+            reverse("users:login"),
             data={"email": self.email_login, "password": self.password},
         )
 

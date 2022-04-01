@@ -30,22 +30,23 @@ def search(request):
 
 
 def search_hardware(request):
-    if request.user.is_authenticated:
-        User = get_user_model()
-        users = User.objects.all()
-        locations = []
-        for i in users:
-            temp = []
-            if i.lat is None or i.long is None:
-                print(i)
-                continue
-            temp.append(float(i.lat))
-            temp.append(float(i.long))
-            locations.append(temp)
-        userloc = [float(request.user.lat), float(request.user.long)]
+    if not request.user.is_authenticated:
+        return redirect("users:login")
+    User = get_user_model()
+    users = User.objects.all()
+    locations = []
+    for i in users:
+        temp = []
+        if i.lat is None or i.long is None:
+            print(i)
+            continue
+        temp.append(float(i.lat))
+        temp.append(float(i.long))
+        locations.append(temp)
+    userloc = [float(request.user.lat), float(request.user.long)]
 
-        return render(
-            request,
-            "map/locs_hardware.html",
-            context={"base": locations, "user": userloc},
-        )
+    return render(
+        request,
+        "map/locs_hardware.html",
+        context={"base": locations, "user": userloc},
+    )
