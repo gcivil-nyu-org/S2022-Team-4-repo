@@ -1,9 +1,5 @@
 import stripe
-import logging
-from django.http import HttpResponseRedirect, JsonResponse
-from django.views import View
 from django.conf import settings
-from django.urls import reverse
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm, LocationForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
@@ -16,11 +12,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model
 from .models import CustomUser
-from .models import Services
-from django.views.decorators.csrf import csrf_exempt
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-# stripe.Coupon.create(percent_off=20, duration="once")
 stripe.TaxRate.create(
     display_name="Sales Tax",
     inclusive=False,
@@ -36,7 +29,7 @@ stripe.TaxRate.create(
 
 
 # def auth(request):
-#     return HttpResponseRedirect(reverse("users:index"))
+#     return HttpResponseRedirect(reverse("basic:index"))
 
 
 # Regitration / Sign Up
@@ -76,14 +69,14 @@ def register_view(request):
         if request.user.is_authenticated and request.user.country is None:
             return redirect("users:set_location", user_id=request.user.id)
         if request.user.is_authenticated and request.user.country:
-            return redirect("users:index")
+            return redirect("basic:index")
         return render(request, "users/register.html", {"form": form})
 
 
 # Login
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect("users:index")
+        return redirect("basic:index")
     if request.method == "POST":
         username = request.POST.get("email")
         password = request.POST.get("password")
@@ -92,7 +85,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("users:index")
+            return redirect("basic:index")
         else:
             err = "Username or password is incorrect"
             return render(request, "users/login.html", {"error": err})
@@ -117,7 +110,7 @@ def set_location(request, user_id):
         #   illegal request. this user should not visit this page
         else:
             logout(request)
-            return redirect("users:index")
+            return redirect("basic:index")
     else:
         # re = request
         # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
@@ -127,7 +120,7 @@ def set_location(request, user_id):
 # Pricing
 def pricing_view(request):
     if not request.user.is_authenticated:
-        return redirect("users:index")
+        return redirect("basic:index")
     if request.method == "POST":
         try:
             tier = int(request.POST.get("tier"))
@@ -140,7 +133,7 @@ def pricing_view(request):
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
             user.save()
-            return redirect("users:index")
+            return redirect("basic:index")
     else:
         return render(request, "users/pricing.html")
 
@@ -177,17 +170,11 @@ def pricing_view(request):
 #         )
 #         return JsonResponse({"id": checkout_session.id})
 
-
-# Homepage
-def homepage_view(request):
-    return render(request, "users/homepage.html")
-
-
 # Logout
 def logout_view(request):
     logout(request)
     # messages.info(request, "You have successfully logged out.")
-    return redirect("users:index")
+    return redirect("basic:index")
 
 
 # Email Verification
@@ -206,7 +193,7 @@ def activate(
         user.is_active = True
         user.save()
         login(request, user, backend="django.contrib.auth.backends.ModelBackend")
-        # return redirect('home')
+        # return redirect('users')
         # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
         return redirect("users:set_location", user_id=user.id)
     else:
@@ -217,59 +204,6 @@ def actilink(request):
     return HttpResponse("Please Verify your Email!!")
 
 
-def search(request):
-    if not request.user.is_authenticated:
-        return redirect("users:login")
-    User = get_user_model()
-    users = User.objects.all()
-    userloc = []
-    userloc.append(float(request.user.lat))
-    userloc.append(float(request.user.long))
-    locations = []
-    for i in users:
-        temp = []
-        if i.lat is None or i.long is None:
-            print(i)
-            continue
-        temp.append(float(i.lat))
-        temp.append(float(i.long))
-        locations.append(temp)
-
-    return render(
-        request,
-        "users/locs.html",
-        context={
-            "users": locations,
-            "user": userloc,
-        },
-    )
-
-
-def search_hardware(request):
-    if not request.user.is_authenticated:
-        return redirect("users:login")
-    User = get_user_model()
-    users = User.objects.all()
-    locations = []
-    for i in users:
-        temp = []
-        if i.lat is None or i.long is None:
-            print(i)
-            continue
-        temp.append(float(i.lat))
-        temp.append(float(i.long))
-        locations.append(temp)
-    userloc = []
-    userloc.append(float(request.user.lat))
-    userloc.append(float(request.user.long))
-
-    return render(
-        request,
-        "users/locs_hardware.html",
-        context={"users": locations, "user": userloc},
-    )
-
-
 def profile_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
@@ -277,7 +211,7 @@ def profile_view(request):
         user.password = None
         return render(request, "users/profile.html", context={"user": user})
     else:
-        return redirect("users:index")
+        return redirect("basic:index")
 
 
 def profile_editor_view(request):
@@ -293,50 +227,4 @@ def profile_editor_view(request):
         else:
             return render(request, "users/profile_editor.html", context={"user": user})
     else:
-        return redirect("users:index")
-
-
-def request_service_view(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        services = Services.objects.all()
-        user.password = None
-        return render(
-            request,
-            "users/request_services.html",
-            context={"user": user, "services": services},
-        )
-    else:
-        return redirect("users:index")
-
-
-@csrf_exempt
-def offer_service_view(request):
-    if request.method == "POST":
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        user.password = None
-        logging.warning(request.POST["category"])
-        Services.objects.create(
-            service_category=request.POST["category"],
-            user=request.user,
-            service_description=request.POST["description"],
-            coins_charged=request.POST["coins"],
-            street=request.POST["address"],
-            state=request.POST["state"],
-            country=request.POST["country"],
-            zip=request.POST["postalcode"],
-            long=request.POST["long"],
-            lat=request.POST["lat"],
-        )
-        return redirect("users:request_service")
-    #        return render(request, "users/request_services.html", context={"user": user, "services": services})
-    else:
-        if request.user.is_authenticated:
-            user_id = request.user.id
-            user = CustomUser.objects.get(id=user_id)
-            user.password = None
-            return render(request, "users/offer_services.html", context={"user": user})
-        else:
-            return redirect("users:index")
+        return redirect("basic:index")

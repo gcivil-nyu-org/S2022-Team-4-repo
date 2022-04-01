@@ -45,7 +45,7 @@ class TestViews(TestCase):
             data={"email": self.email_login, "password": self.password},
         )
         response = self.client.get(reverse("users:register"))
-        self.assertRedirects(response, reverse("users:index"))
+        self.assertRedirects(response, reverse("basic:index"))
         # logout
         self.client.get(reverse("users:logout"))
 
@@ -100,7 +100,7 @@ class TestViews(TestCase):
             data={"email": self.email_login, "password": self.password},
         )
         response = self.client.get(reverse("users:login"))
-        self.assertRedirects(response, reverse("users:index"))
+        self.assertRedirects(response, reverse("basic:index"))
 
     def test_login_view_post(self):
         response = self.client.post(
@@ -113,7 +113,7 @@ class TestViews(TestCase):
             reverse("users:login"),
             data={"email": self.email_login, "password": self.password},
         )
-        self.assertRedirects(response, reverse("users:index"))
+        self.assertRedirects(response, reverse("basic:index"))
 
     def test_default(self):
         response = self.client.login(
@@ -190,7 +190,7 @@ class TestViews(TestCase):
     def test_pricing_view_get(self):
         # not login
         response = self.client.get(reverse("users:pricing"))
-        self.assertRedirects(response, reverse("users:index"))
+        self.assertRedirects(response, reverse("basic:index"))
         # login
         self.client.post(
             reverse("users:login"),
@@ -217,15 +217,15 @@ class TestViews(TestCase):
             reverse("users:pricing"),
             data={"tier": 1},
         )
-        self.assertRedirects(response, reverse("users:index"))
+        self.assertRedirects(response, reverse("basic:index"))
         user = CustomUser.objects.get(email=self.email_login)
         assert user.tier == 1
 
     def test_homepage_view(self):
-        response = self.client.get(reverse("users:index"))
+        response = self.client.get(reverse("basic:index"))
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, "users/homepage.html")
+        self.assertTemplateUsed(response, "basic/homepage.html")
 
     def test_logout_view(self):
         # login
@@ -237,59 +237,6 @@ class TestViews(TestCase):
         response = self.client.get(reverse("users:logout"))
         self.assertEquals(response.status_code, 302)
         # self.assertTemplateUsed(response, "users/homepage.html")
-
-    def test_search_view(self):
-        # not login
-        response = self.client.get(reverse("users:search"))
-        self.assertEquals(response.status_code, 302)
-
-        # login
-        self.client.post(
-            reverse("users:login"),
-            data={"email": self.email_login, "password": self.password},
-        )
-
-        #  if a user doesn't have lat or long
-        CustomUser.objects.create_user(
-            email="demo@demo.com",
-            first_name=self.first_name,
-            last_name=self.last_name,
-            password=self.password,
-            gender=self.gender,
-            street=self.street,
-            state=self.state,
-            country=self.country,
-            zip=self.zip,
-        )
-        response = self.client.get(reverse("users:search"))
-        self.assertEquals(response.status_code, 200)
-
-    def test_search_hardware_view(self):
-        # not login
-        response = self.client.get(reverse("users:search_hardware"))
-        self.assertEquals(response.status_code, 302)
-
-        # login
-        self.client.post(
-            reverse("users:login"),
-            data={"email": self.email_login, "password": self.password},
-        )
-
-        #  if a user doesn't have lat or long
-        CustomUser.objects.create_user(
-            email="demo@demo.com",
-            first_name=self.first_name,
-            last_name=self.last_name,
-            password=self.password,
-            gender=self.gender,
-            street=self.street,
-            state=self.state,
-            country=self.country,
-            zip=self.zip,
-        )
-
-        response = self.client.get(reverse("users:search_hardware"))
-        self.assertEquals(response.status_code, 200)
 
     def test_profile_view(self):
         # didn't login
@@ -322,19 +269,6 @@ class TestViews(TestCase):
         self.client.post(reverse("users:profile_editor"), data={"gender": "female"})
         user = CustomUser.objects.get(email=self.email_login)
         self.assertEqual(user.gender, "female")
-
-    def test_request_service_view(self):
-        # didn't login
-        response = self.client.get(reverse("users:request_service"))
-        self.assertEquals(response.status_code, 302)
-
-        # login
-        self.client.post(
-            reverse("users:login"),
-            data={"email": self.email_login, "password": self.password},
-        )
-        response = self.client.get(reverse("users:request_service"))
-        self.assertTemplateUsed(response, "users/request_services.html")
 
     def test_activate(self):
         self.client.get(reverse("users:activate", kwargs={"uidb64": 1, "token": 1}))
