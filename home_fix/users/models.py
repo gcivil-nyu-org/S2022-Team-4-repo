@@ -26,6 +26,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     tier = models.IntegerField(default=0)
+    coin = models.IntegerField(default=0)
     # coins = models.IntegerField(default=0)
     # set email as primary key
     USERNAME_FIELD = "email"
@@ -35,6 +36,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         # return self.user.__str__()
         return "{}".format(self.email.__str__())
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.IntegerField(default=0)  # price in cents
+
+    def __str__(self):
+        return self.name
+
+    def get_display_price(self):
+        return "{0:.2f}".format(self.price / 100)
 
 
 #

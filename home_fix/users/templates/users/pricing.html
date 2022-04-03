@@ -69,49 +69,41 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">Golden Hammer</h4>
+                            <h4 class="my-0 fw-normal">{{ product1.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$100<small class="text-muted fw-light">/yr</small>
+                            <h1 class="card-title pricing-card-title">${{ product1.get_display_price }}<small
+                                    class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>Waiver commission fee</li>
-                                 <li>Discount in Hardware Stores</li>
-                                 <li>Priority support</li>
+                                <li>Discount in Hardware Stores</li>
+                                <li>Priority support</li>
                             </ul>
-                            {#                            <form action="{% url 'users:pricing' %}" method="post">#}
-                            {#                                {% csrf_token %}#}
-                            <button type="button" onclick="location.href='https://buy.stripe.com/test_14k4j5gwW0b6aSk4gh'"
-                                    class="w-100 btn btn-lg btn-primary">Select
-                            </button>
-                            {#                                <button type="submit" value="1" class="w-100 btn btn-lg btn-primary" name="tier">Get#}
-                            {#                                    started#}
-                            {#                                </button>#}
-                            {#                            </form>#}
+                            {% csrf_token %}
+                            <button type="button" class="checkout-button w-100 btn btn-lg btn-primary">Select</button>
+                            {#                           <button type="button" onclick="location.href='https://buy.stripe.com/test_14k4j5gwW0b6aSk4gh'"#}
+                            {#                                    class="w-100 btn btn-lg btn-primary">Select#}
+                            {#                            </button>#}
                         </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm border-primary">
                         <div class="card-header py-3 text-white bg-primary border-primary">
-                            <h4 class="my-0 fw-normal">Loyal Customer</h4>
+                            <h4 class="my-0 fw-normal">{{ product2.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$150<small class="text-muted fw-light">/yr</small>
+                            <h1 class="card-title pricing-card-title">${{ product2.get_display_price }}<small
+                                    class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>Get 200 coins every month</li>
-                                 <li>Discount in Hardware Stores</li>
+                                <li>Discount in Hardware Stores</li>
                                 <li>Priority support</li>
                             </ul>
-                            {#                            <form action="{% url 'users:pricing' %}" method="post">#}
-                            {#                                {% csrf_token %}#}
-                            <button type="button" onclick="location.href='https://buy.stripe.com/test_eVabLxfsS7Dy7G86oo'"
-                                    class="w-100 btn btn-lg btn-primary">Select
-                            </button>
-                            {#                                <button type="button" value="2" class="w-100 btn btn-lg btn-primary" name="tier">Select#}
-                            {#                                </button>#}
-                            {#                            </form>#}
+                            {% csrf_token %}
+                            <button type="button" class="checkout-button w-100 btn btn-lg btn-primary">Select</button>
                         </div>
                     </div>
                 </div>
@@ -155,7 +147,8 @@
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
                             </svg>
-                        </td>Ï
+                        </td>
+                        Ï
                         <td>
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
@@ -174,14 +167,14 @@
                             100 coins
                         </td>
                         <td>
-                           200 coins / Month
+                            200 coins / Month
                         </td>
                     </tr>
                     <tr>
                         <th scope="row" class="text-start">Commission Fee</th>
                         <td>20%</td>
                         <td>
-                           5%
+                            5%
                         </td>
                         <td>20%
                         </td>
@@ -203,9 +196,11 @@
                     <tr>
                         <th scope="row" class="text-start">Discount in Hardware Stores</th>
                         <td></td>
-                        <td> <svg class="bi" width="24" height="24">
+                        <td>
+                            <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
-                            </svg></td>
+                            </svg>
+                        </td>
                         <td>
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
@@ -236,33 +231,59 @@
         </div>
     </footer>
 
-{#    <script type="text/javascript">#}
-{#        (function () {#}
-{#            var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;#}
-{#            // Create an instance of the Stripe object with your publishable API key#}
-{#            var stripe = Stripe("pk_test_51KhkjnHgOFOjKM17Kvs8VZysMnxPrTWwhexv5g4lgq1hOlb1n4X1txtXzwUBaXVxdDKXmOxWIAv5di4i1oQNcJUL00AjqBdVSr");#}
-{#            var checkoutButton = document.getElementById("checkout-button");#}
-{#            checkoutButton.addEventListener("click", function () {#}
-{#                fetch("{% url 'create-checkout-session' %}", {#}
-{#                    method: "POST",#}
-{#                    headers: {#}
-{#                        "X-CSRFToken": csrftoken,#}
-{#                    },#}
-{#                }).then(function (response) {#}
-{#                    return response.json();#}
-{#                })#}
-{#                    .then(function (session) {#}
-{#                        return stripe.redirectToCheckout({sessionId: session.id});#}
-{#                    })#}
-{#                    .then(function (result) {#}
-{#                        if (result.error) {#}
-{#                            alert(result.error.message);#}
-{#                        }#}
-{#                    })#}
-{#                    .catch(function (error) {#}
-{#                        console.error("Error:", error);#}
-{#                    });#}
-{#            });#}
-{#        })();#}
-{#    </script>#}
+    <script type="text/javascript">
+        (function () {
+            var csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+            // Create an instance of the Stripe object with your publishable API key
+            var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+            var checkoutButtons = document.getElementsByClassName("checkout-button");
+
+            // Golden Hammer Checkout
+            checkoutButtons[0].addEventListener("click", function () {
+                fetch("{% url 'users:create-checkout-session' product1.id %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrftoken,
+                    },
+                }).then(function (response) {
+                    return response.json();
+                })
+                    .then(function (session) {
+                        return stripe.redirectToCheckout({sessionId: session.id});
+                    })
+                    .then(function (result) {
+                        if (result.error) {
+                            alert(result.error.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Error:", error);
+                    });
+            });
+
+            //Loyal Customer Checkout
+            checkoutButtons[1].addEventListener("click", function () {
+                fetch("{% url 'users:create-checkout-session' product2.id %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": csrftoken,
+                    },
+                }).then(function (response) {
+                    return response.json();
+                })
+                    .then(function (session) {
+                        return stripe.redirectToCheckout({sessionId: session.id});
+                    })
+                    .then(function (result) {
+                        if (result.error) {
+                            alert(result.error.message);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Error:", error);
+                    });
+            });
+            //}
+        })();
+    </script>
 {% endblock %}

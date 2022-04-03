@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, Product
 
 
 class CustomUserAdmin(UserAdmin):
@@ -34,6 +34,8 @@ class CustomUserAdmin(UserAdmin):
                     "country",
                     "lat",
                     "long",
+                    "tier",
+                    "coin",
                 )
             },
         ),
@@ -58,6 +60,8 @@ class CustomUserAdmin(UserAdmin):
                     "country",
                     "lat",
                     "long",
+                    "tier",
+                    "coin",
                 ),
             },
         ),
@@ -67,3 +71,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Product)

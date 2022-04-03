@@ -182,3 +182,6 @@ django_heroku.settings(locals(), test_runner=False)
 
 STRIPE_PUBLIC_KEY = "pk_test_51KhkjnHgOFOjKM17Kvs8VZysMnxPrTWwhexv5g4lgq1hOlb1n4X1txtXzwUBaXVxdDKXmOxWIAv5di4i1oQNcJUL00AjqBdVSr"
 STRIPE_SECRET_KEY = "sk_test_51KhkjnHgOFOjKM17JK8YVjAKEQcYQ0ZVOcrutMauCco9WZKsNzJSL1hD5D77yx10PHwYBulFlH6q4NqxJzp7oGrB00P9NtSTkW"
+STRIPE_WEBHOOK_SECRET = (
+    "whsec_94a89b2404dcbe1aec12f8bb596b3e126fc724187db28d8f37caa15e2c484e46"
+)
