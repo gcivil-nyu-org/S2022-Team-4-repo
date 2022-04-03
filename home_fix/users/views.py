@@ -1,6 +1,9 @@
 import stripe
+
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomUserCreationForm, LocationForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
@@ -9,9 +12,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
-from .models import CustomUser
+from .models import CustomUser, Product
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe.TaxRate.create(
@@ -26,11 +29,6 @@ stripe.TaxRate.create(
 
 
 # Create your views here.
-
-
-# def auth(request):
-#     return HttpResponseRedirect(reverse("basic:index"))
-
 
 # Regitration / Sign Up
 def register_view(request):
@@ -97,7 +95,6 @@ def login_view(request):
 def set_location(request, user_id):
     context = {"user_id": user_id}
     if request.method == "POST":
-        print(request.user)
         if request.user.id == user_id and request.user.is_authenticated:
             form = LocationForm(request.POST, instance=request.user)
             if form.is_valid():
@@ -135,40 +132,105 @@ def pricing_view(request):
             user.save()
             return redirect("basic:index")
     else:
-        return render(request, "users/pricing.html")
+        product1 = Product.objects.get(name="Golden Hammer")
+        product2 = Product.objects.get(name="Loyal Customer")
+        return render(
+            request,
+            "users/pricing.html",
+            {
+                "product1": product1,
+                "product2": product2,
+                "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
+            },
+        )
 
 
 # Stripe Integration
-# class CreateCheckoutSessionView(View):
-#     def post(self, request, *args, **kwargs):
-#         checkout_session = stripe.checkout.Session.create(
-#             payment_method_types=["card"],
-#             line_items=[
-#                 {
-#                     "price_data": {
-#                         "currency": "usd",
-#                         "unit_amount": 10000,
-#                         "product_data": {
-#                             "name": "Starter Pack",
-#                             # 'images': [
-#                             #     'https://images.unsplash.com/20/cambridge.JPG?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1030&q=80'],
-#                         },
-#                     },
-#                     "quantity": 1,
-#                     "tax_rates": ["txr_1Ki0PYHgOFOjKM17qZ1TP5Um"],
-#                 },
-#             ],
-#             mode="payment",
-#             # discounts=[{
-#             #     'coupon': 'lpnrN54N',
-#             # }],
-#             allow_promotion_codes=True,
-#             # success_url= 'http://127.0.0.1:8000/',
-#             success_url="https://homefix-dev.herokuapp.com/",
-#             # cancel_url='http://127.0.0.1:8000/pricing',
-#             cancel_url="https://homefix-dev.herokuapp.com/pricing",
-#         )
-#         return JsonResponse({"id": checkout_session.id})
+class CreateCheckoutSessionView(View):
+    def post(self, request, *args, **kwargs):
+        product_id = self.kwargs["pk"]
+        product = Product.objects.get(id=product_id)
+        # YOUR_DOMAIN = "http://127.0.0.1:8000/"
+        YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "unit_amount": product.price,
+                        "product_data": {
+                            "name": product.name,
+                            # 'images': [
+                            #     'https://images.unsplash.com/20/cambridge.JPG?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1030&q=80'],
+                        },
+                    },
+                    "quantity": 1,
+                    "tax_rates": ["txr_1Ki0PYHgOFOjKM17qZ1TP5Um"],
+                },
+            ],
+            metadata={
+                "product_id": product_id,
+                "product_name": product.name,
+                "user_first_name": request.user.first_name,
+            },
+            mode="payment",
+            # discounts=[{
+            #     'coupon': 'lpnrN54N',
+            # }],
+            allow_promotion_codes=True,
+            success_url=YOUR_DOMAIN + "users/success/",
+            cancel_url=YOUR_DOMAIN + "users/cancel/",
+        )
+        return JsonResponse({"id": checkout_session.id})
+
+
+# Payment Success
+def success_view(request):
+    return render(request, "users/success.html")
+
+
+# Payment Cancelled
+def cancel_view(request):
+    return render(request, "users/cancel.html")
+
+
+# Stripe Web-hook
+@csrf_exempt
+def stripe_webhook(request):
+    payload = request.body
+    sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, settings.STRIPE_WEBHOOK_SECRET
+        )
+    except ValueError:
+        # Invalid payload
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError:
+        # Invalid signature
+        return HttpResponse(status=400)
+
+    if event["type"] == "checkout.session.completed":
+        session = event["data"]["object"]
+
+        # Fulfill the purchase...
+        User = get_user_model()
+        user_first_name = session["metadata"]["user_first_name"]
+        user = User.objects.get(first_name=user_first_name)
+        product_name = session["metadata"]["product_name"]
+        if product_name == "Golden Hammer":
+            user.coin += 100
+            user.save()
+        elif product_name == "Loyal Customer":
+            user.coin += 200
+            user.save()
+
+    # Passed signature verification
+    return HttpResponse(status=200)
+
 
 # Logout
 def logout_view(request):

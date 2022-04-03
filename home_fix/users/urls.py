@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import CreateCheckoutSessionView
 
 app_name = "users"
 urlpatterns = [
@@ -7,6 +8,14 @@ urlpatterns = [
     path("register/", views.register_view, name="register"),
     path("set_location/<int:user_id>/", views.set_location, name="set_location"),
     path("pricing/", views.pricing_view, name="pricing"),
+    path(
+        "create-checkout-session/<pk>",
+        CreateCheckoutSessionView.as_view(),
+        name="create-checkout-session",
+    ),
+    path("success/", views.success_view, name="success"),
+    path("cancel/", views.cancel_view, name="cancel"),
+    path("webhooks/stripe", views.stripe_webhook, name="stripe-webhook"),
     path("logout/", views.logout_view, name="logout"),
     # path("", views.auth, name="auth"),
     path("activate/<uidb64>/<token>/", views.activate, name="activate"),
