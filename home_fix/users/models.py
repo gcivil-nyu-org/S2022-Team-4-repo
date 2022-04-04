@@ -25,7 +25,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    tier = models.IntegerField(default=0)
+    tier = models.IntegerField(default=1)
     coin = models.IntegerField(default=0)
     # coins = models.IntegerField(default=0)
     # set email as primary key
@@ -39,13 +39,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Product(models.Model):
+    tier = models.IntegerField(default=0)
     name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)  # price in cents
 
     def __str__(self):
         return self.name
 
-    def get_display_price(self):
+    def get_display_price(self):  # diplay price in dollars
         return "{0:.2f}".format(self.price / 100)
 
 
