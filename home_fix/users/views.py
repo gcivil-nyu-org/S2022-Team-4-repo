@@ -123,7 +123,7 @@ def pricing_view(request):
             tier = int(request.POST.get("tier"))
         except ValueError:
             return render(request, "users/pricing.html")
-        if tier not in [0, 1, 2]:
+        if tier not in [1]:
             # wrong params
             return render(request, "users/pricing.html")
         else:
@@ -150,8 +150,8 @@ def pricing_view(request):
 # Stripe Checkout Backend
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        product_id = self.kwargs["pk"]
-        product = Product.objects.get(id=product_id)
+        product_tier = self.kwargs["pk"]
+        product = Product.objects.get(tier=product_tier)
         # YOUR_DOMAIN = "http://127.0.0.1:8000/"
         YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
         checkout_session = stripe.checkout.Session.create(
@@ -172,7 +172,7 @@ class CreateCheckoutSessionView(View):
                 },
             ],
             metadata={
-                "product_id": product_id,
+                "product_tier": product_tier,
                 "product_name": product.name,
                 "user_id": request.user.id,
             },
@@ -181,8 +181,8 @@ class CreateCheckoutSessionView(View):
             #     'coupon': 'lpnrN54N',
             # }],
             allow_promotion_codes=True,
-            success_url=YOUR_DOMAIN + "users/success/",
-            cancel_url=YOUR_DOMAIN + "users/cancel/",
+            success_url=YOUR_DOMAIN,
+            cancel_url=YOUR_DOMAIN + "users/pricing/",
         )
         return JsonResponse({"id": checkout_session.id})
 
@@ -223,6 +223,9 @@ def stripe_webhook(request):
         user_id = session["metadata"]["user_id"]
         user = User.objects.get(id=user_id)
         product_name = session["metadata"]["product_name"]
+        user.tier = int(session["metadata"]["product_tier"])
+        print(f"User tier: {user.tier}")
+        user.save()
         if product_name == "Golden Hammer":
             user.coin += 100
             user.save()

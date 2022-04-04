@@ -49,7 +49,7 @@
                             <h4 class="my-0 fw-normal">{{ product1.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">${{ product1.get_display_price }}<small class="text-muted fw-light">/mo</small>
+                            <h1 class="card-title pricing-card-title">Free
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>Initialize 100 coins</li>
@@ -59,7 +59,7 @@
                             <form action="{% url 'users:pricing' %}" method="post">
                                 {% csrf_token %}
                                 {#                                <button type="button" id="checkout-button" class="w-100 btn btn-lg btn-outline-primary">Checkout</button>#}
-                                <button type="submit" class="w-100 btn btn-lg btn-outline-primary" value="0" name="tier"
+                                <button type="submit" class="w-100 btn btn-lg btn-outline-primary" value="1" name="tier"
                                 >Select
                                 </button>
                             </form>
@@ -240,7 +240,7 @@
 
             // Golden Hammer Checkout
             checkoutButtons[0].addEventListener("click", function () {
-                fetch("{% url 'users:create-checkout-session' product2.id %}", {
+                fetch("{% url 'users:create-checkout-session' product2.tier %}", {
                     method: "POST",
                     headers: {
                         "X-CSRFToken": csrftoken,
@@ -263,7 +263,7 @@
 
             //Loyal Customer Checkout
             checkoutButtons[1].addEventListener("click", function () {
-                fetch("{% url 'users:create-checkout-session' product3.id %}", {
+                fetch("{% url 'users:create-checkout-session' product3.tier %}", {
                     method: "POST",
                     headers: {
                         "X-CSRFToken": csrftoken,
