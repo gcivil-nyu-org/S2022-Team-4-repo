@@ -46,10 +46,10 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">Free</h4>
+                            <h4 class="my-0 fw-normal">{{ product1.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">$0<small class="text-muted fw-light">/mo</small>
+                            <h1 class="card-title pricing-card-title">Free
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
                                 <li>Initialize 100 coins</li>
@@ -59,7 +59,7 @@
                             <form action="{% url 'users:pricing' %}" method="post">
                                 {% csrf_token %}
                                 {#                                <button type="button" id="checkout-button" class="w-100 btn btn-lg btn-outline-primary">Checkout</button>#}
-                                <button type="submit" class="w-100 btn btn-lg btn-outline-primary" value="0" name="tier"
+                                <button type="submit" class="w-100 btn btn-lg btn-outline-primary" value="1" name="tier"
                                 >Select
                                 </button>
                             </form>
@@ -69,10 +69,10 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm">
                         <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">{{ product1.name }}</h4>
+                            <h4 class="my-0 fw-normal">{{ product2.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">${{ product1.get_display_price }}<small
+                            <h1 class="card-title pricing-card-title">${{ product2.get_display_price }}<small
                                     class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
@@ -91,10 +91,10 @@
                 <div class="col">
                     <div class="card mb-4 rounded-3 shadow-sm border-primary">
                         <div class="card-header py-3 text-white bg-primary border-primary">
-                            <h4 class="my-0 fw-normal">{{ product2.name }}</h4>
+                            <h4 class="my-0 fw-normal">{{ product3.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">${{ product2.get_display_price }}<small
+                            <h1 class="card-title pricing-card-title">${{ product3.get_display_price }}<small
                                     class="text-muted fw-light">/yr</small>
                             </h1>
                             <ul class="list-unstyled mt-3 mb-4">
@@ -116,9 +116,9 @@
                     <thead>
                     <tr>
                         <th style="width: 34%;"></th>
-                        <th style="width: 22%;">Free</th>
-                        <th style="width: 22%;">Golden Hammer</th>
-                        <th style="width: 22%;">Loyal Customer</th>
+                        <th style="width: 22%;">{{ product1.name }}</th>
+                        <th style="width: 22%;">{{ product2.name }}</th>
+                        <th style="width: 22%;">{{ product3.name }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -240,7 +240,7 @@
 
             // Golden Hammer Checkout
             checkoutButtons[0].addEventListener("click", function () {
-                fetch("{% url 'users:create-checkout-session' product1.id %}", {
+                fetch("{% url 'users:create-checkout-session' product2.tier %}", {
                     method: "POST",
                     headers: {
                         "X-CSRFToken": csrftoken,
@@ -263,7 +263,7 @@
 
             //Loyal Customer Checkout
             checkoutButtons[1].addEventListener("click", function () {
-                fetch("{% url 'users:create-checkout-session' product2.id %}", {
+                fetch("{% url 'users:create-checkout-session' product3.tier %}", {
                     method: "POST",
                     headers: {
                         "X-CSRFToken": csrftoken,
