@@ -6,6 +6,9 @@ from django.utils import timezone
 from .managers import CustomUserManager
 
 
+# from home_fix.settings import EMAIL_HOST_USER
+
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     #  delete username file
     email = models.EmailField("email address", unique=True)
@@ -47,17 +50,3 @@ class Product(models.Model):
 
     def get_display_price(self):
         return "{0:.2f}".format(self.price / 100)
-
-
-#
-# class Transaction(models.Model):
-#     service_id = models.IntegerField()
-#     sender = models.EmailField("sender email address")
-#     receiver = models.EmailField("receiver email address")
-#     amount = models.DecimalField(
-#         "amount", max_digits=22, decimal_places=16, blank=True, null=True
-#     )
-#     commission_fee = models.DecimalField(
-#         "commission_fee", max_digits=22, decimal_places=16, blank=True, null=True
-#     )
-#     service_type = models.CharField("type", max_length=64, blank=True, null=True)
