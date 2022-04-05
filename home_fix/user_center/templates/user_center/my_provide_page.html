@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "basic/layout.html" %}
+{% block title %}My Provide | Homefix{% endblock %}
+{% block body %}
+{% for provide in provide_list%}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Service_id</th>
+        <th scope="col">create_time</th>
+        <th scope="col">request_time</th>
+        <th scope="col">requester</th>
+        <th scope="col">status</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">{{ provide.service_id }}</th>
+        <td>{{ provide.service_time }}</td>
+        <td>{{ provide.order_time }}</td>
+        <td>{{ provide.request_user_id }}</td>
+        <td>{{ provide.status }}</td>
+        <td>
+            <button>sdfsdf</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+{% endfor %}
+{% endblock %}

@@ -1,7 +1,7 @@
 import logging
 from django.shortcuts import render, redirect
 from users.models import CustomUser
-from service.models import Services
+from service.models import Services, Order
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -12,7 +12,7 @@ def request_service_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
-        services = Services.objects.all()
+        services = Services.objects.filter(visible=True)
         user.password = None
         return render(
             request,
@@ -30,6 +30,8 @@ def offer_service_view(request):
         user = CustomUser.objects.get(id=user_id)
         user.password = None
         logging.warning(request.POST["category"])
+        # can add some params check
+        print(request.POST)
         Services.objects.create(
             service_category=request.POST["category"],
             user=request.user,
@@ -54,3 +56,16 @@ def offer_service_view(request):
             )
         else:
             return redirect("basic:index")
+
+
+def request_service_confirm_view(request, service_id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        service = Services.objects.get(id=service_id)
+        Order.objects.create(user=user, service=service)
+        service.visible = False
+        service.save()
+        return redirect("service:request_service")
+    else:
+        return redirect("basic:index")

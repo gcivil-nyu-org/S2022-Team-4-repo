@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "basic/layout.html" %}
+{% block title %}Transaction | Homefix{% endblock %}
+{% block body %}
+<a href="{% url 'user_center:profile'%}">Profile</a>
+<br>
+<a href="{% url 'user_center:transaction'%}">Transaction</a>
+<br>
+<a href="{% url 'user_center:request'%}">My Request List</a>
+<br>
+<a href="{% url 'user_center:provide'%}">My Provide List</a>
+{% endblock %}

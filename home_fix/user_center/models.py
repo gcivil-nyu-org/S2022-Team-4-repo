@@ -10,10 +10,15 @@ class Transaction(models.Model):
         "receiver email address", max_length=64, blank=True, null=True
     )
     amount = models.DecimalField(
-        "amount", max_digits=22, decimal_places=16, blank=True, null=True
+        "amount", max_digits=20, decimal_places=2, default=0.0, blank=True, null=True
     )
     commission_fee = models.DecimalField(
-        "commission_fee", max_digits=22, decimal_places=16, blank=True, null=True
+        "commission_fee",
+        max_digits=20,
+        decimal_places=2,
+        default=0.0,
+        blank=True,
+        null=True,
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     service_type = models.CharField("type", max_length=64, blank=True, null=True)

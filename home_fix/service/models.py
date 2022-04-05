@@ -8,7 +8,14 @@ class Services(models.Model):
     service_category = models.CharField("service category", max_length=128, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     service_description = models.TextField("service_description", blank=True)
-    coins_charged = models.IntegerField("coins_charged", default=0)
+    coins_charged = models.DecimalField(
+        "coins_charged",
+        max_digits=20,
+        decimal_places=2,
+        default=0.0,
+        blank=True,
+        null=True,
+    )
     street = models.CharField("street", max_length=64, blank=True, null=True)
     state = models.CharField("state", max_length=64, blank=True, null=True)
     country = models.CharField("country", max_length=64, blank=True, null=True)
@@ -32,7 +39,9 @@ class Services(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     service = models.ForeignKey(Services, on_delete=models.CASCADE)
-    status = models.CharField("status", max_length=64, blank=True, null=True)
+    status = models.CharField(
+        "status", max_length=64, blank=True, null=True, default="pending"
+    )
     timestamp = models.DateTimeField(auto_now_add=True)
     # status : pending / cancel/ in progress / finished
     #
