@@ -123,7 +123,7 @@ def pricing_view(request):
             tier = int(request.POST.get("tier"))
         except ValueError:
             return render(request, "users/pricing.html")
-        if tier not in [0, 1, 2]:
+        if tier not in [1]:
             # wrong params
             return render(request, "users/pricing.html")
         else:
@@ -132,24 +132,26 @@ def pricing_view(request):
             user.save()
             return redirect("basic:index")
     else:
-        product1 = Product.objects.get(name="Golden Hammer")
-        product2 = Product.objects.get(name="Loyal Customer")
+        product1 = Product.objects.get(name="Starter")
+        product2 = Product.objects.get(name="Golden Hammer")
+        product3 = Product.objects.get(name="Loyal Customer")
         return render(
             request,
             "users/pricing.html",
             {
                 "product1": product1,
                 "product2": product2,
+                "product3": product3,
                 "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
             },
         )
 
 
-# Stripe Integration
+# Stripe Checkout Backend
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
-        product_id = self.kwargs["pk"]
-        product = Product.objects.get(id=product_id)
+        product_tier = self.kwargs["pk"]
+        product = Product.objects.get(tier=product_tier)
         # YOUR_DOMAIN = "http://127.0.0.1:8000/"
         YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
         checkout_session = stripe.checkout.Session.create(
@@ -170,17 +172,17 @@ class CreateCheckoutSessionView(View):
                 },
             ],
             metadata={
-                "product_id": product_id,
+                "product_tier": product_tier,
                 "product_name": product.name,
-                "user_first_name": request.user.first_name,
+                "user_id": request.user.id,
             },
             mode="payment",
             # discounts=[{
             #     'coupon': 'lpnrN54N',
             # }],
             allow_promotion_codes=True,
-            success_url=YOUR_DOMAIN + "users/success/",
-            cancel_url=YOUR_DOMAIN + "users/cancel/",
+            success_url=YOUR_DOMAIN,
+            cancel_url=YOUR_DOMAIN + "users/pricing/",
         )
         return JsonResponse({"id": checkout_session.id})
 
@@ -195,7 +197,7 @@ def cancel_view(request):
     return render(request, "users/cancel.html")
 
 
-# Stripe Web-hook
+# Stripe webhook
 @csrf_exempt
 def stripe_webhook(request):
     payload = request.body
@@ -218,9 +220,12 @@ def stripe_webhook(request):
 
         # Fulfill the purchase...
         User = get_user_model()
-        user_first_name = session["metadata"]["user_first_name"]
-        user = User.objects.get(first_name=user_first_name)
+        user_id = session["metadata"]["user_id"]
+        user = User.objects.get(id=user_id)
         product_name = session["metadata"]["product_name"]
+        user.tier = int(session["metadata"]["product_tier"])
+        print(f"User tier: {user.tier}")
+        user.save()
         if product_name == "Golden Hammer":
             user.coin += 100
             user.save()
