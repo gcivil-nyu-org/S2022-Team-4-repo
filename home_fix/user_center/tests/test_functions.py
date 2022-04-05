@@ -9,7 +9,7 @@ from utils import namedtuplefetchall
 
 
 class TestViews(TestCase):
-    def test_database(self):
+    def database(self):
         with connection.cursor() as cursor:
             cursor.execute(provide_list_query(1))
             result = namedtuplefetchall(cursor)

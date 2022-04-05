@@ -68,8 +68,4 @@
 #         user = CustomUser.objects.get(email=self.email_login)
 #         self.assertEqual(user.gender, "female")
 #
-#     def test_activate(self):
-#         self.client.get(reverse("users:activate", kwargs={"uidb64": 1, "token": 1}))
 #
-#     def test_actilink(self):
-#         self.client.get(reverse("users:activationlinkpage"))
