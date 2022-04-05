@@ -29,7 +29,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     tier = models.IntegerField(default=1)
-    coin = models.IntegerField(default=0)
+    coin = models.DecimalField(
+        max_digits=20, decimal_places=2, default=0.0, blank=True, null=True
+    )
     # coins = models.IntegerField(default=0)
     # set email as primary key
     USERNAME_FIELD = "email"

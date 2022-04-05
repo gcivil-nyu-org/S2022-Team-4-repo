@@ -9,7 +9,14 @@ from django.db import connection
 from django.db.models import Q
 
 # Create your views here.
-from utils import dictfetchall
+from utils import dictfetchall, namedtuplefetchall
+
+
+def index_view(request):
+    if request.user.is_authenticated:
+        return render(request, "user_center/index.html")
+    else:
+        return redirect("basic:index")
 
 
 def profile_view(request):
@@ -55,11 +62,38 @@ def request_view(request):
         return redirect("basic:index")
 
 
+def request_finish_view(request, order_id):
+    print("Xxx")
+    if request.user.is_authenticated:
+        request_user_id = request.user.id
+        order = Order.objects.get(id=order_id)
+        # this order doesn't belong to this user
+        if order.user.id != request_user_id:
+            return redirect("basic:index")
+        else:
+            order.status = "finished"
+            order.save()
+            coin_charged = order.service.coins_charged
+            request_user = order.user
+            provide_user = order.service.user
+            Transaction.objects.create(
+                sender=request_user.email,
+                receiver=provide_user.email,
+                amount=coin_charged,
+                service_type=order.service.service_category,
+            )
+            provide_user.coin -= coin_charged
+            request_user.coin += coin_charged
+            return redirect("user_center:request")
+    else:
+        return redirect("basic:index")
+
+
 def transaction_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
-        transactions = Transaction.object.filter(
+        transactions = Transaction.objects.filter(
             Q(sender=user.email) | Q(receiver=user.email)
         )
         return render(
@@ -85,19 +119,26 @@ def provide_view(request):
         #  'order_time': None, 'server_provider': 1,
         #  'service_time': datetime.datetime(2022, 4, 4, 16, 26, 35, 36278),
         #  'status': None}
+        #  request_user_id
+        print(result)
         for row in result:
             # translate status
 
             # there is no correspond order
-            if row.status is None or "cancel":
-                row.status = "no response"
-                row.request_user_id = None
+            if row["status"] is None or row["status"] == "cancel":
+                row["status"] = "no response"
+                row["request_user_id"] = None
             # "pending" mean a user choose this service
-            if row.status == "pending":
-                row.status = "picked"
+            if row["status"] == "pending":
+                row["status"] = "picked"
+            if row["request_user_id"] is not None:
+                row["request_user_id"] = CustomUser.objects.get(
+                    id=row["request_user_id"]
+                ).first_name
+        print(result)
         return render(
             request,
-            "user_center/my_request_page.html",
+            "user_center/my_provide_page.html",
             context={"provide_list": result},
         )
 
