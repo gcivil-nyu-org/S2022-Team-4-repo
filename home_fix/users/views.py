@@ -122,19 +122,20 @@ def pricing_view(request):
         try:
             tier = int(request.POST.get("tier"))
         except ValueError:
-            return render(request, "users/pricing.html")
+            return redirect("basic:index")
         if tier not in [1]:
             # wrong params
-            return render(request, "users/pricing.html")
+            return redirect("basic:index")
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
             user.save()
             return redirect("basic:index")
     else:
-        product1 = Product.objects.get(name="Starter")
-        product2 = Product.objects.get(name="Golden Hammer")
-        product3 = Product.objects.get(name="Loyal Customer")
+        product1 = Product.objects.get(tier=1)
+        product2 = Product.objects.get(tier=2)
+        product3 = Product.objects.get(tier=3)
+
         return render(
             request,
             "users/pricing.html",

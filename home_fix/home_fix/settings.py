@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "users.apps.AuthenticationConfig",
     "map.apps.MapConfig",
     "basic.apps.BasicConfig",
+    "user_center.apps.UserCenterConfig",
     "service.apps.ServiceConfig",
     "django.contrib.admin",
     "django.contrib.auth",

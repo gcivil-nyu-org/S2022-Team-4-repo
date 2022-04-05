@@ -1,4 +1,4 @@
-{% extends "users/layout.html" %}
+{% extends "basic/layout.html" %}
 {% block head %}
     <!-- Include Editor style. -->
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet"
@@ -118,6 +118,7 @@
             var state = document.getElementById('state').value;
             var postalcode = document.getElementById('postalcode').value;
             var country = document.getElementById('country').value;
+            // can fetch lat and long from google
             var lat = 12.12;
             var long = 21.14;
             $.ajax({

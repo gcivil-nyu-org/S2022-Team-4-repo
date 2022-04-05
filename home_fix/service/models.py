@@ -19,6 +19,20 @@ class Services(models.Model):
     lat = models.DecimalField(
         "latitude", max_digits=22, decimal_places=16, blank=True, null=True
     )
+    # can hide post by setting visible as false
+    visible = models.BooleanField("visible", default=True, blank=True)
+    # time
+    timestamp = models.DateTimeField(auto_now_add=True)
 
-    def _str_(self):
-        return "{}".format(self.service_category._str_())
+    def __str__(self):
+        return "{}".format(self.service_category.__str__())
+
+
+# when a user take a service, it will create an order
+class Order(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    service = models.ForeignKey(Services, on_delete=models.CASCADE)
+    status = models.CharField("status", max_length=64, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    # status : pending / cancel/ in progress / finished
+    #
