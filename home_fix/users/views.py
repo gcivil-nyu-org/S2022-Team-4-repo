@@ -232,7 +232,7 @@ def stripe_webhook(request):
         user = User.objects.get(id=user_id)
         product_name = session["metadata"]["product_name"]
         user.tier = int(session["metadata"]["product_tier"])
-        product = Product.objects.get(product_name=product_name)
+        product = Product.objects.get(name=product_name)
         print(f"User tier: {user.tier}")
         user.save()
         Transaction.objects.create(
