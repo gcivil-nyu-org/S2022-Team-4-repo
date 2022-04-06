@@ -227,14 +227,12 @@ def stripe_webhook(request):
         session = event["data"]["object"]
 
         # Fulfill the purchase...
-        print(session)
         User = get_user_model()
         user_id = session["metadata"]["user_id"]
         user = User.objects.get(id=user_id)
         product_name = session["metadata"]["product_name"]
         user.tier = int(session["metadata"]["product_tier"])
         product = Product.objects.get(name=product_name)
-        print(f"User tier: {user.tier}")
         user.save()
         Transaction.objects.create(
             sender=EMAIL_HOST_USER,

@@ -60,8 +60,11 @@
                              class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:profile'%}">Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:transaction'%}">My Transactions</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:request'%}">My Requests</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:provide'%}">My Services</a></li>
+{#                        <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>#}
                         <li>
                             <hr class="dropdown-divider">
                         </li>
