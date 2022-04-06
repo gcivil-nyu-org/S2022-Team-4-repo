@@ -158,13 +158,14 @@ class CreateCheckoutSessionView(View):
         product = Product.objects.get(tier=product_tier)
         # YOUR_DOMAIN = "http://127.0.0.1:8000/"
         YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
+        unit_price = int(float(product.price) * 100)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[
                 {
                     "price_data": {
                         "currency": "usd",
-                        "unit_amount": product.price,
+                        "unit_amount": unit_price,
                         "product_data": {
                             "name": product.name,
                             # 'images': [

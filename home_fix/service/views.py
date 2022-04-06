@@ -30,7 +30,7 @@ def offer_service_view(request):
         user = CustomUser.objects.get(id=user_id)
         user.password = None
         logging.warning(request.POST["category"])
-        # can add some params check
+        # can add some params validation
         print(request.POST)
         Services.objects.create(
             service_category=request.POST["category"],
