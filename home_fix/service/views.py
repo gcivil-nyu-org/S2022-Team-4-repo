@@ -66,6 +66,22 @@ def request_service_confirm_view(request, service_id):
         Order.objects.create(user=user, service=service)
         service.visible = False
         service.save()
-        return redirect("service:request_service")
+        return redirect("user_center:request")
+    else:
+        return redirect("basic:index")
+
+
+def service_detail_view(request, service_id):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        services = list(Services.objects.filter(id=service_id).all())
+        logging.warning(services)
+        user.password = None
+        return render(
+            request,
+            "service/service_detail.html",
+            context={"user": user, "services": services[0]},
+        )
     else:
         return redirect("basic:index")
