@@ -1,29 +1,50 @@
 {% extends "basic/layout.html" %}
-{% block title %}Transaction | Homefix{% endblock %}
+{% block title %} My Request | Homefix{% endblock %}
 {% block body %}
+
+<br><br>
+<center>
+<h1 class="display-5 fw-bold">SERVICE TRANSACTIONS</h1>
+</center>
+<br><br>
+
 {% for record in transactions%}
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">date</th>
-        <th scope="col">sender</th>
-        <th scope="col">receiver</th>
-        <th scope="col">amount</th>
-        <th scope="col">commission_fee</th>
-        <th scope="col">type</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">{{ record.timestamp }}</th>
-        <td>{{ record.sender }}</td>
-        <td>{{ record.receiver }}</td>
-        <td>{{ record.amount }}</td>
-        <td>{{ record.commission_fee }}</td>
-        <td>{{ record.service_type }}</td>
-    </tr>
-    </tbody>
-</table>
+<style>
+    a { 
+        text-decoration: none; 
+        color: black;
+      }
+  </style>
+
+<div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
+    <div class="row text-center">
+        <div class="col text-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">date</th>
+                    <th scope="col">sender</th>
+                    <th scope="col">receiver</th>
+                    <th scope="col">amount</th>
+                    <th scope="col">commission_fee</th>
+                    <th scope="col">type</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ record.timestamp }}</th>
+                    <td>{{ record.sender }}</td>
+                    <td>{{ record.receiver }}</td>
+                    <td>{{ record.amount }}</td>
+                    <td>{{ record.commission_fee }}</td>
+                    <td>{{ record.service_type }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br><br>
 {% endfor %}
 {% endblock %}
