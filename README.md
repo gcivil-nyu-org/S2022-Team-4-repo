@@ -3,7 +3,7 @@
 Develop Branch (https://homefix-dev.herokuapp.com/):
 
 [![Build Status](https://app.travis-ci.com/gcivil-nyu-org/S2022-Team-4-repo.svg?branch=develop)](https://app.travis-ci.com/gcivil-nyu-org/S2022-Team-4-repo)
-[![Coverage Status](https://coveralls.io/repos/github/hazenoeasy/S2022-Team-4-repo/badge.svg?branch=develop&kill_cache=1)](https://coveralls.io/github/gcivil-nyu-org/S2022-Team-4-repo?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/hazenoeasy/S2022-Team-4-repo/badge.svg?branch=develop)](https://coveralls.io/github/gcivil-nyu-org/S2022-Team-4-repo?branch=develop)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 Main Branch (https://home-fix.herokuapp.com/):
