@@ -1,0 +1,57 @@
+{% extends "basic/layout.html" %}
+{% block title %} My Request | Homefix{% endblock %}
+{% block body %}
+
+<br><br>
+<center>
+<h1 class="display-5 fw-bold">SERVICES YOU REQUESTED</h1>
+</center>
+<br><br>
+
+{% for order in order_list%}
+<style>
+    a { 
+        text-decoration: none; 
+        color: black;
+      }
+  </style>
+
+<div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
+    <div class="row">
+        <div class="col-10 text-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Order_id</th>
+                    <th scope="col">Service_id</th>
+                    <th scope="col">Provider</th>
+                    <th scope="col">date</th>
+                    <th scope="col">status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ order.id }}</th>
+                    <td>{{ order.service.id }}</td>
+                    <td>{{ order.service.user }}</td>
+                    <td>{{ order.timestamp }}</td>
+                    <td>{{ order.status }}</td>
+                    <!-- <td>
+                        {% if order.status != 'finished'%}
+                        <div><a href="{% url 'user_center:request_finish' order.id %}">finish</a></div>
+                        {%endif%}
+                    </td> -->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if order.status != 'finished'%}
+        <div class="col justify-content-center align-self-center text-center">
+            <button type="button" class="btn btn-success"><a href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a></button>
+        </div>
+        {%endif%}
+    </div>
+</div>
+<br><br>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "basic/layout.html" %}
+{% block title %}Hardware Stores | Homefix{% endblock %}
+{% block body %}
+<style>
+  #map {
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 100%;
+    /* The width is the width of the web page */
+  }
+</style>
+<script>
+  let map;
+  let service;
+  let infowindow;
+  const iconBase =
+    "https://developers.google.com/maps/documentation/javascript/examples/full/images/";
+
+    const icons = {
+    hardware: {
+      icon: iconBase + "info-i_maps.png",
+    },
+    users: {
+      icon: iconBase + "library_maps.png",
+    },
+
+    };
+  function initMap() {
+    //const sydney = new google.map.LatLng(-33.867, 151.195);
+    var directionsService = new google.maps.DirectionsService();
+  var directionsRenderer = new google.maps.DirectionsRenderer();
+    infowindow = new google.maps.InfoWindow();
+    var services = eval("{{services|safe}}")
+    var locations = eval("{{user|safe}}");
+    var uluru = { lat: locations[0], lng: locations[1] };
+    
+    console.log(services);
+    console.log(locations);
+    
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: uluru,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    
+    let markeru = new google.maps.Marker({
+      position: uluru,
+      icon: icons["users"].icon,
+      map: map,
+    });
+    for (var i = 0; i < services.length; i++) {
+      console.log(services[i])
+      uluruusers = { lat: services[i][0], lng: services[i][1] };
+      var markerus = new google.maps.Marker({
+        position: uluruusers,
+        icon: icons["users"].icon,
+        map: map,
+      });
+    }
+    
+
+        
+
+  }
+  
+
+
+</script>
+<h3>Locations of services</h3>
+<div id="map"></div>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=places&v=weekly"
+  async></script>
+{% endblock %}
