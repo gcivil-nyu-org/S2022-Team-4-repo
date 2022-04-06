@@ -195,16 +195,6 @@ class CreateCheckoutSessionView(View):
         return JsonResponse({"id": checkout_session.id})
 
 
-# Payment Success
-def success_view(request):
-    return render(request, "users/success.html")
-
-
-# Payment Cancelled
-def cancel_view(request):
-    return render(request, "users/cancel.html")
-
-
 # Stripe webhook
 @csrf_exempt
 def stripe_webhook(request):
@@ -279,29 +269,3 @@ def activate(
 
 def actilink(request):
     return HttpResponse("Please Verify your Email!!")
-
-
-def profile_view(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        user.password = None
-        return render(request, "users/profile.html", context={"user": user})
-    else:
-        return redirect("basic:index")
-
-
-def profile_editor_view(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        user.password = None
-        if request.method == "POST":
-            form = CustomUserChangeForm(request.POST, instance=request.user)
-            if form.is_valid():
-                form.save()
-            return redirect("users:profile")
-        else:
-            return render(request, "users/profile_editor.html", context={"user": user})
-    else:
-        return redirect("basic:index")

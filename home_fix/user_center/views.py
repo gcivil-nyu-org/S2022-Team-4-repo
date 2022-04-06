@@ -9,14 +9,7 @@ from django.db import connection
 from django.db.models import Q
 
 # Create your views here.
-from utils import dictfetchall, namedtuplefetchall
-
-
-def index_view(request):
-    if request.user.is_authenticated:
-        return render(request, "user_center/index.html")
-    else:
-        return redirect("basic:index")
+from utils import dictfetchall
 
 
 def profile_view(request):
@@ -63,7 +56,6 @@ def request_view(request):
 
 
 def request_finish_view(request, order_id):
-    print("Xxx")
     if request.user.is_authenticated:
         request_user_id = request.user.id
         order = Order.objects.get(id=order_id)
@@ -120,7 +112,6 @@ def provide_view(request):
         #  'service_time': datetime.datetime(2022, 4, 4, 16, 26, 35, 36278),
         #  'status': None}
         #  request_user_id
-        print(result)
         for row in result:
             # translate status
 
@@ -135,7 +126,6 @@ def provide_view(request):
                 row["request_user_id"] = CustomUser.objects.get(
                     id=row["request_user_id"]
                 ).first_name
-        print(result)
         return render(
             request,
             "user_center/my_provide_page.html",
@@ -146,10 +136,11 @@ def provide_view(request):
         return redirect("basic:index")
 
 
-def contact_view(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        print(user)
-    else:
-        return redirect("basic:index")
+#
+# def contact_view(request):
+#     if request.user.is_authenticated:
+#         user_id = request.user.id
+#         user = CustomUser.objects.get(id=user_id)
+#         print(user)
+#     else:
+#         return redirect("basic:index")
