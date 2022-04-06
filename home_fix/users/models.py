@@ -44,12 +44,19 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Product(models.Model):
-    tier = models.IntegerField(default=0)
+    tier = models.IntegerField(default=1)
     name = models.CharField(max_length=100)
-    price = models.IntegerField(default=0)  # price in cents
+    price = models.DecimalField(
+        "price",
+        max_digits=20,
+        decimal_places=2,
+        default=0.0,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return self.name
 
-    def get_display_price(self):  # diplay price in dollars
-        return "{0:.2f}".format(self.price / 100)
+    # def get_display_price(self):  # diplay price in dollars
+    #     return "{0:.2f}".format(self.price / 100)
