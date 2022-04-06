@@ -157,7 +157,10 @@ class CreateCheckoutSessionView(View):
         product_tier = self.kwargs["pk"]
         product = Product.objects.get(tier=product_tier)
         # YOUR_DOMAIN = "http://127.0.0.1:8000/"
-        YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
+        if request.is_secure():
+            YOUR_DOMAIN = "".join(["https://", get_current_site(request).domain])
+        else:
+            YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
         unit_price = int(float(product.price) * 100)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
