@@ -41,6 +41,10 @@ DEFAULT_FROM_EMAIL = "homefixitservice@gmail.com"
 
 INSTALLED_APPS = [
     "users.apps.AuthenticationConfig",
+    "map.apps.MapConfig",
+    "basic.apps.BasicConfig",
+    "user_center.apps.UserCenterConfig",
+    "service.apps.ServiceConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -153,7 +157,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 4
-LOGIN_REDIRECT_URL = "/register/"
+LOGIN_REDIRECT_URL = "/users/register/"
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
@@ -179,3 +183,4 @@ django_heroku.settings(locals(), test_runner=False)
 
 STRIPE_PUBLIC_KEY = "pk_test_51KhkjnHgOFOjKM17Kvs8VZysMnxPrTWwhexv5g4lgq1hOlb1n4X1txtXzwUBaXVxdDKXmOxWIAv5di4i1oQNcJUL00AjqBdVSr"
 STRIPE_SECRET_KEY = "sk_test_51KhkjnHgOFOjKM17JK8YVjAKEQcYQ0ZVOcrutMauCco9WZKsNzJSL1hD5D77yx10PHwYBulFlH6q4NqxJzp7oGrB00P9NtSTkW"
+STRIPE_WEBHOOK_SECRET = "whsec_rwuZ6ppxPbdjnFOoenHUNrq9QuOaWl3H"

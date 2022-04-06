@@ -1,0 +1,76 @@
+{% extends "basic/layout.html" %}
+{% block title %}Profile | Homefix{% endblock %}
+{% block body %}
+    <section class="container">
+        <h1 style="margin: 0 auto; width: 500px"> {{ user.first_name }}'s User Center</h1>
+        <hr>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>first name: {{ user.first_name }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>last name: {{ user.last_name }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>Coins: {{ user.coin }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>email: {{ user.email }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>gender</p>
+                <p>{{ user.gender }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>country</p>
+                <p>{{ user.country }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>street: {{ user.street }}</p>
+            </div>
+        </div>
+        <div style="margin: 0 auto; width: 500px">
+            <div class="form-outline mb-4">
+                <p>membership</p>
+                {% if user.tier == 1 %}
+                    <p>
+                        Starter
+                    </p>
+                {% endif %}
+
+                {% if user.tier == 2 %}
+                    <div>
+                        Golden Hammer
+                    </div>
+                {% endif %}
+
+                {% if user.tier == 3 %}
+                    <div>
+                        Loyal Customer
+                    </div>
+                {% endif %}
+            </div>
+            <div style="margin: 0 auto; width: 500px">
+                <div class="form-outline mb-4">
+                    <p>street</p>
+                    <p>{{ user.street }}</p>
+                </div>
+            </div>
+            <a class="btn btn-light btn-lg btn-block shadow" href="{% url 'user_center:profile_editor' %}" role="button">
+                Edit your information
+            </a>
+        </div>
+    </section>
+{% endblock %}
