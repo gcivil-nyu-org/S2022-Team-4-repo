@@ -74,7 +74,7 @@
 <!-- Hero Section  -->
 <style>
     #myInput {
-        background-image: url('/css/searchicon.png');
+        /* background-image: url('/css/searchicon.png'); */
         background-position: 10px 12px;
         background-repeat: no-repeat;
         width: 60%;
@@ -83,6 +83,7 @@
         border: 1px solid #ddd;
         margin-bottom: 12px;
     }
+   
 </style>
 
 <center>
@@ -121,6 +122,11 @@ href="{% url 'service:service_detail' service.id %}">
 {% endfor %}
 
 <!-- JS FOR DYNAMIC SEARCH -->
+
+
+
+
+
 <script>
     function mySearchFunction() {
         var input, filter, ul, li, a, i, txtValue;
