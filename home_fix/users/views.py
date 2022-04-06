@@ -4,6 +4,8 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
+
+from user_center.models import Transaction
 from .forms import CustomUserCreationForm, LocationForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
@@ -15,6 +17,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from .models import CustomUser, Product
+from home_fix.settings import EMAIL_HOST_USER
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 stripe.TaxRate.create(
@@ -225,14 +228,17 @@ def stripe_webhook(request):
         user = User.objects.get(id=user_id)
         product_name = session["metadata"]["product_name"]
         user.tier = int(session["metadata"]["product_tier"])
+        product = Product.objects.get(product_name=product_name)
         print(f"User tier: {user.tier}")
         user.save()
-        if product_name == "Golden Hammer":
-            user.coin += 100
-            user.save()
-        elif product_name == "Loyal Customer":
-            user.coin += 200
-            user.save()
+        Transaction.objects.create(
+            sender=EMAIL_HOST_USER,
+            receiver=user.email,
+            amount=product.price,
+            service_type="membership fee",
+        )
+        user.coin += product.price
+        user.save()
 
     # Passed signature verification
     return HttpResponse(status=200)
