@@ -119,8 +119,8 @@
             var postalcode = document.getElementById('postalcode').value;
             var country = document.getElementById('country').value;
             // can fetch lat and long from google
-            var lat = 12.12;
-            var long = 21.14;
+            var lat = document.getElementById('lat').value;
+            var long = document.getElementById('long').value;
             $.ajax({
                 type: "POST",
                 url: "/service/offer_service/",

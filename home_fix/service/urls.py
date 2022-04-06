@@ -10,4 +10,9 @@ urlpatterns = [
         views.request_service_confirm_view,
         name="request_service_confirm",
     ),
+    path(
+        "service_detail/<int:service_id>",
+        views.service_detail_view,
+        name="service_detail",
+    ),
 ]
