@@ -43,5 +43,8 @@ class Order(models.Model):
         "status", max_length=64, blank=True, null=True, default="pending"
     )
     timestamp = models.DateTimeField(auto_now_add=True)
+
     # status : pending / cancel/ in progress / finished
     #
+    def __str__(self):
+        return "{} {}".format(self.service.__str__(), self.user.__str__())
