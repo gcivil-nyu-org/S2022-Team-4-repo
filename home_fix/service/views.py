@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from users.models import CustomUser
 from service.models import Services, Order
 from django.views.decorators.csrf import csrf_exempt
-
+from django.contrib.auth import get_user_model
 
 # Create your views here.
 
@@ -85,3 +85,24 @@ def service_detail_view(request, service_id):
         )
     else:
         return redirect("basic:index")
+
+
+def services_locations(request):
+    if not request.user.is_authenticated:
+        return redirect("users:login")
+    # User = get_user_model()
+    # users = User.objects.all()
+    services = Services.objects.filter(visible=True)
+    serv = []
+    for i in services:
+        temp = []
+        temp.append(float(i.lat))
+        temp.append(float(i.long))
+        serv.append(temp)
+    userloc = [float(request.user.lat), float(request.user.long)]
+
+    return render(
+        request,
+        "service/services_locations.html",
+        context={"services": serv, "user": userloc},
+    )
