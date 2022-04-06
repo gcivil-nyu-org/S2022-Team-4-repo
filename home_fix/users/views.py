@@ -158,7 +158,7 @@ class CreateCheckoutSessionView(View):
         product = Product.objects.get(tier=product_tier)
         # YOUR_DOMAIN = "http://127.0.0.1:8000/"
         if request.is_secure():
-            YOUR_DOMAIN = "".join(["https://", get_current_site(request).domain])
+            YOUR_DOMAIN = "".join([get_current_site(request).domain])
         else:
             YOUR_DOMAIN = "".join(["http://", get_current_site(request).domain])
         unit_price = int(float(product.price) * 100)
