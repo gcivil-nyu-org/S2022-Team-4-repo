@@ -157,7 +157,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SITE_ID = 4
-LOGIN_REDIRECT_URL = "users/register/"
+LOGIN_REDIRECT_URL = "/users/register/"
 
 # Additional configuration settings
 SOCIALACCOUNT_QUERY_EMAIL = True
