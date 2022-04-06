@@ -190,10 +190,7 @@ class CreateCheckoutSessionView(View):
             # }],
             allow_promotion_codes=True,
             success_url=YOUR_DOMAIN,
-            if request.is_secure():
-                cancel_url=YOUR_DOMAIN + "/users/pricing/",
-            else:
-                cancel_url=YOUR_DOMAIN + "users/pricing/",
+            cancel_url=YOUR_DOMAIN + "users/pricing/",
         )
         return JsonResponse({"id": checkout_session.id})
 
