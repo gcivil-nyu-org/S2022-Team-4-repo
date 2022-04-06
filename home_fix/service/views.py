@@ -30,12 +30,16 @@ def offer_service_view(request):
         user = CustomUser.objects.get(id=user_id)
         user.password = None
         logging.warning(request.POST["category"])
+        a = request.POST["description"]
+        find = a.find('<p data-f-id="pbf" style="text-align: center; font-size: 14px;')
+        if find != -1:
+            a = a[:find]
         # can add some params validation
         print(request.POST)
         Services.objects.create(
             service_category=request.POST["category"],
             user=request.user,
-            service_description=request.POST["description"],
+            service_description=a,
             coins_charged=request.POST["coins"],
             street=request.POST["address"],
             state=request.POST["state"],
