@@ -29,7 +29,7 @@
             <h3>Personal info</h3>
 
             <form class="form-horizontal" role="form" method="post" id="customuser_form"
-                  action="{% url 'users:profile_editor' %}">
+                  action="{% url 'user_center:profile_editor' %}">
                 {% csrf_token %}
                 <div class="form-group">
                     <label class="col-lg-3 control-label" for="first_name">First name:</label>

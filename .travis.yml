@@ -14,7 +14,7 @@ before_script:
 
 script:
   - flake8 .
-  - coverage run --source=users,basic,map manage.py test
+  - coverage run --source=users,basic,map,service,user_center manage.py test
 
 after_script:
   - coveralls
