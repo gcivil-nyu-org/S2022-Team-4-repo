@@ -8,51 +8,76 @@
     </center>
     <br><br>
 
-    {% for order in order_list %}
-        <style>
-            a {
-                text-decoration: none;
-                color: black;
-            }
-        </style>
+    <div class="container">
+        <table class=" table table-hover table-bordered">
+            <thead class="table-light">
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Service ID</th>
+                <th scope="col">Provider</th>
+                <th scope="col">Date</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in order_list %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.service.id }}</td>
+                    <td>{{ order.service.user }}</td>
+                    <td>{{ order.timestamp }}</td>
+                    <th scope="row">{{ order.status }}</th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
-        <div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
-            <div class="row">
-                <div class="col-10 text-center">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Order_id</th>
-                            <th scope="col">Service_id</th>
-                            <th scope="col">Provider</th>
-                            <th scope="col">date</th>
-                            <th scope="col">status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">{{ order.id }}</th>
-                            <td>{{ order.service.id }}</td>
-                            <td>{{ order.service.user }}</td>
-                            <td>{{ order.timestamp }}</td>
-                            <td>{{ order.status }}</td>
-                            <!-- <td>
-                        {% if order.status != 'finished'%}
-                        <div><a href="{% url 'user_center:request_finish' order.id %}">finish</a></div>
-                        {%endif%}
-                    </td> -->
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                {% if order.status != 'finished' %}
-                    <div class="col justify-content-center align-self-center text-center">
-                        <button type="button" class="btn btn-success"><a
-                                href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a></button>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
-        <br><br>
-    {% endfor %}
+{#    {% for order in order_list %}#}
+{#        <style>#}
+{#            a {#}
+{#                text-decoration: none;#}
+{#                color: black;#}
+{#            }#}
+{#        </style>#}
+{##}
+{#        <div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">#}
+{#            <div class="row">#}
+{#                <div class="col-10 text-center">#}
+{#                    <table class="table">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th scope="col">Order_id</th>#}
+{#                            <th scope="col">Service_id</th>#}
+{#                            <th scope="col">Provider</th>#}
+{#                            <th scope="col">date</th>#}
+{#                            <th scope="col">status</th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        <tr>#}
+{#                            <th scope="row">{{ order.id }}</th>#}
+{#                            <td>{{ order.service.id }}</td>#}
+{#                            <td>{{ order.service.user }}</td>#}
+{#                            <td>{{ order.timestamp }}</td>#}
+{#                            <td>{{ order.status }}</td>#}
+{#                            <!-- <td>#}
+{#                        {% if order.status != 'finished'%}#}
+{#                        <div><a href="{% url 'user_center:request_finish' order.id %}">finish</a></div>#}
+{#                        {%endif%}#}
+{#                    </td> -->#}
+{#                        </tr>#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#                {% if order.status != 'finished' %}#}
+{#                    <div class="col justify-content-center align-self-center text-center">#}
+{#                        <button type="button" class="btn btn-success"><a#}
+{#                                href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a></button>#}
+{#                    </div>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#        <br><br>#}
+{#    {% endfor %}#}
 {% endblock %}
