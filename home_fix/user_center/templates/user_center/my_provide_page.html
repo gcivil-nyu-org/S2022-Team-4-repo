@@ -3,52 +3,56 @@
 {% block body %}
 <style>
     .dropbtn {
-      background-color: #04AA6D;
-      color: white;
-      border: none;
+        background-color: #04AA6D;
+        color: white;
+        border: none;
     }
-    
+
     .dropdown {
-      position: relative;
-      display: inline-block;
+        position: relative;
+        display: inline-block;
     }
-    
+
     .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f1f1f1;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
     }
-    
+
     .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
     }
-    
-    .dropdown-content a:hover {background-color: #ddd;}
-    
-    .dropdown:hover .dropdown-content {display: block;}
-    
-    .dropdown:hover .dropbtn {background-color: #3e8e41;}
-    </style>
+
+    .dropdown-content a:hover {
+        background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
+</style>
 <br><br>
 <center>
-<h1 class="display-5 fw-bold">SERVICES YOU PROVIDE</h1>
+    <h1 class="display-5 fw-bold">SERVICES YOU PROVIDE</h1>
 </center>
 <br><br>
-
-{% for provide in provide_list%}
 <style>
-    a { 
-        text-decoration: none; 
+    a {
+        text-decoration: none;
         color: black;
-      }
-  </style>
-
+    }
+</style>
+{% for provide in provide_list%}
 <div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
     <div class="row">
         <div class="col-10 text-center">
@@ -86,14 +90,27 @@
         </div>
         <div class="col justify-content-center align-self-center text-center">
             <div class="dropdown">
+                 {% if  provide.status == 'no response' %}
                 <button class="dropbtn btn btn-success">Action</button>
-                    <div class="dropdown-content">
-                        <a href="#">Accept</a>
-                        <a href="#">Cancel</a>
-                        <a href="#">Delete</a>
-                        <a href="#">Update</a>
-                    </div>
-              </div>
+                <div class="dropdown-content">
+                    <a href="{% url 'user_center:provide_delete' provide.service_id %}">Delete</a>
+                </div>
+                 {% endif %}
+                 {% if  provide.status == 'picked' %}
+                <button class="dropbtn btn btn-success">Action</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'user_center:provide_accept' provide.order_id %}">Accept</a>
+                    <a href="{% url 'user_center:provide_cancel' provide.order_id %}">Cancel</a>
+                </div>
+                 {% endif %}
+                {% if  provide.status == 'in progress' %}
+                <button class="dropbtn btn btn-success">Action</button>
+                <div class="dropdown-content">
+                    <a href="{% url 'user_center:provide_cancel' provide.order_id %}">Cancel</a>
+<!--                    <a href="{% url 'user_center:request_finish' provide.service_id %}">Delete</a>-->
+                </div>
+                 {% endif %}
+            </div>
         </div>
     </div>
 </div>

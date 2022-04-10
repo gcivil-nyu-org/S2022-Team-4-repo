@@ -4,17 +4,23 @@
 
 <br><br>
 <center>
-<h1 class="display-5 fw-bold">SERVICES YOU REQUESTED</h1>
+    <h1 class="display-5 fw-bold">SERVICES YOU REQUESTED</h1>
 </center>
 <br><br>
-
+{% if request.info %}
+<center>
+    <div class="btn-outline-danger">
+        {{ request.info }}
+    </div>
+</center>
+{% endif %}
 {% for order in order_list%}
 <style>
-    a { 
-        text-decoration: none; 
+    a {
+        text-decoration: none;
         color: black;
-      }
-  </style>
+    }
+</style>
 
 <div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
     <div class="row">
@@ -26,6 +32,7 @@
                     <th scope="col">Service_id</th>
                     <th scope="col">Provider</th>
                     <th scope="col">date</th>
+                    <th scope="col">price</th>
                     <th scope="col">status</th>
                 </tr>
                 </thead>
@@ -35,6 +42,7 @@
                     <td>{{ order.service.id }}</td>
                     <td>{{ order.service.user }}</td>
                     <td>{{ order.timestamp }}</td>
+                    <td>{{ order.service.coins_charged}}</td>
                     <td>{{ order.status }}</td>
                     <!-- <td>
                         {% if order.status != 'finished'%}
@@ -45,9 +53,14 @@
                 </tbody>
             </table>
         </div>
-        {% if order.status != 'finished'%}
+        {% if order.status == 'in progress'%}
         <div class="col justify-content-center align-self-center text-center">
-            <button type="button" class="btn btn-success"><a href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a></button>
+            {% if order.service.user.coin < order.service.coins_charged %}
+            <div>doesn't have enough coins</div>
+            {% else %}
+            <button type="button" class="btn btn-success"><a href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a>
+            </button>
+            {%endif%}
         </div>
         {%endif%}
     </div>
