@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from service.models import Order
+from service.models import Order, Services
 from user_center.models import Transaction
 from user_center.query import provide_list_query
 from users.forms import CustomUserChangeForm
@@ -46,10 +46,12 @@ def request_view(request):
         user = CustomUser.objects.get(id=user_id)
         # fetch data from Order table
         order_list = Order.objects.filter(user=user).order_by("-timestamp")
+        if not hasattr(request, "info"):
+            request.info = None
         return render(
             request,
             "user_center/my_request_page.html",
-            context={"order_list": order_list},
+            context={"order_list": order_list, "info": request.info},
         )
     else:
         return redirect("basic:index")
@@ -63,11 +65,17 @@ def request_finish_view(request, order_id):
         if order.user.id != request_user_id:
             return redirect("basic:index")
         else:
-            order.status = "finished"
-            order.save()
             coin_charged = order.service.coins_charged
             request_user = order.user
             provide_user = order.service.user
+            # print(provide_user.coin)
+            # print(coin_charged)
+            # if provide_user.coin < coin_charged:
+            #     print("xxxx")
+            #     request.info = "your account doesn't have enough coins, please charge"
+            #     return redirect("user_center:request")
+            order.status = "finished"
+            order.save()
             Transaction.objects.create(
                 sender=request_user.email,
                 receiver=provide_user.email,
@@ -76,6 +84,8 @@ def request_finish_view(request, order_id):
             )
             provide_user.coin -= coin_charged
             request_user.coin += coin_charged
+            provide_user.save()
+            request_user.save()
             return redirect("user_center:request")
     else:
         return redirect("basic:index")
@@ -114,11 +124,12 @@ def provide_view(request):
         #  request_user_id
         for row in result:
             # translate status
-
+            print(row)
             # there is no correspond order
             if row["status"] is None or row["status"] == "cancel":
                 row["status"] = "no response"
                 row["request_user_id"] = None
+                row["order_time"] = None
             # "pending" mean a user choose this service
             if row["status"] == "pending":
                 row["status"] = "picked"
@@ -131,6 +142,55 @@ def provide_view(request):
             "user_center/my_provide_page.html",
             context={"provide_list": result},
         )
+
+    else:
+        return redirect("basic:index")
+
+
+def provide_accept_view(request, order_id):
+    if request.user.is_authenticated:
+        service_user_id = request.user.id
+        order = Order.objects.get(id=order_id)
+        service = order.service
+        # this order doesn't belong to this user
+
+        if service.user.id != service_user_id:
+            return redirect("basic:index")
+        if order.status != "pending":
+            return redirect("basic:index")
+        order.status = "in progress"
+        order.save()
+        return redirect("user_center:provide")
+        # get a list of transaction
+
+    else:
+        return redirect("basic:index")
+
+
+def provide_delete_view(request, service_id):
+    if request.user.is_authenticated:
+        service_user_id = request.user.id
+        service = Services.objects.get(id=service_id)
+        if service.user.id != service_user_id:
+            return redirect("basic:index")
+        service.delete()
+        return redirect("user_center:provide")
+    else:
+        return redirect("basic:index")
+
+
+def provide_cancel_view(request, order_id):
+    if request.user.is_authenticated:
+        service_user_id = request.user.id
+        order = Order.objects.get(id=order_id)
+        service = order.service
+        if service.user.id != service_user_id:
+            return redirect("basic:index")
+        order.status = "cancel"
+        service.visible = True
+        order.save()
+        service.save()
+        return redirect("user_center:provide")
 
     else:
         return redirect("basic:index")
