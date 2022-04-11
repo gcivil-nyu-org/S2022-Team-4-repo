@@ -16,6 +16,8 @@
                     <th scope="col">Request Time</th>
                     <th scope="col">Requester</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +30,7 @@
                     <td>{{ provide.status }}</td>
                     <td>
                         <div class="col justify-content-center align-self-center text-center">
+                              {% if  provide.status != 'finished' %}
                             <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,6 +57,7 @@
                                     {% endif %}
                                 </ul>
                             </div>
+                              {% endif %}
                         </div>
                     </td>
                 </tr>

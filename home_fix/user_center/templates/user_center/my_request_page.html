@@ -25,6 +25,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">Price</th>
                 <th scope="col">Status</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -35,14 +36,16 @@
                     <td>{{ order.service.user }}</td>
                     <td>{{ order.timestamp }}</td>
                     <td>{{ order.service.coins_charged}}</td>
-                    <th scope="row">{{ order.status }}</th>
+                    <td>{{ order.status }}</td>
                     <td>
                         <div class="col justify-content-center align-self-center text-center">
+                            {% if order.status == "in progress" %}
                             {% if order.service.user.coin < order.service.coins_charged %}
                             <div>doesn't have enough coins</div>
                             {% else %}
-                            <button type="button" class="btn btn-success"><a href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a>
+                            <button type="button" class="btn btn-primary"><a style="color: white" href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a>
                             </button>
+                            {%endif%}
                             {%endif%}
                         </div>
                     </td>
