@@ -24,3 +24,4 @@ verify-email==2.4.3
 whitenoise==6.0.0
 django-allauth==0.45.0
 pre-commit
+python-decouple
