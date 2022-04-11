@@ -67,6 +67,7 @@ def request_service_confirm_view(request, service_id):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         service = Services.objects.get(id=service_id)
+
         Order.objects.create(user=user, service=service)
         service.visible = False
         service.save()

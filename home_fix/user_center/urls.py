@@ -14,4 +14,19 @@ urlpatterns = [
         views.request_finish_view,
         name="request_finish",
     ),
+    path(
+        "provide_accept_view/<int:order_id>",
+        views.provide_accept_view,
+        name="provide_accept",
+    ),
+    path(
+        "provide_cancel_view/<int:order_id>",
+        views.provide_cancel_view,
+        name="provide_cancel",
+    ),
+    path(
+        "provide_delete_view/<int:service_id>",
+        views.provide_delete_view,
+        name="provide_delete",
+    ),
 ]
