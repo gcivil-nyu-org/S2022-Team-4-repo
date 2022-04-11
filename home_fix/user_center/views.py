@@ -124,7 +124,7 @@ def provide_view(request):
         #  request_user_id
         for row in result:
             # translate status
-            print(row)
+            # print(row)
             # there is no correspond order
             if row["status"] is None or row["status"] == "cancel":
                 row["status"] = "no response"
