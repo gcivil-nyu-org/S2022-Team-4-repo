@@ -8,9 +8,17 @@ install:
   - pip install coveralls
 
 before_script:
+  - echo “DATABASE_URL=$DATABASE_URL” >>.env
+  - echo “SECRET_KEY=$SECRET_KEY” >>.env
+  - echo “EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD” >>.env
+  - echo “GOOGLE_API_KEY=$GOOGLE_API_KEY” >>.env
+  - echo “STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY” >>.env
+  - echo “STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY” >>.env
+  - echo “STRIPE_WEBHOOK_SECRET=$STRIPE_WEBHOOK_SECRET” >>.env
   - cd home_fix
   - python manage.py migrate
   - python manage.py collectstatic --noinput
+
 
 script:
   - flake8 .
