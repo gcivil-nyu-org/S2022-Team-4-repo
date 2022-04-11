@@ -8,7 +8,6 @@ install:
   - pip install coveralls
 
 before_script:
-  - echo “DATABASE_URL=$DATABASE_URL” >>.env
   - echo “SECRET_KEY=$SECRET_KEY” >>.env
   - echo “EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD” >>.env
   - echo “GOOGLE_API_KEY=$GOOGLE_API_KEY” >>.env
