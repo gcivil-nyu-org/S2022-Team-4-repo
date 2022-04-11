@@ -2,49 +2,75 @@
 {% block title %} My Request | Homefix{% endblock %}
 {% block body %}
 
-<br><br>
-<center>
-<h1 class="display-5 fw-bold">SERVICE TRANSACTIONS</h1>
-</center>
-<br><br>
-
-{% for record in transactions%}
-<style>
-    a { 
-        text-decoration: none; 
-        color: black;
-      }
-  </style>
-
-<div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
-    <div class="row text-center">
-        <div class="col text-center">
-            <table class="table">
-                <thead>
+    <br><br>
+    <center>
+        <h1 class="display-5 fw-bold">MY TRANSACTIONS</h1>
+    </center>
+    <br><br>
+    <div class="container">
+        <table class=" table table-hover table-bordered">
+            <thead class="table-light">
+            <tr>
+                <th scope="col" >Date</th>
+                <th scope="col">Sender</th>
+                <th scope="col">Receiver</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Commission Fee</th>
+                <th scope="col">Type</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for record in transactions %}
                 <tr>
-                    <th scope="col">date</th>
-                    <th scope="col">sender</th>
-                    <th scope="col">receiver</th>
-                    <th scope="col">amount</th>
-                    <th scope="col">commission_fee</th>
-                    <th scope="col">type</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">{{ record.timestamp }}</th>
+                    <td>{{ record.timestamp }}</td>
                     <td>{{ record.sender }}</td>
                     <td>{{ record.receiver }}</td>
                     <td>{{ record.amount }}</td>
                     <td>{{ record.commission_fee }}</td>
-                    <td>{{ record.service_type }}</td>
+                    <th scope="row">{{ record.service_type }}</th>
                 </tr>
-                </tbody>
-            </table>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-</div>
-<br><br>
-{% endfor %}
+
+{#    {% for record in transactions %}#}
+{#        <style>#}
+{#            a {#}
+{#                text-decoration: none;#}
+{#                color: black;#}
+{#            }#}
+{#        </style>#}
+{##}
+{#        <div class="container w-75 border border-success" style="background-color: #eee;">#}
+{#            <div class="row text-center">#}
+{#                <div class="col text-center">#}
+{#                    <table class="table">#}
+{#                        <thead>#}
+{#                        <tr>#}
+{#                            <th scope="col">date</th>#}
+{#                            <th scope="col">sender</th>#}
+{#                            <th scope="col">receiver</th>#}
+{#                            <th scope="col">amount</th>#}
+{#                            <th scope="col">commission_fee</th>#}
+{#                            <th scope="col">type</th>#}
+{#                            <th></th>#}
+{#                        </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                        <tr class="ms-2">#}
+{#                            <th scope="row">{{ record.timestamp }}</th>#}
+{#                            <td>{{ record.sender }}</td>#}
+{#                            <td>{{ record.receiver }}</td>#}
+{#                            <td>{{ record.amount }}</td>#}
+{#                            <td>{{ record.commission_fee }}</td>#}
+{#                            <td>{{ record.service_type }}</td>#}
+{#                        </tr>#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <br><br>#}
+{#    {% endfor %}#}
 {% endblock %}

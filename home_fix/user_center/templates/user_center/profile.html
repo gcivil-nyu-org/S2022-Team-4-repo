@@ -2,134 +2,153 @@
 {% block title %} User Profile | Homefix{% endblock %}
 {% block body %}
 
-<style>
-input.hidden {
-    position: absolute;
-    left: -9999px;
-}
+    <style>
+        input.hidden {
+            position: absolute;
+            left: -9999px;
+        }
 
-#profile-image1 {
-    cursor: pointer;
-  
-     width: 100px;
-    height: 100px;
-    border:2px solid #03b1ce ;}
-    .title{ font-size:16px; font-weight:500;}
-     .bot-border{ border-bottom:1px #f8f8f8 solid;  margin:5px 0  5px 0}
+        #profile-image1 {
+            cursor: pointer;
 
-</style>
-<br><br>
-<center>
-<h1 class="display-5 fw-bold" style="text-transform:uppercase"> {{ user.first_name }}'s USER CENTER</h1>
-</center>
-<br>
+            width: 100px;
+            height: 100px;
+            border: 2px solid #03b1ce;
+        }
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        .title {
+            font-size: 16px;
+            font-weight: 500;
+        }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-7 mx-auto">
-        <div class="panel panel-default">
-          <div class="panel-heading">  <h4>User Profile</h4></div>
-           <div class="panel-body">
-               
-            <div class="box box-info">
-                <div class="box-body">
-                    <div class="col-sm-6">
-                        <div  align="center"> 
-                            <img alt="User Pic" src="https://png.pngitem.com/pimgs/s/294-2947257_interface-icons-user-avatar-profile-user-avatar-png.png" id="profile-image1" class="img-circle img-responsive">   
+        .bot-border {
+            border-bottom: 1px #f8f8f8 solid;
+            margin: 5px 0 5px 0
+        }
+
+    </style>
+    <br><br>
+    <center>
+        <h1 class="display-5 fw-bold" style="text-transform:uppercase"> {{ user.first_name }}'s USER CENTER</h1>
+    </center>
+    <br>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 mx-auto">
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4>User Profile</h4></div>
+                    <div class="panel-body">
+
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <div class="col-sm-6">
+                                    <div align="center">
+                                        <img alt="User Pic"
+                                             src="https://png.pngitem.com/pimgs/s/294-2947257_interface-icons-user-avatar-profile-user-avatar-png.png"
+                                             id="profile-image1" class="img-circle img-responsive">
+                                    </div>
+                                    <br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h2 style="color:#00b1b1;">{{ user.first_name }} {{ user.last_name }}</h2>
+                                    <span><h4>A Proud Homefixer</h4></span>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr style="margin:5px 0 5px 0;">
+
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">First Name:</div>
+                                <div class="col-sm-5 ">{{ user.first_name }}</div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Last Name:</div>
+                                <div class="col-sm-5"> {{ user.last_name }}</div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Gender:</div>
+                                <div class="col-sm-5">{{ user.gender }}</div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title">Email ID:</div>
+                                <div class="col-sm-5">{{ user.email }}</div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title">Coins held till date:</div>
+                                <div class="col-sm-5">{{ user.coin }}</div>
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Nationality:</div>
+                                <div class="col-sm-5">{{ user.country }}</div>
+
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Street Address:</div>
+                                <div class="col-sm-5">{{ user.street }}</div>
+
+
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+
+                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Membership Level:</div>
+                                <div class="col-sm-5">
+                                    {% if user.tier == 1 %}
+                                        Starter
+                                    {% endif %}
+
+                                    {% if user.tier == 2 %}
+                                        Golden Hammer
+                                    {% endif %}
+
+                                    {% if user.tier == 3 %}
+                                        Loyal Customer
+                                    {% endif %}</div>
+
+
+                                <!-- /.box-body -->
+                            </div>
+                            <!-- /.box -->
                         </div>
-                        <br>
                     </div>
-                    <div class="col-sm-6">
-                        <h2 style="color:#00b1b1;">{{ user.first_name }} {{ user.last_name }}</h2>
-                        <span><h4>A Proud Homefixer</h4></span>            
-                    </div>
-                    <div class="clearfix"></div>
-                    <hr style="margin:5px 0 5px 0;">
-            
-                      
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title " >First Name:</div><div class="col-sm-5 ">{{ user.first_name }}</div>
-                    <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title " >Last Name:</div><div class="col-sm-5"> {{ user.last_name }}</div>
-                      <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title " >Gender:</div><div class="col-sm-5">{{ user.gender }}</div>
-
-                      <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title" >Email ID:</div><div class="col-sm-5">{{ user.email }}</div>
-
-                      <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title" >Coins held till date:</div><div class="col-sm-5">{{ user.coin }}</div>
-
-                     <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title " >Nationality:</div><div class="col-sm-5">{{ user.country }}</div>
-                          
-
-                     <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-                          <div class="col-sm-4 col-xs-offset-2 col-xs-4 title " >Street Address:</div><div class="col-sm-5">{{ user.street }}</div>
-                          
-
-                     <div class="clearfix"></div>
-                    <div class="bot-border"></div>
-
-                    <div class="col-sm-4 col-xs-offset-2 col-xs-4 title " >Membership Level:</div><div class="col-sm-5">
-                        {% if user.tier == 1 %}
-                                Starter
-                        {% endif %}
-
-                        {% if user.tier == 2 %}
-                                 Golden Hammer
-                        {% endif %}
-
-                        {% if user.tier == 3 %}
-                                 Loyal Customer
-                        {% endif %}</div>
-
-
-                    <!-- /.box-body -->
-                  </div>
-                  <!-- /.box -->
+                </div>
             </div>
-            </div> 
-        </div>
         </div>
     </div>
-</div>
 
-<style type="text/css">
-    a { 
-    text-decoration: none; 
-    color: black;
-  }
-</style>
-<div class="col justify-content-center align-self-center text-center">
-    <button type="button" class="btn btn-lg btn-primary btn-success">
-     <a href="{% url 'user_center:profile_editor' %}" role="button">
-        Edit your information
-     </a>                    
-    </button>
-</div>
+    <style type="text/css">
+        a {
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+    <div class="col justify-content-center align-self-center text-center">
+        <button type="button" class="btn btn-lg btn-primary btn-success">
+            <a href="{% url 'user_center:profile_editor' %}" role="button">
+                Edit your information
+            </a>
+        </button>
+    </div>
 
 
-<script>
-    $(function() {
-        $('#profile-image1').on('click', function() {
-            $('#profile-image-upload').click();
+    <script>
+        $(function () {
+            $('#profile-image1').on('click', function () {
+                $('#profile-image-upload').click();
+            });
         });
-    });       
-</script>   
-    
+    </script>
+
 
 {% endblock %}
