@@ -20,15 +20,15 @@ from .models import CustomUser, Product
 from home_fix.settings import EMAIL_HOST_USER
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-stripe.TaxRate.create(
-    display_name="Sales Tax",
-    inclusive=False,
-    percentage=7.25,
-    country="US",
-    state="NY",
-    jurisdiction="US - NY",
-    description="NY Sales Tax",
-)
+# stripe.TaxRate.create(
+#     display_name="Commission Fee",
+#     inclusive=False,
+#     percentage=7.25,
+#     country="US",
+#     state="NY",
+#     jurisdiction="US - NY",
+#     description="NY Sales Tax",
+# )
 
 
 # Create your views here.
@@ -176,7 +176,7 @@ class CreateCheckoutSessionView(View):
                         },
                     },
                     "quantity": 1,
-                    "tax_rates": ["txr_1Ki0PYHgOFOjKM17qZ1TP5Um"],
+                    "tax_rates": ["txr_1KnCXDHgOFOjKM17c8BkJoeF"],
                 },
             ],
             metadata={

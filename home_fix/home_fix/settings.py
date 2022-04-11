@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 import django_heroku
 import os
 
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-dmzllzcgkw2&#1-a-p8p!wx4u)8a9&m!vun5u%_#7b(hw-qk1c"
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -137,14 +138,14 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-GOOGLE_MAPS_API_KEY = "AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE"
+GOOGLE_MAPS_API_KEY = config("GOOGLE_MAPS_API_KEY")
 
 AUTH_USER_MODEL = "users.CustomUser"
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "homefixitservice@gmail.com"
-EMAIL_HOST_PASSWORD = "homefix@123"
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = "TestSite Team <noreply@example.com>"
@@ -181,6 +182,6 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 django_heroku.settings(locals(), test_runner=False)
 
-STRIPE_PUBLIC_KEY = "pk_test_51KhkjnHgOFOjKM17Kvs8VZysMnxPrTWwhexv5g4lgq1hOlb1n4X1txtXzwUBaXVxdDKXmOxWIAv5di4i1oQNcJUL00AjqBdVSr"
-STRIPE_SECRET_KEY = "sk_test_51KhkjnHgOFOjKM17JK8YVjAKEQcYQ0ZVOcrutMauCco9WZKsNzJSL1hD5D77yx10PHwYBulFlH6q4NqxJzp7oGrB00P9NtSTkW"
-STRIPE_WEBHOOK_SECRET = "whsec_rwuZ6ppxPbdjnFOoenHUNrq9QuOaWl3H"
+STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY")
+STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
+STRIPE_WEBHOOK_SECRET = config("STRIPE_WEBHOOK_SECRET")
