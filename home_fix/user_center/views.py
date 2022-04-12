@@ -110,6 +110,7 @@ def provide_view(request):
         #  'service_time': datetime.datetime(2022, 4, 4, 16, 26, 35, 36278),
         #  'status': None}
         #  request_user_id
+
         for row in result:
             # translate status
             # print(row)

@@ -5,26 +5,243 @@
 {% endblock %}
 {% block title %}Editor | Homefix{% endblock %}
 {% block body %}
+
+    <style>
+
+        #profile-image1 {
+            cursor: pointer;
+
+            width: 100px;
+            height: 100px;
+            border: 2px solid #03b1ce;
+        }
+
+        .title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .bot-border {
+            border-bottom: 1px #f8f8f8 solid;
+            margin: 5px 0 5px 0
+        }
+
+    </style>
+
+    <center>
+        <h1 class="display-7 fw-bold" style="text-transform:uppercase"> {{ user.first_name }}'s PROFILE</h1>
+    </center>
+
+    <br>
+
     <div class="container">
-        <h1>Edit Profile</h1>
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <form class="form-horizontal" role="form" method="post" id="customuser_form"
+                                action="{% url 'user_center:profile_editor' %}">
+                                {% csrf_token %}
+
+                <div class="card">
+                    <div class="card-header"><h5>Edit Profile</h5></div>
+                    <div class="card-body">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <br>
+
+                                <div class="row">
+                                    <div class="col-sm-5" align="right">
+                                            <img alt="User Pic"
+                                                 src="https://png.pngitem.com/pimgs/s/294-2947257_interface-icons-user-avatar-profile-user-avatar-png.png"
+                                                 id="profile-image1" class="img-circle img-responsive">
+                                        <br>
+                                    </div>
+                                    <div class="col">
+                                            <h4 style="color:#00b1b1;">{{ user.first_name }} {{ user.last_name }}</h4>
+                                            <h5>A Proud Homefixer</h5>
+                                    </div>
+                                </div>
+                                <br>
+
+                                <div class="clearfix"></div>
+                                <hr style="margin:5px 0 5px 0;">
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">First Name : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                <input class="form-control" type="text" name="first_name" value="{{ user.first_name }}"
+                                   maxlength="128" style="width:15em" id="first_name">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Last Name : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" style="width:15em"
+                                   id="last_name">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Gender : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <label for="gender" class="col-lg-5 control-label">Select Below</label>
+                                        <div class="col-lg-4">
+                                            <select name="gender" id="gender" class="form-control" required>
+                                                {% if user.gender == 'male' %}
+                                                    <option value="male" selected>male</option>
+                                                    <option value="female">female</option>
+                                                {% elif user.gender == 'female' %}
+                                                    <option value="male">male</option>
+                                                    <option value="female" selected>female</option>
+                                                {% else %}
+                                                    <option value="" selected disabled hidden>Choose Here</option>
+                                                    <option value="male">male</option>
+                                                    <option value="female">female</option>
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Email ID : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <input type="email" name="email" value="{{ user.email }}" class="form-control"
+                                    maxlength="128" required="" style="width:15em" id="email" disabled>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Street : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                   <input type="text" name="street" value="{{ user.street }}" class="form-control" style="width:15em"
+                                   maxlength="128" id="id_street">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">State : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                   <input type="text" name="state" value="{{ user.state }}" class="form-control"
+                                   maxlength="128" style="width:15em" id="id_state">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Country : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="country" value="{{ user.country }}" class="form-control" style="width:15em"
+                                    maxlength="128" id="id_country">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+
+
+                                <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Zip Code : </div>
+                                    </div>
+                                </div>
+                                <div class="col form-group">
+                                    <input type="text" name="zip" value="{{ user.zip }}" class="form-control" maxlength="128" style="width:15em"
+                                    id="id_zip">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <center>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"></label>
+                        <div class="col-md-8">
+                            <button class="btn btn-lg btn-primary btn-success" type="submit">submit</button>
+                            <span></span>
+                            <input type="reset" class="btn btn-default" value="Cancel">
+                        </div>
+                    </div>
+                    </center>
+            </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- 
+
+
+
+
+
+
+    <div class="container">
         <hr>
         <div class="row">
-            <!-- left column -->
-            <!--        <div class="col-md-3">-->
-            <!--            <div class="text-center">-->
-            <!--                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">-->
-            <!--                <h6>Upload a different photo...</h6>-->
-
-            <!--                <input type="file" class="form-control">-->
-            <!--            </div>-->
-            <!--        </div>-->
-
-            <!-- edit form column -->
             <div class="col-md-9 personal-info">
-                <div class="alert alert-info alert-dismissable">
+                <div class="text-center alert alert-info alert-dismissable">
                     <a class="panel-close close" data-dismiss="alert">×</a>
                     <i class="fa fa-coffee"></i>
-                    This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                    You are<strong> Editing </strong>your homefix profile.
                 </div>
                 <h3>Personal info</h3>
 
@@ -46,49 +263,6 @@
                                    id="last_name">
                         </div>
                     </div>
-                    <!--                <div class="form-group">-->
-                    <!--                    <label class="col-lg-3 control-label">Time Zone:</label>-->
-                    <!--                    <div class="col-lg-8">-->
-                    <!--                        <div class="ui-select">-->
-                    <!--                            <select id="user_time_zone" class="form-control">-->
-                    <!--                                <option value="Hawaii">(GMT-10:00) Hawaii</option>-->
-                    <!--                                <option value="Alaska">(GMT-09:00) Alaska</option>-->
-                    <!--                                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp;-->
-                    <!--                                    Canada)-->
-                    <!--                                </option>-->
-                    <!--                                <option value="Arizona">(GMT-07:00) Arizona</option>-->
-                    <!--                                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp;-->
-                    <!--                                    Canada)-->
-                    <!--                                </option>-->
-                    <!--                                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00)-->
-                    <!--                                    Central Time (US &amp; Canada)-->
-                    <!--                                </option>-->
-                    <!--                                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp;-->
-                    <!--                                    Canada)-->
-                    <!--                                </option>-->
-                    <!--                                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>-->
-                    <!--                            </select>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                    <!--                <div class="form-group">-->
-                    <!--                    <label class="col-md-3 control-label">Username:</label>-->
-                    <!--                    <div class="col-md-8">-->
-                    <!--                        <input class="form-control" type="text" value="janeuser">-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                    <!--                <div class="form-group">-->
-                    <!--                    <label class="col-md-3 control-label">Password:</label>-->
-                    <!--                    <div class="col-md-8">-->
-                    <!--                        <input class="form-control" type="password" value="11111122333">-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                    <!--                <div class="form-group">-->
-                    <!--                    <label class="col-md-3 control-label">Confirm password:</label>-->
-                    <!--                    <div class="col-md-8">-->
-                    <!--                        <input class="form-control" type="password" value="11111122333">-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
                     <div class="form-group">
                         <label class="required col-lg-3 control-label" for="email">Email address:</label>
                         <div class="col-lg-8">
@@ -159,86 +333,5 @@
             </div>
         </div>
     </div>
-    <hr>
-
-
-    <!--<section>-->
-    <!--    <div id="content-main">-->
-
-    <!--        {% csrf_token %}-->
-    <!--        <div>-->
-    <!--            <fieldset class="module aligned ">-->
-    <!--                <div class="form-row field-first_name">-->
-    <!--                    <div>-->
-    <!--                        <label for="first_name">First name:</label>-->
-    <!--                        <input type="text" name="first_name" value="{{ user.first_name }}" class="vTextField"-->
-    <!--                               maxlength="128"-->
-    <!--                               id="first_name">-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <div class="form-row field-last_name">-->
-    <!--                    <div>-->
-    <!--                        <label for="last_name">Last name:</label>-->
-    <!--                        <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}" class="vTextField"-->
-    <!--                               maxlength="128"-->
-    <!--                               id="last_name">-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <div class="form-group">-->
-    <!--                        <label class="required col-lg-3 control-label" for="email">Email address:</label>-->
-    <!--                        <input type="email" name="email" value="{{ user.email }}" class="form-control"-->
-    <!--                               maxlength="254" required="" id="email" disabled>-->
-    <!--                </div>-->
-    <!--                <div class="form-row field-gender">-->
-    <!--                    <div>-->
-    <!--                        <label for="gender">Gender:</label>-->
-    <!--                        <select name="gender" id="gender">-->
-    <!--                            {% if user.gender == 'male' %}-->
-        <!--                            <option value="male" selected>male</option>-->
-        <!--                            <option value="female">female</option>-->
-        <!--                            {% elif user.gender == 'female' %}-->
-        <!--                            <option value="male">male</option>-->
-        <!--                            <option value="female" selected>female</option>-->
-        <!--                            {% else %}-->
-        <!--                            <option value="" selected disabled hidden>Choose Here</option>-->
-        <!--                            <option value="male">male</option>-->
-        <!--                            <option value="female">female</option>-->
-        <!--                            {% endif %}-->
-    <!--                        </select>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <div class="form-row field-street">-->
-    <!--                    <div>-->
-    <!--                        <label for="id_street">Street:</label>-->
-    <!--                        <input type="text" name="street" value="{{ user.street }}" class="vTextField"-->
-    <!--                               maxlength="64" id="id_street">-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <div class="form-row field-state">-->
-    <!--                    <div>-->
-    <!--                        <label for="id_state">State:</label>-->
-    <!--                        <input type="text" name="state" value="{{ user.state }}" class="vTextField"-->
-    <!--                               maxlength="64" id="id_state">-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <div class="form-row field-country">-->
-    <!--                    <div>-->
-    <!--                        <label for="id_country">Country:</label>-->
-    <!--                        <input type="text" name="country" value="{{ user.country }}" class="vTextField"-->
-    <!--                               maxlength="64" id="id_country">-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <div class="form-row field-zip">-->
-    <!--                    <div>-->
-    <!--                        <label for="id_zip">Zip Code:</label>-->
-    <!--                        <input type="text" name="zip" class="vTextField" value="{{ user.zip }}" maxlength="64"-->
-    <!--                               id="id_zip">-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </fieldset>-->
-    <!--        </div>-->
-    <!--        <button type="submit">submit</button>-->
-    <!--        </form>-->
-    <!--    </div>-->
-    <!--</section>-->
+    <hr> -->
 {% endblock %}
