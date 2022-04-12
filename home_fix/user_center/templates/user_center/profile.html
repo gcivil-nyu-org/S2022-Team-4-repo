@@ -29,81 +29,133 @@
     </style>
     <br><br>
     <center>
-        <h1 class="display-5 fw-bold" style="text-transform:uppercase"> {{ user.first_name }}'s USER CENTER</h1>
+        <h1 class="display-7 fw-bold" style="text-transform:uppercase"> {{ user.first_name }}'s USER CENTER</h1>
     </center>
     <br>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
 
     <div class="container">
         <div class="row">
-            <div class="col-md-7 mx-auto">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h4>User Profile</h4></div>
-                    <div class="panel-body">
+            <div class="col-md-6 mx-auto">
+                <div class="card">
+                    <div class="card-header"><h5>User Profile</h5></div>
+                    <div class="card-body">
 
                         <div class="box box-info">
                             <div class="box-body">
-                                <div class="col-sm-6">
-                                    <div align="center">
-                                        <img alt="User Pic"
-                                             src="https://png.pngitem.com/pimgs/s/294-2947257_interface-icons-user-avatar-profile-user-avatar-png.png"
-                                             id="profile-image1" class="img-circle img-responsive">
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-5" align="right">
+                                            <img alt="User Pic"
+                                                 src="https://png.pngitem.com/pimgs/s/294-2947257_interface-icons-user-avatar-profile-user-avatar-png.png"
+                                                 id="profile-image1" class="img-circle img-responsive">
+                                        <br>
                                     </div>
-                                    <br>
+                                    <div class="col">
+                                            <h4 style="color:#00b1b1;">{{ user.first_name }} {{ user.last_name }}</h4>
+                                            <h5>A Proud Homefixer</h5>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <h2 style="color:#00b1b1;">{{ user.first_name }} {{ user.last_name }}</h2>
-                                    <span><h4>A Proud Homefixer</h4></span>
-                                </div>
+                                <br>
+
                                 <div class="clearfix"></div>
                                 <hr style="margin:5px 0 5px 0;">
 
-
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">First Name:</div>
-                                <div class="col-sm-5 ">{{ user.first_name }}</div>
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">First Name : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.first_name }}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+                                </div>
 
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Last Name:</div>
-                                <div class="col-sm-5"> {{ user.last_name }}</div>
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Last Name : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.last_name}}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+                                </div>
 
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Gender:</div>
-                                <div class="col-sm-5">{{ user.gender }}</div>
-
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Gender : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.gender }}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+                                </div>
 
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title">Email ID:</div>
-                                <div class="col-sm-5">{{ user.email }}</div>
-
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Email ID : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.email }}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+                                </div>
 
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title">Coins held till date:</div>
-                                <div class="col-sm-5">{{ user.coin }}</div>
-
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Current Coins : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.coin }}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+                                </div>
 
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Nationality:</div>
-                                <div class="col-sm-5">{{ user.country }}</div>
-
-
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Country : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.country }}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Street Address:</div>
-                                <div class="col-sm-5">{{ user.street }}</div>
+                                </div>
 
-
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Street Address : </div>
+                                    </div>
+                                </div>
+                                <div class="col" align="left">{{ user.street }}</div>
                                 <div class="clearfix"></div>
                                 <div class="bot-border"></div>
+                                </div>
 
-                                <div class="col-sm-4 col-xs-offset-2 col-xs-4 title ">Membership Level:</div>
-                                <div class="col-sm-5">
+
+                                <div class="row">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col"></div>
+                                        <div class="col title">Membership Level : </div>
+                                    </div>
+                                </div>
+                                <div class="col">
                                     {% if user.tier == 1 %}
                                         Starter
                                     {% endif %}
@@ -115,11 +167,10 @@
                                     {% if user.tier == 3 %}
                                         Loyal Customer
                                     {% endif %}</div>
-
-
-                                <!-- /.box-body -->
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="bot-border"></div>
                             </div>
-                            <!-- /.box -->
                         </div>
                     </div>
                 </div>
@@ -133,6 +184,7 @@
             color: black;
         }
     </style>
+    <br>
     <div class="col justify-content-center align-self-center text-center">
         <button type="button" class="btn btn-lg btn-primary btn-success">
             <a href="{% url 'user_center:profile_editor' %}" role="button">
