@@ -1,113 +1,123 @@
 {% extends "basic/layout.html" %}
 {% block head %}
-    
+
 {% endblock %}
 {% block title %}Offer Services | Homefix{% endblock %}
 {% block body %}
 <style>
     #map {
-      height: 400px;
-      /* The height is 400 pixels */
-      width: 50%;
-      /* The width is the width of the web page */
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 50%;
+        /* The width is the width of the web page */
     }
-  </style>
+</style>
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <center>
-        <h1 class="display-7 fw-bold lead mb-4">SERVICE DETAILS</h1>
-    </center>
+<center>
+    <h1 class="display-7 fw-bold lead mb-4">SERVICE DETAILS</h1>
+</center>
 
-    <div class="container my-5">
-        <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-6">
-                <div class="form">
-                   <b> <label class="form-label" for="category">Category</label></b>
-                    <div class="input-group mb-3">
-                        {{services.service_category}}
-                    </div>
-                </div>
-               <b> <label class="form-label">Description</label></b>
-                <div>{{services.service_description | safe}}</div>
-                <div class="form-outline mb-4">
-                    <b><label class="form-label" for="address">Street</label></b>
-                    <br>
-                    {{services.street}}
-                </div>
-                <!-- Row 2: State and Postal Code -->
-                <div class="row mb-4">
-                    <div class="col">
-                        <div class="form-outline">
-                            <b> <label class="form-label" for="state">State</label></b>
-                            <br>
-                    {{services.state}}
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <b>   <label class="form-label" for="postalcode">Post Code</label></b>
-                            <br>
-                    {{services.zip}}
-                        </div>
-                    </div>
-                </div>
-                <!-- Row 3: Country -->
-                <div class="form-outline mb-4">
-                    <b> <label class="form-label" for="country">Country</label></b>
-                    <br>
-                    {{services.country}}
-                </div>
-                <div class="form-outline mb-4">
-                    <b> <label class="form-label" for="country">Service Charge</label></b>
-                    <br>
-                    {{services.coins_charged}}
+<div class="container my-5">
+    <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="form">
+                <b> <label class="form-label" for="category">Category</label></b>
+                <div class="input-group mb-3">
+                    {{services.service_category}}
                 </div>
             </div>
-            <div id="map"></div>
-            <script>let map;
-                var lat="{{services.lat}}"
-                lat=parseFloat(lat)
-                var long="{{services.long}}"
-                long=parseFloat(long)
-                function initMap() {
-                  const mapOptions = {
-                    zoom: 14,
-                    center: { lat: lat, lng: long },
-                  };
-                
-                  map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                
-                  const marker = new google.maps.Marker({
-                    // The below line is equivalent to writing:
-                    // position: new google.maps.LatLng(-34.397, 150.644)
-                    position: { lat: lat, lng: long },
-                    map: map,
-                  });
-                  // You can use a LatLng literal in place of a google.maps.LatLng object when
-                  // creating the Marker object. Once the Marker object is instantiated, its
-                  // position will be available as a google.maps.LatLng object. In this case,
-                  // we retrieve the marker's position using the
-                  // google.maps.LatLng.getPosition() method.
-                  const infowindow = new google.maps.InfoWindow({
-                    content: "<p>Marker Location:" + marker.getPosition() + "</p>",
-                  });
-                
-                  google.maps.event.addListener(marker, "click", () => {
-                    infowindow.open(map, marker);
-                  });
-                }</script>
-            <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-            <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
-  async></script>
-            
-            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" onclick="location.href='{% url 'service:request_service_confirm' services.id%}'">Take
+            <b> <label class="form-label">Description</label></b>
+            <div>{{services.service_description | safe}}</div>
+            <div class="form-outline mb-4">
+                <b><label class="form-label" for="address">Street</label></b>
+                <br>
+                {{services.street}}
+            </div>
+            <!-- Row 2: State and Postal Code -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <b> <label class="form-label" for="state">State</label></b>
+                        <br>
+                        {{services.state}}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <b> <label class="form-label" for="postalcode">Post Code</label></b>
+                        <br>
+                        {{services.zip}}
+                    </div>
+                </div>
+            </div>
+            <!-- Row 3: Country -->
+            <div class="form-outline mb-4">
+                <b> <label class="form-label" for="country">Country</label></b>
+                <br>
+                {{services.country}}
+            </div>
+            <div class="form-outline mb-4">
+                <b> <label class="form-label" for="country">Service Charge</label></b>
+                <br>
+                {{services.coins_charged}}
+            </div>
+        </div>
+        <div id="map"></div>
+        <script>let map;
+        var lat = "{{services.lat}}"
+        lat = parseFloat(lat)
+        var long = "{{services.long}}"
+        long = parseFloat(long)
+
+        function initMap() {
+            const mapOptions = {
+                zoom: 14,
+                center: {lat: lat, lng: long},
+            };
+
+            map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            const marker = new google.maps.Marker({
+                // The below line is equivalent to writing:
+                // position: new google.maps.LatLng(-34.397, 150.644)
+                position: {lat: lat, lng: long},
+                map: map,
+            });
+            // You can use a LatLng literal in place of a google.maps.LatLng object when
+            // creating the Marker object. Once the Marker object is instantiated, its
+            // position will be available as a google.maps.LatLng object. In this case,
+            // we retrieve the marker's position using the
+            // google.maps.LatLng.getPosition() method.
+            const infowindow = new google.maps.InfoWindow({
+                content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+            });
+
+            google.maps.event.addListener(marker, "click", () => {
+                infowindow.open(map, marker);
+            });
+        }</script>
+        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+        <script
+                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
+                async></script>
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+
+            <div>
+                {%if message %}
+                 <button type="button" class="btn btn-warning btn-lg px-4 gap-3"
+                       > {{message}}
                 </button>
+                {% else %}
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3"
+                        onclick="location.href='{% url 'service:request_service_confirm' services.id%}'">Take
+                </button>
+                {% endif %}
                 <button type="button" class="btn btn-outline-dark btn-lg px-4"
                         onclick="">Report
                 </button>
             </div>
         </div>
     </div>
-    
-{% endblock %}
+
+    {% endblock %}
