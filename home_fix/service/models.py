@@ -50,3 +50,11 @@ class Order(models.Model):
     #
     def __str__(self):
         return "{} {}".format(self.service.__str__(), self.user.__str__())
+
+
+class Notifications(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    service = models.ForeignKey(Services, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=64)
+    read = models.BooleanField("visible", default=False, blank=True)

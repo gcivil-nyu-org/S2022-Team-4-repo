@@ -1,0 +1,119 @@
+{% extends "basic/layout.html" %}
+{% block title %} Notifications | Homefix{% endblock %}
+{% block body %}
+<style>
+    body {
+  font-family: "Roboto", sans-serif;
+  background: #EFF1F3;
+  min-height: 100vh;
+  position: relative;
+}
+a {
+  text-decoration: none;
+}
+.logo-title{
+    font-size: 25px;
+    font-weight: bold;
+    color: #9e0000;
+}
+.section-50 {
+  padding: 50px 0;
+}
+.m-b-50 {
+  margin-bottom: 50px;
+}
+.dark-link {
+  color: #333;
+  text-decoration:none!important;
+}
+.heading-line {
+  position: relative;
+  padding-bottom: 5px;
+}
+.heading-line:after {
+  content: "";
+  height: 4px;
+  width: 75px;
+  background-color: #0355d0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.notification-ui_dd-content {
+  margin-bottom: 30px;
+}
+.notification-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  padding: 20px;
+  margin-bottom: 7px;
+  background: #fff;
+  -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+.notification-list--unread {
+  border-left: 2px solid #0355d0;
+}
+.notification-list--read {
+  border-left: 2px solid #03ae30;
+}
+.notification-list .notification-list_content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.notification-list .notification-list_content .notification-list_img img {
+  height: 48px;
+  width: 48px;
+  border-radius: 50px;
+  margin-right: 20px;
+}
+.notification-list .notification-list_content .notification-list_detail p {
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+.notification-list .notification-list_feature-img img {
+  height: 48px;
+  width: 48px;
+  border-radius: 5px;
+  margin-left: 20px;
+}
+</style>
+<section class="section-50">
+    <div class="container">
+      <h3 class="m-b-50 heading-line">Notifications <i class="fa fa-bell text-muted"></i></h3>
+      <div class="notification-ui_dd-content">
+{% for service in notification%}
+<div class="notification-list notification-list--unread">
+    <div class="notification-list_content">
+      <div class="notification-list_detail">
+        {% if service.status == "pending" and service.user == user %}
+        <p><b>You</b> requested {{service.service.service_category}} service</p>
+        {% endif %}
+        {% if service.status == "pending" and service.user != user %}
+        <p><b>{{service.user.first_name}}</b> requested your {{service.service.service_category}} service</p>
+        {% endif %}
+        {% if service.status == "accepted" and service.service.user == user%}
+        <p><b>You</b> accepted {{service.service.service_category}} service for {{service.user.first_name}}</p>
+        {% endif %}
+        {% if service.status == "accepted" and service.service.user != user%}
+        <p><b>{{service.service.user.first_name}}</b> accepted {{service.service.service_category}} service</p>
+        {% endif %}
+        <p class="text-muted"><small>{{service.timestamp}}</small></p>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+
+</section>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
+<script src="<a href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" target="_blank" rel="noreferrer noopener">https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js</a>"></script> 
+<script src="<a href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" target="_blank" rel="noreferrer noopener">https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js</a>"></script>
+</body>
+</html>
+{% endblock %}
