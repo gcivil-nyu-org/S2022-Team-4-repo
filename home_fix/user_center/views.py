@@ -65,26 +65,14 @@ def request_finish_view(request, order_id):
         if order.user.id != request_user_id:
             return redirect("basic:index")
         else:
-            coin_charged = order.service.coins_charged
             request_user = order.user
-            provide_user = order.service.user
-            # print(provide_user.coin)
-            # print(coin_charged)
-            # if provide_user.coin < coin_charged:
-            #     print("xxxx")
-            #     request.info = "your account doesn't have enough coins, please charge"
-            #     return redirect("user_center:request")
             order.status = "finished"
             order.save()
-            Transaction.objects.create(
-                sender=request_user.email,
-                receiver=provide_user.email,
-                amount=coin_charged,
-                service_type=order.service.service_category,
-            )
-            provide_user.coin -= coin_charged
-            request_user.coin += coin_charged
-            provide_user.save()
+            transaction = order.transaction
+            if transaction is not None:
+                transaction.status = "finished"
+                transaction.save()
+            request_user.coin += transaction.amount
             request_user.save()
             return redirect("user_center:request")
     else:
@@ -153,8 +141,8 @@ def provide_accept_view(request, order_id):
         service_user_id = request.user.id
         order = Order.objects.get(id=order_id)
         service = order.service
-        # this order doesn't belong to this user
 
+        # this order doesn't belong to this user
         if service.user.id != service_user_id:
             return redirect("basic:index")
         if order.status != "pending":
@@ -189,6 +177,12 @@ def provide_cancel_view(request, order_id):
             return redirect("basic:index")
         order.status = "cancel"
         service.visible = True
+        transaction = order.transaction
+        transaction.status = "cancel"
+        transaction.save()
+        user = order.user
+        user.coin += transaction.amount
+        user.save()
         order.save()
         service.save()
         return redirect("user_center:provide")

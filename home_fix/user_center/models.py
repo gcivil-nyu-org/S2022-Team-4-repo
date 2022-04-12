@@ -22,6 +22,9 @@ class Transaction(models.Model):
     )
     timestamp = models.DateTimeField(auto_now_add=True)
     service_type = models.CharField("type", max_length=64, blank=True, null=True)
+    status = models.CharField(
+        "status", max_length=64, blank=True, null=True, default="finished"
+    )
 
     def __str__(self):
         return "{}".format(self.timestamp.__str__())

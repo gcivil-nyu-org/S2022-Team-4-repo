@@ -1,6 +1,7 @@
 from django.db import models
 
 # Create your models here.
+from user_center.models import Transaction
 from users.models import CustomUser
 
 
@@ -39,6 +40,7 @@ class Services(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     service = models.ForeignKey(Services, on_delete=models.CASCADE)
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, null=True)
     status = models.CharField(
         "status", max_length=64, blank=True, null=True, default="pending"
     )
