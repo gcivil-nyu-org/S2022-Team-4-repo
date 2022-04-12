@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, redirect
 
 from service.models import Order, Services
@@ -7,6 +8,7 @@ from users.forms import CustomUserChangeForm
 from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
+from service.models import Notifications
 
 # Create your views here.
 from utils import dictfetchall
@@ -149,6 +151,9 @@ def provide_accept_view(request, order_id):
             return redirect("basic:index")
         order.status = "in progress"
         order.save()
+        Notifications.objects.create(
+            user=order.user, service=service, status="accepted", read=False
+        )
         return redirect("user_center:provide")
         # get a list of transaction
 
@@ -187,6 +192,24 @@ def provide_cancel_view(request, order_id):
         service.save()
         return redirect("user_center:provide")
 
+    else:
+        return redirect("basic:index")
+
+
+def notification_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        notification = Notifications.objects.filter(
+            Q(user=user) | Q(service__user=user)
+        ).order_by("-timestamp")
+        logging.warning(list(notification.all()))
+        user.password = None
+        return render(
+            request,
+            "user_center/notifications.html",
+            context={"user": user, "notification": notification},
+        )
     else:
         return redirect("basic:index")
 

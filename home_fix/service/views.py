@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 
 from user_center.models import Transaction
 from users.models import CustomUser
-from service.models import Services, Order
+from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
 
@@ -83,6 +83,9 @@ def request_service_confirm_view(request, service_id):
 
         service.visible = False
         service.save()
+        Notifications.objects.create(
+            user=user, service=service, status="pending", read=False
+        )
         return redirect("user_center:request")
     else:
         return redirect("basic:index")
