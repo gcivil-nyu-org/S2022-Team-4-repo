@@ -34,7 +34,6 @@ class Services(models.Model):
     def __str__(self):
         return "{}".format(self.service_category.__str__())
 
-
 # when a user take a service, it will create an order
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
