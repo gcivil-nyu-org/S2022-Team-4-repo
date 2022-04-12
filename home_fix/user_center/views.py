@@ -141,8 +141,8 @@ def provide_accept_view(request, order_id):
         service_user_id = request.user.id
         order = Order.objects.get(id=order_id)
         service = order.service
-        # this order doesn't belong to this user
 
+        # this order doesn't belong to this user
         if service.user.id != service_user_id:
             return redirect("basic:index")
         if order.status != "pending":
