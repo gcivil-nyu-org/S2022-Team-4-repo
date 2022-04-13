@@ -1,210 +1,162 @@
 {% extends "basic/layout.html" %}
-{% block title %} My Requests | Homefix{% endblock %}
+{% load static %}
+{% block head %}
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/carousel/"/>
+    <link rel="stylesheet" href="{% static 'users/carousel.css' %}"/>
+{% endblock %}
+{% block title %} About | Homefix{% endblock %}
 {% block body %}
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.88.1">
-    <title>Carousel Template · Bootstrap v5.1</title>
-    
-
-    <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-
-      /* Carousel base class */
-      .carousel {
-        margin-bottom: 4rem;
-      }
-      /* Since positioning the image, we need to help out the caption */
-      .carousel-caption {
-        bottom: 3rem;
-        z-index: 10;
-      }
-
-      /* Declare heights because of positioning of img element */
-      .carousel-item {
-        height: 32rem;
-      }
-      .carousel-item > img {
-        /*position: absolute;*/
-        top: 0;
-        left: 0;
-        min-width: 100%;
-        height: 50rem;
-        margin: 5px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }
-
-      /*.box {
-        margin: 5px;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }*/
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    <link href="carousel.css" rel="stylesheet">
-  </head>
-
-
-
-  <body>
-    
-  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="img-fluid tile-image" src="https://www.allprodad.com/wp-content/uploads/2022/02/03-09-22-love-your-neighbor-scaled.jpg">
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>Get help from your neighbors!</h1>
-            <p>Fix your house having safety as a main factor. Homefix encourages transparency between service takers and providers</p>
-          </div>
+    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                    aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-      </div>
-      <div class="carousel-item">
-          <img class="img-fluid tile-image" src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/free-credit-report-weekly.jpg">
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Report the services if you find them fishy!</h1>
-            <p>Our top notch customer service works day and night to fulfill the user needs and enforce safe and verified coin transactions between the users</p>
-          </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="img-fluid tile-image"
+                     src="https://www.allprodad.com/wp-content/uploads/2022/02/03-09-22-love-your-neighbor-scaled.jpg">
+                <div class="container">
+                    <div class="carousel-caption text-start">
+                        <h1>Get help from your neighbors!</h1>
+                        <p>Fix your house having safety as a main factor. Homefix encourages transparency between
+                            service takers and providers</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="img-fluid tile-image"
+                     src="https://www.forbes.com/advisor/wp-content/uploads/2021/03/free-credit-report-weekly.jpg">
+                <div class="container">
+                    <div class="carousel-caption">
+                        <h1>Report the services if you find them fishy!</h1>
+                        <p>Our top notch customer service works day and night to fulfill the user needs and enforce safe
+                            and verified coin transactions between the users</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="img-fluid tile-image" src="https://i.ytimg.com/vi/RwIxTTvN2yA/maxresdefault.jpg">
+                <div class="container">
+                    <div class="carousel-caption text-end">
+                        <h1>Make more friends!</h1>
+                        <p>Now, there are multiple reasons to call your friends home and hangout with them!</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="carousel-item">
-        <img class="img-fluid tile-image" src="https://i.ytimg.com/vi/RwIxTTvN2yA/maxresdefault.jpg">
-        <div class="container">
-          <div class="carousel-caption text-end">
-            <h1>Make more friends!</h1>
-            <p>Now, there are multiple reasons to call your friends home and hangout with them!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
-
-  <div class="container marketing">
-
-    <center><h1> A BIT ABOUT HOMEFIX DEVELOPERS </h1></center>
-    <br><br>
-
-    <!-- Three columns of text below the carousel -->
-    <div class="row" align="center">
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/C5603AQFPI7N3l_ALWQ/profile-displayphoto-shrink_800_800/0/1630719368769?e=1655337600&v=beta&t=qYOkgeNCv6IfxXniy0gpFAEWYL1lVUvwbPtkIoJosMY" width="140" height="140">
-        <h2>Pruthviraj R Patil</h2>
-        <p> Developer, Master of Computer Science, Class of 2022, New York University</p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/D5635AQF0-PJDvL8Rtg/profile-framedphoto-shrink_800_800/0/1631100742777?e=1649952000&v=beta&t=wzahwVwnUvUaF1vJDl6KBV4EmZBJqSNPJ1AAOv2m8Po" width="140" height="140">
-
-        <h2>Bharath C</h2>
-        <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/C5603AQG5vZ_BcB2hQA/profile-displayphoto-shrink_800_800/0/1625591269907?e=1655337600&v=beta&t=qvaD1eugYcUq16ucPt8KjzTPJXMW27XT-h3grj6wPrk" width="140" height="140">
-
-        <h2>Vijay Krishna</h2>
-        <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-
-    <div class="row" align="center">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-4">
-          <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/C4D03AQE4LJ8Q4s0r9g/profile-displayphoto-shrink_800_800/0/1622879772332?e=1655337600&v=beta&t=FkqDjuUXzTTpg1YvyH1szUzatJ0FGJ3wC6vSNkuLS_Q" width="140" height="140">
-          <h2>Yuhao Zhang</h2>
-          <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
-        </div>
-
-        <div class="col-sm-4">
-          <img class="rounded-circle" src="https://media-exp1.licdn.com/dms/image/D4D35AQFZ4pkDXBh7MA/profile-framedphoto-shrink_800_800/0/1644170453693?e=1649952000&v=beta&t=Gr2vX1zUIpBv_hcGcaK090AcPDJcil-PL4zyJW_flgw" width="140" height="140">
-          <h2>Jash Marchant</h2>
-          <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
-        </div>
-        <div class="col-sm-2"></div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
 
 
-    <!-- START THE FEATURETTES -->
-    <br>
-    <hr class="featurette-divider">
-    <br><br>
-    <div class="row featurette">
-      <div class="col-md-7 ">
-        <h2 class="featurette-heading">The first ever <span class="text-muted">project that is fully customer centric!</span></h2>
-        <p class="lead mx-auto">Our Mission is to help every person to have that friend who helps to fix house hold issues and provide similar help. We believe that this platform users can not only take the help but also provide the help for their friends charging the coins of their wish. So why to wait? Subscribe for our Golden Hammer tier soon and enjoy this platform by getting help from your nearest friend to fix your household issue! We assure you that you will enjoy our services!</p>
-      </div>
-      <div class="col-md-5 align-items-center">
-        <img class="featurette-image img-fluid mx-auto" src="https://visionedgemarketing.com/wp-content/uploads/2009/06/customer-centric-best-practices.jpg" width="500" height="500">
-      </div>
+    <!-- Marketing messaging and featurettes -->
+
+    <div class="container marketing">
+
+        <center><h1> A BIT ABOUT HOMEFIX DEVELOPERS </h1></center>
+        <br><br>
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row" align="center">
+            <div class="col-lg-4">
+                <img class="rounded-circle"
+                     src="https://media-exp1.licdn.com/dms/image/C5603AQFPI7N3l_ALWQ/profile-displayphoto-shrink_800_800/0/1630719368769?e=1655337600&v=beta&t=qYOkgeNCv6IfxXniy0gpFAEWYL1lVUvwbPtkIoJosMY"
+                     width="140" height="140">
+                <h2>Pruthviraj R Patil</h2>
+                <p> Developer, Master of Computer Science, Class of 2022, New York University</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-circle"
+                     src="https://media-exp1.licdn.com/dms/image/D5635AQF0-PJDvL8Rtg/profile-framedphoto-shrink_800_800/0/1631100742777?e=1649952000&v=beta&t=wzahwVwnUvUaF1vJDl6KBV4EmZBJqSNPJ1AAOv2m8Po"
+                     width="140" height="140">
+
+                <h2>Bharath C</h2>
+                <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4">
+                <img class="rounded-circle"
+                     src="https://media-exp1.licdn.com/dms/image/C5603AQG5vZ_BcB2hQA/profile-displayphoto-shrink_800_800/0/1625591269907?e=1655337600&v=beta&t=qvaD1eugYcUq16ucPt8KjzTPJXMW27XT-h3grj6wPrk"
+                     width="140" height="140">
+
+                <h2>Vijay Krishna</h2>
+                <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+
+        <div class="row" align="center">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+                <img class="rounded-circle"
+                     src="https://media-exp1.licdn.com/dms/image/C4D03AQE4LJ8Q4s0r9g/profile-displayphoto-shrink_800_800/0/1622879772332?e=1655337600&v=beta&t=FkqDjuUXzTTpg1YvyH1szUzatJ0FGJ3wC6vSNkuLS_Q"
+                     width="140" height="140">
+                <h2>Yuhao Zhang</h2>
+                <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
+            </div>
+
+            <div class="col-sm-4">
+                <img class="rounded-circle"
+                     src="https://media-exp1.licdn.com/dms/image/D4D35AQFZ4pkDXBh7MA/profile-framedphoto-shrink_800_800/0/1644170453693?e=1649952000&v=beta&t=Gr2vX1zUIpBv_hcGcaK090AcPDJcil-PL4zyJW_flgw"
+                     width="140" height="140">
+                <h2>Jash J Merchant</h2>
+                <p>Developer, Master of Computer Science, Class of 2023, New York University</p>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+
+
+        <!-- START THE FEATURETTES -->
+        <br>
+        <hr class="featurette-divider">
+        <br><br>
+        <div class="row featurette">
+            <div class="col-md-7 ">
+                <h2 class="featurette-heading">The first ever <span class="text-muted">project that is fully customer centric!</span>
+                </h2>
+                <p class="lead mx-auto">Our Mission is to help every person to have that friend who helps to fix house
+                    hold issues and provide similar help. We believe that this platform users can not only take the help
+                    but also provide the help for their friends charging the coins of their wish. So why to wait?
+                    Subscribe for our Golden Hammer tier soon and enjoy this platform by getting help from your nearest
+                    friend to fix your household issue! We assure you that you will enjoy our services!</p>
+            </div>
+            <div class="col-md-5 align-items-center">
+                <img class="featurette-image img-fluid mx-auto"
+                     src="https://visionedgemarketing.com/wp-content/uploads/2009/06/customer-centric-best-practices.jpg"
+                     width="500" height="500">
+            </div>
+        </div>
+
+        <br><br>
+
+        <hr class="featurette-divider">
+
+        <br><br>
+        <div class="row featurette">
+            <div class="col-md-7 order-md-2 ">
+                <h2 class="featurette-heading">Oh for sure, it’s that good. <span
+                        class="text-muted">See for yourself.</span></h2>
+                <p class="lead mx-auto">Try our services for free initially. Get 20 coins for a free trial. Get assured
+                    quality household services done.</p>
+            </div>
+            <div class="col-md-5 order-md-1 align-items-center">
+                <img class="featurette-image img-fluid mx-auto"
+                     src="https://media.istockphoto.com/vectors/free-trial-sign-free-trial-blackgreen-round-ribbon-sticker-vector-id1188373880?k=20&m=1188373880&s=612x612&w=0&h=hBrgDbxwVEtRas8NHNUWFxFIcZ9bOz2IkHlkkKZMffo="
+                     width="500" height="500">
+            </div>
+        </div>
+{#        <hr class="featurette-divider">#}
+        <!-- /END THE FEATURETTES -->
     </div>
 
-    <br><br>
-
-    <hr class="featurette-divider">
-
-    <br><br>
-    <div class="row featurette">
-      <div class="col-md-7 order-md-2 ">
-        <h2 class="featurette-heading">Oh for sure, it’s that good. <span class="text-muted">See for yourself.</span></h2>
-        <p class="lead mx-auto">Try our services for free initially. Get 20 coins for a free trial. Get assured quality household services done.</p>
-      </div>
-      <div class="col-md-5 order-md-1 align-items-center">
-        <img class="featurette-image img-fluid mx-auto" src="https://media.istockphoto.com/vectors/free-trial-sign-free-trial-blackgreen-round-ribbon-sticker-vector-id1188373880?k=20&m=1188373880&s=612x612&w=0&h=hBrgDbxwVEtRas8NHNUWFxFIcZ9bOz2IkHlkkKZMffo=" width="500" height="500">
-      </div>
-    </div>
-    <hr class="featurette-divider">
-
-    <!-- /END THE FEATURETTES -->
-
-  </div><!-- /.container -->
-
-</body>
-  <!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="bg-dark py-4 mt-auto">
         <div class="container px-5">
             <div class="row align-items-center justify-content-between flex-column flex-sm-row">
@@ -221,5 +173,4 @@
             </div>
         </div>
     </footer>
-</html>
 {% endblock %}

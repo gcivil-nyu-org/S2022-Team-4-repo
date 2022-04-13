@@ -32,7 +32,7 @@
 </head>
 <body>
 <!--Navbar-->
-<header class="p-3 bg-dark text-white shadow p-3 mb-4">
+<header class="p-3 bg-dark text-white shadow">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a class="navbar-brand" href="{% url 'basic:index' %}" style="color: white;">
@@ -48,10 +48,10 @@
 
             {% if user.is_authenticated %}
 
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                    <input type="search" class="form-control form-control-dark" placeholder="Search..."
-                           aria-label="Search">
-                </form>
+{#                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">#}
+{#                    <input type="search" class="form-control form-control-dark" placeholder="Search..."#}
+{#                           aria-label="Search">#}
+{#                </form>#}
 
                 <div class="dropdown text-end">
                     <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
@@ -62,7 +62,7 @@
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                         <li><a class="dropdown-item" href="{% url 'user_center:profile'%}">Profile</a></li>
                         <li><a class="dropdown-item" href="{% url 'user_center:notifications'%}">Notifications</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:transaction'%}">My Transactions</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:transaction'%}">Transactions</a></li>
                         <li><a class="dropdown-item" href="{% url 'user_center:request'%}">My Requests</a></li>
                         <li><a class="dropdown-item" href="{% url 'user_center:provide'%}">My Services</a></li>
 {#                        <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>#}
