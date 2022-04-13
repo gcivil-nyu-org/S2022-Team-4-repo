@@ -9,6 +9,7 @@ urlpatterns = [
     path("transaction/", views.transaction_view, name="transaction"),
     path("profile/", views.profile_view, name="profile"),
     path("notifications/", views.notification_view, name="notifications"),
+    path("read_notification/", views.read_notification_view, name="read_notifications"),
     path("profile_editor/", views.profile_editor_view, name="profile_editor"),
     path(
         "request_finish_view/<int:order_id>",
