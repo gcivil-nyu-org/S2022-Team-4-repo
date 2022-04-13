@@ -84,15 +84,19 @@
         margin-bottom: 12px;
     }
    
+   .container {
+      min-height: 80%;
+    }
 </style>
 
 <center>
     <h1 class="display-5 fw-bold lead mb-4">SEARCH SERVICES</h1>
+    <p> Search for services, read their description and get them by paying the homefix coins</p>
     <input type="text" id="myInput" onkeyup="mySearchFunction()" placeholder="Search for service.."
            title="Type Some Services" style="border-radius: 20px;">
 </center>
 
-
+<div class="container">
 <!-- HARD CODED THE POSTS THAT HAVE TO BE CREATED DYNAMICALLY LATER USING JS/PY-->
 {% for service in services%}
 <a class="service" style="text-decoration: None; color: black; padding:1%" name="{{ service.service_category }}" 
@@ -119,9 +123,8 @@ href="{% url 'service:service_detail' service.id %}">
       </div>
   </div>
 </a>
-
 {% endfor %}
-
+</div>
 <!-- JS FOR DYNAMIC SEARCH -->
 
 
