@@ -57,4 +57,4 @@ class Notifications(models.Model):
     service = models.ForeignKey(Services, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=64)
-    read = models.BooleanField("visible", default=False, blank=True)
+    read = models.IntegerField(default=0)
