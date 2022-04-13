@@ -9,6 +9,7 @@ from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
 from service.models import Notifications
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from utils import dictfetchall
@@ -210,6 +211,26 @@ def notification_view(request):
             "user_center/notifications.html",
             context={"user": user, "notification": notification},
         )
+    else:
+        return redirect("basic:index")
+
+
+@csrf_exempt
+def read_notification_view(request):
+    if request.user.is_authenticated:
+        id = request.POST["id"]
+        notification = Notifications.objects.get(id=id)
+        if request.user == notification.user:
+            if notification.read == 2:
+                notification.read = 3
+            else:
+                notification.read = 1
+        if request.user == notification.service.user:
+            if notification.read == 1:
+                notification.read = 3
+            else:
+                notification.read = 2
+        notification.save()
     else:
         return redirect("basic:index")
 
