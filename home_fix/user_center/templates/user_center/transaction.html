@@ -17,6 +17,7 @@
                 <th scope="col">Amount</th>
                 <th scope="col">Commission Fee</th>
                 <th scope="col">Type</th>
+                <th scope="col">Status</th>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +28,8 @@
                     <td>{{ record.receiver }}</td>
                     <td>{{ record.amount }}</td>
                     <td>{{ record.commission_fee }}</td>
-                    <th scope="row">{{ record.service_type }}</th>
+                    <td>{{ record.service_type }}</td>
+                    <td>{{ record.status }}</td>
                 </tr>
             {% endfor %}
             </tbody>

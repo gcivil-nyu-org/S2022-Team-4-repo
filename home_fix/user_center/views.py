@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render, redirect
 
 from service.models import Order, Services
@@ -7,6 +8,7 @@ from users.forms import CustomUserChangeForm
 from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
+from service.models import Notifications
 
 # Create your views here.
 from utils import dictfetchall
@@ -65,26 +67,14 @@ def request_finish_view(request, order_id):
         if order.user.id != request_user_id:
             return redirect("basic:index")
         else:
-            coin_charged = order.service.coins_charged
             request_user = order.user
-            provide_user = order.service.user
-            # print(provide_user.coin)
-            # print(coin_charged)
-            # if provide_user.coin < coin_charged:
-            #     print("xxxx")
-            #     request.info = "your account doesn't have enough coins, please charge"
-            #     return redirect("user_center:request")
             order.status = "finished"
             order.save()
-            Transaction.objects.create(
-                sender=request_user.email,
-                receiver=provide_user.email,
-                amount=coin_charged,
-                service_type=order.service.service_category,
-            )
-            provide_user.coin -= coin_charged
-            request_user.coin += coin_charged
-            provide_user.save()
+            transaction = order.transaction
+            if transaction is not None:
+                transaction.status = "finished"
+                transaction.save()
+            request_user.coin += transaction.amount
             request_user.save()
             return redirect("user_center:request")
     else:
@@ -153,14 +143,17 @@ def provide_accept_view(request, order_id):
         service_user_id = request.user.id
         order = Order.objects.get(id=order_id)
         service = order.service
-        # this order doesn't belong to this user
 
+        # this order doesn't belong to this user
         if service.user.id != service_user_id:
             return redirect("basic:index")
         if order.status != "pending":
             return redirect("basic:index")
         order.status = "in progress"
         order.save()
+        Notifications.objects.create(
+            user=order.user, service=service, status="accepted", read=False
+        )
         return redirect("user_center:provide")
         # get a list of transaction
 
@@ -189,10 +182,34 @@ def provide_cancel_view(request, order_id):
             return redirect("basic:index")
         order.status = "cancel"
         service.visible = True
+        transaction = order.transaction
+        transaction.status = "cancel"
+        transaction.save()
+        user = order.user
+        user.coin += transaction.amount
+        user.save()
         order.save()
         service.save()
         return redirect("user_center:provide")
 
+    else:
+        return redirect("basic:index")
+
+
+def notification_view(request):
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        user = CustomUser.objects.get(id=user_id)
+        notification = Notifications.objects.filter(
+            Q(user=user) | Q(service__user=user)
+        ).order_by("-timestamp")
+        logging.warning(list(notification.all()))
+        user.password = None
+        return render(
+            request,
+            "user_center/notifications.html",
+            context={"user": user, "notification": notification},
+        )
     else:
         return redirect("basic:index")
 
