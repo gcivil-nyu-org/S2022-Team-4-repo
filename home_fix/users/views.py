@@ -269,3 +269,7 @@ def activate(
 
 def actilink(request):
     return HttpResponse("Please Verify your Email!!")
+
+
+def about_page(request):
+    return render(request, "users/about.html")

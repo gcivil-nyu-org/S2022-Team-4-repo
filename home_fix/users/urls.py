@@ -18,4 +18,5 @@ urlpatterns = [
     # path("", views.auth, name="auth"),
     path("activate/<uidb64>/<token>/", views.activate, name="activate"),
     path("actvi/", views.actilink, name="activationlinkpage"),
+    path("about/", views.about_page, name="about"),
 ]
