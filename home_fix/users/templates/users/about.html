@@ -1,0 +1,216 @@
+{% extends "basic/layout.html" %}
+{% block title %} My Requests | Homefix{% endblock %}
+{% block body %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Carousel Template · Bootstrap v5.1</title>
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      /* Carousel base class */
+      .carousel {
+        margin-bottom: 4rem;
+      }
+      /* Since positioning the image, we need to help out the caption */
+      .carousel-caption {
+        bottom: 3rem;
+        z-index: 10;
+      }
+
+      /* Declare heights because of positioning of img element */
+      .carousel-item {
+        height: 32rem;
+      }
+      .carousel-item > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        height: 32rem;
+      }
+
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="carousel.css" rel="stylesheet">
+  </head>
+
+
+
+  <body>
+    
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-start">
+            <h1>Get help from your neighbors!</h1>
+            <p>Fix your house having safety as a main factor. Homefix encourages transparency between service takers and providers</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption">
+            <h1>Report the services if you find them fishy!</h1>
+            <p>Our top notch customer service works day and night to fulfill the user needs and enforce safe and verified coin transactions between the users</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+
+        <div class="container">
+          <div class="carousel-caption text-end">
+            <h1>Make more friends!</h1>
+            <p>Now, there are multiple reasons to call your friends home and hangout with them!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing">
+
+    <center><h1> A BIT ABOUT HOMEFIX DEVELOPERS </h1></center>
+    <br><br>
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row" align="center">
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Pruthviraj R Patil</h2>
+        <p> Developer, Master of Computer Science, Class of 2022, New York University</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Heading</h2>
+        <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+
+        <h2>Heading</h2>
+        <p>And lastly this, the third column of representative placeholder content.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+    <div class="row" align="center">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-4">
+          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+          <h2>Heading</h2>
+          <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        </div>
+
+        <div class="col-sm-4">
+          <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+          <h2>Heading</h2>
+          <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">The first ever <span class="text-muted">project that is fully customer centric!</span></h2>
+        <p class="lead">Our Mission is to help every person to have that friend who helps to fix house hold issues and provide similar help. We believe that this platform users can not only take the help but also provide the help for their friends charging the coins of their wish. So why to wait? Subscribe for our Golden Hammer tier soon and enjoy this platform by getting help from your nearest friend to fix your household issue! We assure you that you will enjoy our services!</p>
+      </div>
+      <div class="col-md-5">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Oh for sure, it’s that good. <span class="text-muted">See for yourself.</span></h2>
+        <p class="lead">Try our services for free initially. Get 20 coins for a free trial. Get assured quality household services done.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg>
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+
+</body>
+  <!-- FOOTER -->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright &copy; Homefix 2022</div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</html>
+{% endblock %}

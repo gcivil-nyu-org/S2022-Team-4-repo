@@ -43,7 +43,7 @@
                 <li><a href="{% url 'map:search_hardware' %}" class="nav-link px-2 text-white">Maps</a></li>
                 <li><a href="{% url 'users:pricing' %}" class="nav-link px-2 text-white">Pricing</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Forums</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">About</a></li>
+                <li><a href="{% url 'users:about' %}" class="nav-link px-2 text-white">About</a></li>
             </ul>
 
             {% if user.is_authenticated %}
