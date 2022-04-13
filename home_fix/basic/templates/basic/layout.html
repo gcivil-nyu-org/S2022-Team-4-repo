@@ -42,30 +42,30 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{% url 'map:search_hardware' %}" class="nav-link px-2 text-white">Maps</a></li>
                 <li><a href="{% url 'users:pricing' %}" class="nav-link px-2 text-white">Pricing</a></li>
-                <li><a href="{%url 'forum:Forum' %}" class="nav-link px-2 text-white">Forums</a></li>
-                <li><a href="{%url 'users:about' %}" class="nav-link px-2 text-white">About</a></li>
+                <li><a href="{% url 'forum:Forum' %}" class="nav-link px-2 text-white">Forums</a></li>
+                <li><a href="{% url 'users:about' %}" class="nav-link px-2 text-white">About</a></li>
             </ul>
 
             {% if user.is_authenticated %}
 
-{#                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">#}
-{#                    <input type="search" class="form-control form-control-dark" placeholder="Search..."#}
-{#                           aria-label="Search">#}
-{#                </form>#}
-
-                <div class="dropdown text-end">
+                <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
+                    <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
+                </a>
+                <div class="dropdown">
                     <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
                              class="rounded-circle">
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="{% url 'user_center:profile'%}">Profile</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:notifications'%}">Notifications</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:transaction'%}">Transactions</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:request'%}">My Requests</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:provide'%}">My Services</a></li>
-{#                        <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>#}
+                        <li><a class="dropdown-item" href="{% url 'user_center:profile' %}">Profile</a></li>
+{#                        <li><a class="dropdown-item" href="{% url 'user_center:notifications' %}">Notifications</a>#}
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:transaction' %}">Transactions</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:request' %}">My Requests</a></li>
+                        <li><a class="dropdown-item" href="{% url 'user_center:provide' %}">My Services</a></li>
+                        {#                        <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>#}
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -99,9 +99,14 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"
 ></script>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  {% block js %} {% endblock %}
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+{% block js %} {% endblock %}
 </body>
 </html>
