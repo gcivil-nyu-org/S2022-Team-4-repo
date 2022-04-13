@@ -1,22 +1,18 @@
+import logging
 from django.shortcuts import render, redirect
 
-from service.models import Order
+from service.models import Order, Services
 from user_center.models import Transaction
 from user_center.query import provide_list_query
 from users.forms import CustomUserChangeForm
 from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
+from service.models import Notifications
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
-from utils import dictfetchall, namedtuplefetchall
-
-
-def index_view(request):
-    if request.user.is_authenticated:
-        return render(request, "user_center/index.html")
-    else:
-        return redirect("basic:index")
+from utils import dictfetchall
 
 
 def profile_view(request):
@@ -53,17 +49,18 @@ def request_view(request):
         user = CustomUser.objects.get(id=user_id)
         # fetch data from Order table
         order_list = Order.objects.filter(user=user).order_by("-timestamp")
+        if not hasattr(request, "info"):
+            request.info = None
         return render(
             request,
             "user_center/my_request_page.html",
-            context={"order_list": order_list},
+            context={"order_list": order_list, "info": request.info},
         )
     else:
         return redirect("basic:index")
 
 
 def request_finish_view(request, order_id):
-    print("Xxx")
     if request.user.is_authenticated:
         request_user_id = request.user.id
         order = Order.objects.get(id=order_id)
@@ -71,19 +68,15 @@ def request_finish_view(request, order_id):
         if order.user.id != request_user_id:
             return redirect("basic:index")
         else:
+            request_user = order.user
             order.status = "finished"
             order.save()
-            coin_charged = order.service.coins_charged
-            request_user = order.user
-            provide_user = order.service.user
-            Transaction.objects.create(
-                sender=request_user.email,
-                receiver=provide_user.email,
-                amount=coin_charged,
-                service_type=order.service.service_category,
-            )
-            provide_user.coin -= coin_charged
-            request_user.coin += coin_charged
+            transaction = order.transaction
+            if transaction is not None:
+                transaction.status = "finished"
+                transaction.save()
+            request_user.coin += transaction.amount
+            request_user.save()
             return redirect("user_center:request")
     else:
         return redirect("basic:index")
@@ -120,14 +113,15 @@ def provide_view(request):
         #  'service_time': datetime.datetime(2022, 4, 4, 16, 26, 35, 36278),
         #  'status': None}
         #  request_user_id
-        print(result)
+
         for row in result:
             # translate status
-
+            # print(row)
             # there is no correspond order
             if row["status"] is None or row["status"] == "cancel":
                 row["status"] = "no response"
                 row["request_user_id"] = None
+                row["order_time"] = None
             # "pending" mean a user choose this service
             if row["status"] == "pending":
                 row["status"] = "picked"
@@ -135,7 +129,6 @@ def provide_view(request):
                 row["request_user_id"] = CustomUser.objects.get(
                     id=row["request_user_id"]
                 ).first_name
-        print(result)
         return render(
             request,
             "user_center/my_provide_page.html",
@@ -146,10 +139,108 @@ def provide_view(request):
         return redirect("basic:index")
 
 
-def contact_view(request):
+def provide_accept_view(request, order_id):
+    if request.user.is_authenticated:
+        service_user_id = request.user.id
+        order = Order.objects.get(id=order_id)
+        service = order.service
+
+        # this order doesn't belong to this user
+        if service.user.id != service_user_id:
+            return redirect("basic:index")
+        if order.status != "pending":
+            return redirect("basic:index")
+        order.status = "in progress"
+        order.save()
+        Notifications.objects.create(
+            user=order.user, service=service, status="accepted", read=False
+        )
+        return redirect("user_center:provide")
+        # get a list of transaction
+
+    else:
+        return redirect("basic:index")
+
+
+def provide_delete_view(request, service_id):
+    if request.user.is_authenticated:
+        service_user_id = request.user.id
+        service = Services.objects.get(id=service_id)
+        if service.user.id != service_user_id:
+            return redirect("basic:index")
+        service.delete()
+        return redirect("user_center:provide")
+    else:
+        return redirect("basic:index")
+
+
+def provide_cancel_view(request, order_id):
+    if request.user.is_authenticated:
+        service_user_id = request.user.id
+        order = Order.objects.get(id=order_id)
+        service = order.service
+        if service.user.id != service_user_id:
+            return redirect("basic:index")
+        order.status = "cancel"
+        service.visible = True
+        transaction = order.transaction
+        user = order.user
+        if transaction is not None:
+            transaction.status = "cancel"
+            transaction.save()
+            user.coin += transaction.amount
+        user.save()
+        order.save()
+        service.save()
+        return redirect("user_center:provide")
+
+    else:
+        return redirect("basic:index")
+
+
+def notification_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
-        print(user)
+        notification = Notifications.objects.filter(
+            Q(user=user) | Q(service__user=user)
+        ).order_by("-timestamp")
+        logging.warning(list(notification.all()))
+        user.password = None
+        return render(
+            request,
+            "user_center/notifications.html",
+            context={"user": user, "notification": notification},
+        )
     else:
         return redirect("basic:index")
+
+
+@csrf_exempt
+def read_notification_view(request):
+    if request.user.is_authenticated:
+        id = request.POST["id"]
+        notification = Notifications.objects.get(id=id)
+        if request.user == notification.user:
+            if notification.read == 2:
+                notification.read = 3
+            else:
+                notification.read = 1
+        if request.user == notification.service.user:
+            if notification.read == 1:
+                notification.read = 3
+            else:
+                notification.read = 2
+        notification.save()
+    else:
+        return redirect("basic:index")
+
+
+#
+# def contact_view(request):
+#     if request.user.is_authenticated:
+#         user_id = request.user.id
+#         user = CustomUser.objects.get(id=user_id)
+#         print(user)
+#     else:
+#         return redirect("basic:index")

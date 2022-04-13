@@ -1,9 +1,12 @@
 import logging
 from django.shortcuts import render, redirect
+
+from user_center.models import Transaction
 from users.models import CustomUser
-from service.models import Services, Order
+from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
+
 
 # Create your views here.
 
@@ -67,9 +70,22 @@ def request_service_confirm_view(request, service_id):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         service = Services.objects.get(id=service_id)
-        Order.objects.create(user=user, service=service)
+        user.coin -= service.coins_charged
+        user.save()
+        transaction = Transaction.objects.create(
+            sender=user.email,
+            receiver=service.user.email,
+            amount=service.coins_charged,
+            service_type=service.service_category,
+            status="pending",
+        )
+        Order.objects.create(user=user, service=service, transaction=transaction)
+
         service.visible = False
         service.save()
+        Notifications.objects.create(
+            user=user, service=service, status="pending", read=False
+        )
         return redirect("user_center:request")
     else:
         return redirect("basic:index")
@@ -80,12 +96,15 @@ def service_detail_view(request, service_id):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
+        message = ""
+        if user.coin < services[0].coins_charged:
+            message = "not enough coins"
         logging.warning(services)
         user.password = None
         return render(
             request,
             "service/service_detail.html",
-            context={"user": user, "services": services[0]},
+            context={"user": user, "services": services[0], "message": message},
         )
     else:
         return redirect("basic:index")

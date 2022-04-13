@@ -8,13 +8,22 @@ install:
   - pip install coveralls
 
 before_script:
+  - echo “SECRET_KEY=$SECRET_KEY” >>.env
+  - echo “EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD” >>.env
+  - echo “GOOGLE_API_KEY=$GOOGLE_API_KEY” >>.env
+  - echo “STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY” >>.env
+  - echo “STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY” >>.env
+  - echo “STRIPE_WEBHOOK_SECRET=$STRIPE_WEBHOOK_SECRET” >>.env
+  - echo “GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY” >>.env
+  
   - cd home_fix
   - python manage.py migrate
   - python manage.py collectstatic --noinput
 
+
 script:
   - flake8 .
-  - coverage run --source=users,basic,map manage.py test
+  - coverage run --source=users,basic,map,service,user_center,forum manage.py test
 
 after_script:
   - coveralls

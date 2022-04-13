@@ -20,15 +20,15 @@ from .models import CustomUser, Product
 from home_fix.settings import EMAIL_HOST_USER
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-stripe.TaxRate.create(
-    display_name="Sales Tax",
-    inclusive=False,
-    percentage=7.25,
-    country="US",
-    state="NY",
-    jurisdiction="US - NY",
-    description="NY Sales Tax",
-)
+# stripe.TaxRate.create(
+#     display_name="Commission Fee",
+#     inclusive=False,
+#     percentage=7.25,
+#     country="US",
+#     state="NY",
+#     jurisdiction="US - NY",
+#     description="NY Sales Tax",
+# )
 
 
 # Create your views here.
@@ -176,7 +176,7 @@ class CreateCheckoutSessionView(View):
                         },
                     },
                     "quantity": 1,
-                    "tax_rates": ["txr_1Ki0PYHgOFOjKM17qZ1TP5Um"],
+                    "tax_rates": ["txr_1KnCXDHgOFOjKM17c8BkJoeF"],
                 },
             ],
             metadata={
@@ -193,16 +193,6 @@ class CreateCheckoutSessionView(View):
             cancel_url=YOUR_DOMAIN,
         )
         return JsonResponse({"id": checkout_session.id})
-
-
-# Payment Success
-def success_view(request):
-    return render(request, "users/success.html")
-
-
-# Payment Cancelled
-def cancel_view(request):
-    return render(request, "users/cancel.html")
 
 
 # Stripe webhook
@@ -281,27 +271,5 @@ def actilink(request):
     return HttpResponse("Please Verify your Email!!")
 
 
-def profile_view(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        user.password = None
-        return render(request, "users/profile.html", context={"user": user})
-    else:
-        return redirect("basic:index")
-
-
-def profile_editor_view(request):
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        user = CustomUser.objects.get(id=user_id)
-        user.password = None
-        if request.method == "POST":
-            form = CustomUserChangeForm(request.POST, instance=request.user)
-            if form.is_valid():
-                form.save()
-            return redirect("users:profile")
-        else:
-            return render(request, "users/profile_editor.html", context={"user": user})
-    else:
-        return redirect("basic:index")
+def about_page(request):
+    return render(request, "users/about.html")

@@ -1,102 +1,68 @@
 {% extends "basic/layout.html" %}
-{% block title %} My Provide | Homefix{% endblock %}
+{% block title %} My Services | Homefix{% endblock %}
 {% block body %}
-<style>
-    .dropbtn {
-      background-color: #04AA6D;
-      color: white;
-      border: none;
-    }
-    
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f1f1f1;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-    
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
-    
-    .dropdown-content a:hover {background-color: #ddd;}
-    
-    .dropdown:hover .dropdown-content {display: block;}
-    
-    .dropdown:hover .dropbtn {background-color: #3e8e41;}
-    </style>
-<br><br>
-<center>
-<h1 class="display-5 fw-bold">SERVICES YOU PROVIDE</h1>
-</center>
-<br><br>
+    <br><br>
+    <center>
+        <h1 class="display-5 fw-bold">SERVICES YOU PROVIDE</h1>
+    </center>
+    <br><br>
 
-{% for provide in provide_list%}
-<style>
-    a { 
-        text-decoration: none; 
-        color: black;
-      }
-  </style>
-
-<div class="container w-75 border border-success rounded-pill" style="background-color: #eee;">
-    <div class="row">
-        <div class="col-10 text-center">
-            <table class="table">
-                <thead>
+    <div class="container">
+        <table class=" table table-hover table-bordered text-center">
+            <thead class="table-light">
                 <tr>
-                    <th scope="col">Service_id</th>
+                    <th scope="col">Service_type</th>
                     <th scope="col">Create Time</th>
                     <th scope="col">Request Time</th>
                     <th scope="col">Requester</th>
                     <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
+            {% for provide in provide_list %}
                 <tr>
-                    <th scope="row">{{ provide.service_id }}</th>
+                    <th scope="row">{{ provide.service_category }}</th>
                     <td>{{ provide.service_time }}</td>
                     <td>{{ provide.order_time }}</td>
                     <td>{{ provide.request_user_id }}</td>
                     <td>{{ provide.status }}</td>
-                    <!-- <td>
-                        <div class="dropdown">
-                            <button class="dropbtn">Action</button>
-                            <div class="dropdown-content">
-                              <a href="#">Accept</a>
-                              <a href="#">Cancel</a>
-                              <a href="#">Delete</a>
-                              <a href="#">Update</a>
+                    <td>
+                        <div class="col justify-content-center align-self-center text-center">
+                              {% if  provide.status != 'finished' %}
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    {% if  provide.status == 'no response' %}
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'user_center:provide_delete' provide.service_id %}">Delete</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if  provide.status == 'picked' %}
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'user_center:provide_accept' provide.order_id %}">Accept</a>
+                                        </li>
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'user_center:provide_cancel' provide.order_id %}">Cancel</a>
+                                        </li>
+                                    {% endif %}
+                                    {% if  provide.status == 'in progress' %}
+                                        <li><a class="dropdown-item"
+                                               href="{% url 'user_center:provide_cancel' provide.order_id %}">Cancel</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
                             </div>
-                          </div>
-                    </td> -->
+                              {% endif %}
+                        </div>
+                    </td>
                 </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col justify-content-center align-self-center text-center">
-            <div class="dropdown">
-                <button class="dropbtn btn btn-success">Action</button>
-                    <div class="dropdown-content">
-                        <a href="#">Accept</a>
-                        <a href="#">Cancel</a>
-                        <a href="#">Delete</a>
-                        <a href="#">Update</a>
-                    </div>
-              </div>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-</div>
-<br><br>
-{% endfor %}
 {% endblock %}
