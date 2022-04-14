@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from service.models import Order, Services
 from users.models import CustomUser
 from utils import auth_test
 
@@ -75,3 +76,61 @@ class TestViews(TestCase):
         )
         user = CustomUser.objects.get(email=self.email_login)
         self.assertEqual(user.gender, "female")
+
+    def test_provide_accept_view(self):
+        service = Services.objects.create(user=self.test_user)
+        order = Order.objects.create(service=service, user=self.test_user)
+        response = self.client.get(
+            reverse("user_center:provide_accept", kwargs={"order_id": order.id})
+        )
+        self.assertEquals(response.status_code, 302)
+
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(
+            reverse("user_center:provide_accept", kwargs={"order_id": order.id})
+        )
+        self.assertRedirects(response, reverse("user_center:provide"))
+
+    def test_provide_delete_view(self):
+        service = Services.objects.create(user=self.test_user)
+        response = self.client.get(
+            reverse("user_center:provide_delete", kwargs={"service_id": service.id})
+        )
+        self.assertEquals(response.status_code, 302)
+
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(
+            reverse("user_center:provide_delete", kwargs={"service_id": service.id})
+        )
+        self.assertRedirects(response, reverse("user_center:provide"))
+
+    def test_provide_cancel_view(self):
+        service = Services.objects.create(user=self.test_user)
+        order = Order.objects.create(service=service, user=self.test_user)
+        response = self.client.get(
+            reverse("user_center:provide_cancel", kwargs={"order_id": order.id})
+        )
+        self.assertEquals(response.status_code, 302)
+
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(
+            reverse("user_center:provide_cancel", kwargs={"order_id": order.id})
+        )
+        self.assertRedirects(response, reverse("user_center:provide"))
+
+    def test_notification_view(self):
+        auth_test(self, "user_center:profile")
+        response = self.client.get(reverse("user_center:notifications"))
+        self.assertTemplateUsed(response, "user_center/notifications.html")

@@ -184,10 +184,11 @@ def provide_cancel_view(request, order_id):
         order.status = "cancel"
         service.visible = True
         transaction = order.transaction
-        transaction.status = "cancel"
-        transaction.save()
         user = order.user
-        user.coin += transaction.amount
+        if transaction is not None:
+            transaction.status = "cancel"
+            transaction.save()
+            user.coin += transaction.amount
         user.save()
         order.save()
         service.save()
