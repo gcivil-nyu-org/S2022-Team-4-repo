@@ -32,7 +32,7 @@
   var directionsRenderer = new google.maps.DirectionsRenderer();
     infowindow = new google.maps.InfoWindow();
     var userlocations = eval("{{base|safe}}")
-    var locations = eval("{{user|safe}}");
+    var locations = eval("{{user_loc|safe}}");
     var uluru = { lat: locations[0], lng: locations[1] };
     
     console.log(locations);
