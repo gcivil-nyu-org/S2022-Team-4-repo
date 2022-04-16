@@ -48,5 +48,5 @@ def search_hardware(request):
     return render(
         request,
         "map/locs_hardware.html",
-        context={"base": locations, "user": userloc},
+        context={"base": locations, "user_loc": userloc},
     )
