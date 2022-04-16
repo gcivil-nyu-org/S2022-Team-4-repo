@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("service", "0006_notifications"),
     ]
@@ -13,6 +12,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="notifications",
             name="status",
-            field=models.IntegerField(default=0),
+            field=models.CharField(max_length=64),
         ),
     ]

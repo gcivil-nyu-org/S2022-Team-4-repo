@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
 class Transaction(models.Model):
     sender = models.CharField(
         "sender email address", max_length=64, blank=True, null=True

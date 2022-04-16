@@ -47,45 +47,50 @@
             </ul>
 
             {% if user.is_authenticated %}
-
-                <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
-                    <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
+            {% if not user.is_staff %}
+            <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
+                <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
+            </a>
+            {% endif %}
+            <div class="dropdown">
+                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
+                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
+                         class="rounded-circle">
                 </a>
-                <div class="dropdown">
-                    <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
-                       id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
-                             class="rounded-circle">
+                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                    {% if user.is_staff %}
+                    <li><a class="dropdown-item" href="{% url 'admin_system:report' %}">Reports</a></li>
+                    <li><a class="dropdown-item" href="{% url 'admin_system:user' %}">Users</a></li>
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'user_center:profile' %}">Profile</a></li>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'user_center:transaction' %}">Transactions</a>
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'user_center:request' %}">My Requests</a></li>
+                    <li><a class="dropdown-item" href="{% url 'user_center:provide' %}">My Services</a></li>
+                    {% endif %}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'users:logout' %}">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                     </a>
-                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="{% url 'user_center:profile' %}">Profile</a></li>
-{#                        <li><a class="dropdown-item" href="{% url 'user_center:notifications' %}">Notifications</a>#}
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:transaction' %}">Transactions</a>
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:request' %}">My Requests</a></li>
-                        <li><a class="dropdown-item" href="{% url 'user_center:provide' %}">My Services</a></li>
-                        {#                        <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>#}
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="{% url 'users:logout' %}">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-                        </a>
-                        </li>
-                    </ul>
-                </div>
+                    </li>
+
+                </ul>
+            </div>
 
             {% else %}
 
-                <div class="text-end">
-                    <button type="button" class="btn btn-outline-light me-2"
-                            onclick="location.href='{% url 'users:login' %}'">Login
-                    </button>
-                    <button type="button" class="btn btn-warning"
-                            onclick="location.href='{% url 'users:register' %}'">Sign-up
-                    </button>
-                </div>
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2"
+                        onclick="location.href='{% url 'users:login' %}'">Login
+                </button>
+                <button type="button" class="btn btn-warning"
+                        onclick="location.href='{% url 'users:register' %}'">Sign-up
+                </button>
+            </div>
 
             {% endif %}
         </div>
