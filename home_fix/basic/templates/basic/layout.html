@@ -47,10 +47,11 @@
             </ul>
 
             {% if user.is_authenticated %}
-
+            {% if not user.is_staff %}
             <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
                 <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
             </a>
+            {% endif %}
             <div class="dropdown">
                 <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
                    id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,16 +64,12 @@
                     <li><a class="dropdown-item" href="{% url 'admin_system:user' %}">Users</a></li>
                     {% else %}
                     <li><a class="dropdown-item" href="{% url 'user_center:profile' %}">Profile</a></li>
-                    {#
-                    <li><a class="dropdown-item" href="{% url 'user_center:notifications' %}">Notifications</a>#}
                     </li>
                     <li><a class="dropdown-item" href="{% url 'user_center:transaction' %}">Transactions</a>
                     </li>
                     <li><a class="dropdown-item" href="{% url 'user_center:request' %}">My Requests</a></li>
                     <li><a class="dropdown-item" href="{% url 'user_center:provide' %}">My Services</a></li>
-                    {#
-                    <li><a class="dropdown-item" href="{% url 'user_center:index' %}">User Center</a></li>
-                    #}
+                    {% endif %}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -80,7 +77,7 @@
                         <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                     </a>
                     </li>
-                    {% endif %}
+
                 </ul>
             </div>
 
