@@ -1,14 +1,16 @@
 import logging
 from django.shortcuts import render, redirect
 
+from admin_system.models import Report
 from user_center.models import Transaction
 from users.models import CustomUser
 from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
 
-
 # Create your views here.
+
+from django.urls import reverse
 
 
 def request_service_view(request):
@@ -129,3 +131,16 @@ def services_locations(request):
         "service/services_locations.html",
         context={"services": serv, "user": userloc},
     )
+
+
+def report_view(request, service_id):
+    if request.user.is_authenticated:
+        service = Services.objects.get(id=service_id)
+        reporter = CustomUser.objects.get(id=request.user.id)
+        content = request.POST.get("discription")
+        Report.objects.create(service=service, reporter=reporter, content=content)
+        return redirect(
+            reverse("service:service_detail", kwargs={"service_id": service_id})
+        )
+    else:
+        return redirect("basic:index")

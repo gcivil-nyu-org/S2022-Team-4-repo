@@ -16,4 +16,5 @@ urlpatterns = [
         views.service_detail_view,
         name="service_detail",
     ),
+    path("report/<int:service_id>", views.report_view, name="report"),
 ]
