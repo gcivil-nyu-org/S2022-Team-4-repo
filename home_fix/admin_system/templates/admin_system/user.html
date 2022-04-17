@@ -1,0 +1,44 @@
+{% extends "basic/layout.html" %}
+{% block title %} User List | Homefix{% endblock %}
+{% block body %}
+
+<br><br>
+<center>
+    <h1 class="display-5 fw-bold">User list</h1>
+</center>
+<br><br>
+<div class="container">
+    <table class=" table table-hover table-bordered">
+        <thead class="table-light">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">email</th>
+            <th scope="col">first_name</th>
+            <th scope="col">last_name</th>
+            <th scope="col">tier</th>
+            <th scope="col">coins</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users%}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            {% if user.tier == 0%}
+            <td>{{ product.0 }}</td>
+            {% endif%}
+              {% if user.tier == 1%}
+            <td>{{ product.1 }}</td>
+            {% endif%}
+              {% if user.tier == 2%}
+            <td>{{ product.2 }}</td>
+            {% endif%}
+            <td>{{ user.coin }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock%}

@@ -1,0 +1,45 @@
+{% extends "basic/layout.html" %}
+{% block title %} Report List | Homefix{% endblock %}
+{% block body %}
+
+<br><br>
+<center>
+    <h1 class="display-5 fw-bold">Report list</h1>
+</center>
+<br><br>
+<div class="container">
+    <table class=" table table-hover table-bordered">
+        <thead class="table-light">
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Report ID</th>
+            <th scope="col">Reporter</th>
+            <th scope="col">Service ID</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for report in reports%}
+        <tr>
+            <td>{{ report.timestamp }}</td>
+            <td>{{ report.id }}</td>
+            <td>{{ report.reporter }}</td>
+            <td><a href="{% url 'service:service_detail' report.service.id %}" target="_blank">{{report.service.id}}
+                </a></td>
+            <td>{{ report.status }}</td>
+            <td>
+                {% if report.status == "unsolved"%}
+                <form method="post">
+                    <input id="report_id" name="report_id" value="{{report.id}}" type="hidden">
+                    {% csrf_token %}
+                    <button>Confirm</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock  %}

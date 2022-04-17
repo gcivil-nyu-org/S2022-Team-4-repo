@@ -132,6 +132,7 @@ def pricing_view(request):
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
+            user.coin += 100
             user.save()
             return redirect("basic:index")
     else:

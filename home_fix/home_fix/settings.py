@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "map.apps.MapConfig",
     "basic.apps.BasicConfig",
     "user_center.apps.UserCenterConfig",
+    "admin_system.apps.AdminSystemConfig",
     "service.apps.ServiceConfig",
     "django.contrib.admin",
     "django.contrib.auth",
