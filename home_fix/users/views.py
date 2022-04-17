@@ -231,7 +231,10 @@ def stripe_webhook(request):
             amount=product.price,
             service_type="membership fee",
         )
-        user.coin += product.price
+        if user.tier == 2:
+            user.coin += 200
+        elif user.tier == 3:
+            user.coin += 300
         user.save()
 
     # Passed signature verification
