@@ -72,13 +72,11 @@
                             <h4 class="my-0 fw-normal">{{ product2.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">${{ product2.price }}<small
-                                    class="text-muted fw-light">/yr</small>
-                            </h1>
+                            <h1 class="card-title pricing-card-title">${{ product2.price }}</h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>Waiver commission fee</li>
+                                <li>Receive 200 coins</li>
+                                <li>5% commission fee</li>
                                 <li>Discount in Hardware Stores</li>
-                                <li>Priority support</li>
                             </ul>
                             {% csrf_token %}
                             <button type="button" class="checkout-button w-100 btn btn-lg btn-primary">Select</button>
@@ -94,13 +92,11 @@
                             <h4 class="my-0 fw-normal">{{ product3.name }}</h4>
                         </div>
                         <div class="card-body">
-                            <h1 class="card-title pricing-card-title">${{ product3.price }}<small
-                                    class="text-muted fw-light">/yr</small>
-                            </h1>
+                            <h1 class="card-title pricing-card-title">${{ product3.price }}</h1>
                             <ul class="list-unstyled mt-3 mb-4">
-                                <li>Get 200 coins every month</li>
+                                <li>Get a whopping 300 coins!</li>
+                                <li>No commission fee</li>
                                 <li>Discount in Hardware Stores</li>
-                                <li>Priority support</li>
                             </ul>
                             {% csrf_token %}
                             <button type="button" class="checkout-button w-100 btn btn-lg btn-primary">Select</button>
@@ -142,7 +138,11 @@
                     </tr>
                     <tr>
                         <th scope="row" class="text-start">Provide Service</th>
-                        <td></td>
+                        <td>
+                            <svg class="bi" width="24" height="24">
+                                <use xlink:href="#check"/>
+                            </svg>
+                        </td>
                         <td>
                             <svg class="bi" width="24" height="24">
                                 <use xlink:href="#check"/>
@@ -163,10 +163,10 @@
                             100 coins
                         </td>
                         <td>
-                            100 coins
+                            200 coins
                         </td>
                         <td>
-                            200 coins / Month
+                            300 coins
                         </td>
                     </tr>
                     <tr>
@@ -175,7 +175,7 @@
                         <td>
                             5%
                         </td>
-                        <td>20%
+                        <td>None
                         </td>
                     </tr>
                     <tr>
