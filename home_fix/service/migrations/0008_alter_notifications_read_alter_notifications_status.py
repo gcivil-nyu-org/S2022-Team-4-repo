@@ -15,9 +15,4 @@ class Migration(migrations.Migration):
             name="read",
             field=models.IntegerField(default=0),
         ),
-        migrations.AlterField(
-            model_name="notifications",
-            name="status",
-            field=models.CharField(max_length=64),
-        ),
     ]

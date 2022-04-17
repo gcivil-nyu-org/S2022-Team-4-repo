@@ -27,4 +27,5 @@ urlpatterns = [
     path("", include("django.contrib.auth.urls")),
     path("user_center/", include("user_center.urls")),
     path("forum/", include("forum.urls")),
+    path("admin_system/", include("admin_system.urls")),
 ]
