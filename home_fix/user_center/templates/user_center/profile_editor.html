@@ -3,7 +3,7 @@
 {% block head %}
     <link rel="stylesheet" href="{% static 'basic/features.css' %}"/>
 {% endblock %}
-{% block title %}Editor | Homefix{% endblock %}
+{% block title %}Profile Editor | Homefix{% endblock %}
 {% block body %}
 
     <style>
@@ -37,7 +37,7 @@
     <div class="container mb-5">
         <div class="row">
             <div class="col-md-6 mx-auto">
-                <form class="form-horizontal" role="form" method="post" id="customuser_form"
+                <form class="form-horizontal" role="form" method="POST" id="customuser_form"
                       action="{% url 'user_center:profile_editor' %}">
                     {% csrf_token %}
 
@@ -51,13 +51,13 @@
                                     <div class="row">
                                         <div class="col-sm-5" align="right">
                                             <img alt="User Pic"
-                                                 src="https://png.pngitem.com/pimgs/s/294-2947257_interface-icons-user-avatar-profile-user-avatar-png.png"
+                                                 src="https://github.com/mdo.png"
                                                  id="profile-image1" class="img-circle img-responsive">
                                             <br>
                                         </div>
                                         <div class="col">
-                                            <h4 style="color:#00b1b1;">{{ user.first_name }} {{ user.last_name }}</h4>
-                                            <h5>A Proud Homefixer</h5>
+                                            <h4 class="text-primary">{{ user.first_name }} {{ user.last_name }}</h4>
+                                            <h5 class="text-muted">A Proud Homefixer</h5>
                                         </div>
                                     </div>
                                     <br>
@@ -69,7 +69,7 @@
                                         <div class="col-sm-5">
                                             <div class="row">
                                                 <div class="col"></div>
-                                                <div class="col title">First Name :</div>
+                                                <div class="col title fw-bold">First Name :</div>
                                             </div>
                                         </div>
                                         <div class="col form-group">
@@ -85,7 +85,7 @@
                                         <div class="col-sm-5">
                                             <div class="row">
                                                 <div class="col"></div>
-                                                <div class="col title">Last Name :</div>
+                                                <div class="col title fw-bold">Last Name :</div>
                                             </div>
                                         </div>
                                         <div class="col form-group">
@@ -97,28 +97,30 @@
                                         <div class="bot-border"></div>
                                     </div>
 
-
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <div class="row">
                                                 <div class="col"></div>
-                                                <div class="col title">Gender :</div>
+                                                <div class="col title fw-bold">Gender :</div>
                                             </div>
                                         </div>
                                         <div class="col form-group">
-                                            <label for="gender" class="col-lg-5 control-label">Select Below</label>
+                                            <label for="gender" class="col-lg-5 control-label">Select</label>
                                             <div class="col-lg-4">
                                                 <select name="gender" id="gender" class="form-control" required>
                                                     {% if user.gender == 'male' %}
-                                                        <option value="male" selected>male</option>
-                                                        <option value="female">female</option>
+                                                        <option value="male" selected>Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="other">Other</option>
                                                     {% elif user.gender == 'female' %}
-                                                        <option value="male">male</option>
-                                                        <option value="female" selected>female</option>
+                                                        <option value="female" selected>Female</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="other">Other</option>
                                                     {% else %}
-                                                        <option value="" selected disabled hidden>Choose Here</option>
-                                                        <option value="male">male</option>
-                                                        <option value="female">female</option>
+                                                        <option value="" selected disabled hidden>Choose</option>
+                                                        <option value="male">Male</option>
+                                                        <option value="female">Female</option>
+                                                        <option value="other">Other</option>
                                                     {% endif %}
                                                 </select>
                                             </div>
@@ -127,12 +129,11 @@
                                         <div class="bot-border"></div>
                                     </div>
 
-
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <div class="row">
                                                 <div class="col"></div>
-                                                <div class="col title">Email ID :</div>
+                                                <div class="col title fw-bold">Email ID :</div>
                                             </div>
                                         </div>
                                         <div class="col form-group">
@@ -144,12 +145,11 @@
                                         <div class="bot-border"></div>
                                     </div>
 
-
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <div class="row">
                                                 <div class="col"></div>
-                                                <div class="col title">Location:</div>
+                                                <div class="col title fw-bold">Street:</div>
                                             </div>
                                         </div>
                                         <div class="col form-group">
@@ -159,77 +159,47 @@
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="bot-border"></div>
-                                        <div class="col justify-content-center align-self-center text-center mt-3 form-group">
-                                            <a class="btn btn-success" href=""
-                                               role="button">Submit</a>
-                                        </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <div class="row">
+                                                <div class="col"></div>
+                                                <div class="col title fw-bold">State:</div>
+                                            </div>
+                                        </div>
+                                        <div class="col form-group">
+                                            <input type="text" name="street" value="{{ user.state }}"
+                                                   id="search_location" class="form-control" style="width:15em"
+                                                   maxlength="128" id="id_street">
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="bot-border"></div>
+                                    </div>
 
-                                    {#                                    <div class="row">#}
-                                    {#                                        <div class="col-sm-5">#}
-                                    {#                                            <div class="row">#}
-                                    {#                                                <div class="col"></div>#}
-                                    {#                                                <div class="col title">State :</div>#}
-                                    {#                                            </div>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="col form-group">#}
-                                    {#                                            <input type="text" name="state" value="{{ user.state }}"#}
-                                    {#                                                   class="form-control"#}
-                                    {#                                                   maxlength="128" style="width:15em" id="id_state">#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="clearfix"></div>#}
-                                    {#                                        <div class="bot-border"></div>#}
-                                    {#                                    </div>#}
-                                    {##}
-                                    {##}
-                                    {#                                    <div class="row">#}
-                                    {#                                        <div class="col-sm-5">#}
-                                    {#                                            <div class="row">#}
-                                    {#                                                <div class="col"></div>#}
-                                    {#                                                <div class="col title">Country :</div>#}
-                                    {#                                            </div>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="col form-group">#}
-                                    {#                                            <input type="text" name="country" value="{{ user.country }}"#}
-                                    {#                                                   class="form-control" style="width:15em"#}
-                                    {#                                                   maxlength="128" id="id_country">#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="clearfix"></div>#}
-                                    {#                                        <div class="bot-border"></div>#}
-                                    {#                                    </div>#}
-                                    {##}
-                                    {##}
-                                    {#                                    <div class="row">#}
-                                    {#                                        <div class="col-sm-5">#}
-                                    {#                                            <div class="row">#}
-                                    {#                                                <div class="col"></div>#}
-                                    {#                                                <div class="col title">Zip Code :</div>#}
-                                    {#                                            </div>#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="col form-group">#}
-                                    {#                                            <input type="text" name="zip" value="{{ user.zip }}" class="form-control"#}
-                                    {#                                                   maxlength="128" style="width:15em"#}
-                                    {#                                                   id="id_zip">#}
-                                    {#                                        </div>#}
-                                    {#                                        <div class="clearfix"></div>#}
-                                    {#                                        <div class="bot-border"></div>#}
-                                    {#                                    </div>#}
-
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <div class="row">
+                                                <div class="col"></div>
+                                                <div class="col title fw-bold">Country:</div>
+                                            </div>
+                                        </div>
+                                        <div class="col form-group">
+                                            <input type="text" name="street" value="{{ user.country }}"
+                                                   id="search_location" class="form-control" style="width:15em"
+                                                   maxlength="128" id="id_street">
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="bot-border"></div>
+                                    </div>
+                                    <div class="col justify-content-center align-self-center text-center mt-3 form-group">
+                                        <a class="btn btn-success" href=""
+                                           role="button" type="submit">Submit</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-{#                    <center>#}
-{#                        <div class="form-group">#}
-{#                            <label class="col-md-3 control-label"></label>#}
-{#                            <div class="col-md-8">#}
-{#                                <button class="btn btn-lg btn-primary btn-success" type="submit">submit</button>#}
-{#                                <span></span>#}
-{#                                <input type="reset" class="btn btn-default" value="Cancel">#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </center>#}
                 </form>
             </div>
         </div>
@@ -253,12 +223,13 @@
         </div>
     </footer>
 
-    <script>
-        function initMap() {
-            var input = document.getElementById('search_location');
-            var autocomplete = new google.maps.places.Autocomplete(input)
-        }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>
+{#    Google Maps API Autosearch #}
+{#    <script>#}
+{#        function initMap() {#}
+{#            var input = document.getElementById('search_location');#}
+{#            var autocomplete = new google.maps.places.Autocomplete(input)#}
+{#        }#}
+{#    </script>#}
+{#    <script async defer#}
+{#            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>#}
 {% endblock %}
