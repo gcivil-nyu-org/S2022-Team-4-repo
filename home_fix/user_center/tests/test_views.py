@@ -72,7 +72,8 @@ class TestViews(TestCase):
 
         # post request
         self.client.post(
-            reverse("user_center:profile_editor"), data={"gender": "female"}
+            reverse("user_center:profile_editor"),
+            data={"gender": "female", "first_name": "sdf", "last_name": "sfd"},
         )
         user = CustomUser.objects.get(email=self.email_login)
         self.assertEqual(user.gender, "female")
