@@ -4,11 +4,12 @@ from django.shortcuts import render, redirect
 from service.models import Order, Services
 from user_center.models import Transaction
 from user_center.query import provide_list_query
-from users.forms import CustomUserChangeForm
+from users.forms import CustomUserChangeForm, LocationForm
 from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
 from service.models import Notifications
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 from utils import dictfetchall
@@ -40,6 +41,27 @@ def profile_editor_view(request):
             )
     else:
         return redirect("basic:index")
+
+
+def edit_location(request):
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            form = LocationForm(request.POST, instance=request.user)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.save()
+                return redirect("user_center:profile")
+            else:
+                # add alert in future
+                return render(request, "users/edit_location.html")
+        #   illegal request. this user should not visit this page
+        else:
+            # logout(request)
+            return redirect("basic:index")
+    else:
+        # re = request
+        # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
+        return render(request, "user_center/edit_location.html")
 
 
 def request_view(request):
@@ -183,10 +205,11 @@ def provide_cancel_view(request, order_id):
         order.status = "cancel"
         service.visible = True
         transaction = order.transaction
-        transaction.status = "cancel"
-        transaction.save()
         user = order.user
-        user.coin += transaction.amount
+        if transaction is not None:
+            transaction.status = "cancel"
+            transaction.save()
+            user.coin += transaction.amount
         user.save()
         order.save()
         service.save()
@@ -210,6 +233,26 @@ def notification_view(request):
             "user_center/notifications.html",
             context={"user": user, "notification": notification},
         )
+    else:
+        return redirect("basic:index")
+
+
+@csrf_exempt
+def read_notification_view(request):
+    if request.user.is_authenticated:
+        id = request.POST["id"]
+        notification = Notifications.objects.get(id=id)
+        if request.user == notification.user:
+            if notification.read == 2:
+                notification.read = 3
+            else:
+                notification.read = 1
+        if request.user == notification.service.user:
+            if notification.read == 1:
+                notification.read = 3
+            else:
+                notification.read = 2
+        notification.save()
     else:
         return redirect("basic:index")
 

@@ -83,11 +83,33 @@ a {
   margin-left: 20px;
 }
 </style>
+<script>
+    function read(notification_id)
+    {
+        console.log(notification_id)
+        $.ajax({
+                type: "POST",
+                url: "/user_center/read_notification/",
+                data: {
+                    "id": notification_id
+                },
+                success: function (data) {
+                    console.log("success");
+                    console.log(data);
+                },
+                failure: function (data) {
+                    console.log("failure");
+                    console.log(data);
+                },
+            });
+    }
+</script>
 <section class="section-50">
     <div class="container">
       <h3 class="m-b-50 heading-line">Notifications <i class="fa fa-bell text-muted"></i></h3>
       <div class="notification-ui_dd-content">
 {% for service in notification%}
+<div onclick="read({{service.id}})">
 <div class="notification-list notification-list--unread">
     <div class="notification-list_content">
       <div class="notification-list_detail">
@@ -103,17 +125,22 @@ a {
         {% if service.status == "accepted" and service.service.user != user%}
         <p><b>{{service.service.user.first_name}}</b> accepted {{service.service.service_category}} service</p>
         {% endif %}
+        {% if service.read == 3 or service.read == 1 and service.user == user or service.read == 2 and service.service.user == user %}
+        ✓✓
+        {% else %}
+        ✓
+        {% endif %}
         <p class="text-muted"><small>{{service.timestamp}}</small></p>
       </div>
     </div>
   </div>
+</div>
 {% endfor %}
 </div>
-
+</div>
 </section>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> 
-<script src="<a href="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" target="_blank" rel="noreferrer noopener">https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js</a>"></script> 
-<script src="<a href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" target="_blank" rel="noreferrer noopener">https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js</a>"></script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script></body>
 </html>
 {% endblock %}

@@ -109,7 +109,7 @@ def set_location(request, user_id):
                 return render(request, "users/set_location.html", context)
         #   illegal request. this user should not visit this page
         else:
-            logout(request)
+            # logout(request)
             return redirect("basic:index")
     else:
         # re = request
@@ -132,6 +132,7 @@ def pricing_view(request):
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
+            user.coin += 100
             user.save()
             return redirect("basic:index")
     else:
@@ -230,7 +231,10 @@ def stripe_webhook(request):
             amount=product.price,
             service_type="membership fee",
         )
-        user.coin += product.price
+        if user.tier == 2:
+            user.coin += 200
+        elif user.tier == 3:
+            user.coin += 300
         user.save()
 
     # Passed signature verification

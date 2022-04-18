@@ -63,61 +63,105 @@
             </div>
         </div>
         <div id="map"></div>
-        <script>let map;
-        var lat = "{{services.lat}}"
-        lat = parseFloat(lat)
-        var long = "{{services.long}}"
-        long = parseFloat(long)
-
-        function initMap() {
-            const mapOptions = {
-                zoom: 14,
-                center: {lat: lat, lng: long},
-            };
-
-            map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-            const marker = new google.maps.Marker({
-                // The below line is equivalent to writing:
-                // position: new google.maps.LatLng(-34.397, 150.644)
-                position: {lat: lat, lng: long},
-                map: map,
-            });
-            // You can use a LatLng literal in place of a google.maps.LatLng object when
-            // creating the Marker object. Once the Marker object is instantiated, its
-            // position will be available as a google.maps.LatLng object. In this case,
-            // we retrieve the marker's position using the
-            // google.maps.LatLng.getPosition() method.
-            const infowindow = new google.maps.InfoWindow({
-                content: "<p>Marker Location:" + marker.getPosition() + "</p>",
-            });
-
-            google.maps.event.addListener(marker, "click", () => {
-                infowindow.open(map, marker);
-            });
-        }</script>
-        <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-        <script
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
-                async></script>
-
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
 
             <div>
                 {%if message %}
-                 <button type="button" class="btn btn-warning btn-lg px-4 gap-3"
-                       > {{message}}
+                <button type="button" class="btn btn-warning btn-lg px-4 gap-3"
+                > {{message}}
                 </button>
                 {% else %}
                 <button type="button" class="btn btn-primary btn-lg px-4 gap-3"
                         onclick="location.href='{% url 'service:request_service_confirm' services.id%}'">Take
                 </button>
                 {% endif %}
-                <button type="button" class="btn btn-outline-dark btn-lg px-4"
+                <button type="button" class="btn btn-outline-dark btn-lg px-4" data-toggle="modal"
+                        data-target="#exampleModal"
                         onclick="">Report Service
                 </button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form role="form" method="post" role="form" id="report_form"
+                                  action="{% url 'service:report' services.id%}">
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="id_discription" class="col-form-label">We will review your report in
+                                            1-3 days:</label>
+                                        <textarea type="text" class="form-control" id="id_discription"
+                                                  name="discription"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn btn-secondary" data-dismiss="modal"
+                                            onclick="formReset()"
+                                    >Close
+                                    </button>
+                                    <button class="btn btn-primary" type="submit">
+                                        Save changes
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+<script>let map;
+var lat = "{{services.lat}}"
+lat = parseFloat(lat)
+var long = "{{services.long}}"
+long = parseFloat(long)
 
-    {% endblock %}
+function initMap() {
+    const mapOptions = {
+        zoom: 14,
+        center: {lat: lat, lng: long},
+    };
+
+    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    const marker = new google.maps.Marker({
+        // The below line is equivalent to writing:
+        // position: new google.maps.LatLng(-34.397, 150.644)
+        position: {lat: lat, lng: long},
+        map: map,
+    });
+    // You can use a LatLng literal in place of a google.maps.LatLng object when
+    // creating the Marker object. Once the Marker object is instantiated, its
+    // position will be available as a google.maps.LatLng object. In this case,
+    // we retrieve the marker's position using the
+    // google.maps.LatLng.getPosition() method.
+    const infowindow = new google.maps.InfoWindow({
+        content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+    });
+
+    google.maps.event.addListener(marker, "click", () => {
+        infowindow.open(map, marker);
+    });
+
+}
+
+function formReset() {
+    document.getElementById("report_form").reset();
+}
+
+2
+</script>
+<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+<script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
+        async>
+</script>
+
+{% endblock %}
