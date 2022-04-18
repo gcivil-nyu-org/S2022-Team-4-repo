@@ -109,7 +109,7 @@ def set_location(request, user_id):
                 return render(request, "users/set_location.html", context)
         #   illegal request. this user should not visit this page
         else:
-            logout(request)
+            # logout(request)
             return redirect("basic:index")
     else:
         # re = request

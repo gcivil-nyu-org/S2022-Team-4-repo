@@ -61,10 +61,27 @@ class CustomUserChangeForm(UserChangeForm):
             "first_name",
             "last_name",
             "gender",
-            "country",
-            "lat",
-            "long",
-            "state",
-            "street",
-            "zip",
+            # "country",
+            # "lat",
+            # "long",
+            # "state",
+            # "street",
+            # "zip",
         )
+
+    def clean_first_name(self):
+        first_name = self.data.get("first_name")
+        pattern = r"[a-zA-Z]+"
+        if re.match(pattern, first_name):
+            return self.data.get("first_name")
+        else:
+            self.add_error("first_name", "Please enter First Name")
+            return None
+
+    def clean_last_name(self):
+        last_name = self.data.get("last_name")
+        pattern = r"[a-zA-Z]+"
+        if re.match(pattern, last_name) is None:
+            self.add_error("last_name", "Please enter Last Name")
+            return None
+        return self.data.get("last_name")

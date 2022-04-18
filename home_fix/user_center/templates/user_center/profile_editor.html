@@ -105,22 +105,21 @@
                                             </div>
                                         </div>
                                         <div class="col form-group">
-                                            <label for="gender" class="col-lg-5 control-label">Select</label>
                                             <div class="col-lg-4">
                                                 <select name="gender" id="gender" class="form-control" required>
-                                                    {% if user.gender == 'male' %}
-                                                        <option value="male" selected>Male</option>
-                                                        <option value="female">Female</option>
-                                                        <option value="other">Other</option>
-                                                    {% elif user.gender == 'female' %}
-                                                        <option value="female" selected>Female</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="other">Other</option>
+                                                    {% if user.gender == 'Male' %}
+                                                        <option value="Male" selected>Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Other">Other</option>
+                                                    {% elif user.gender == 'Female' %}
+                                                        <option value="Female" selected>Female</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Other">Other</option>
                                                     {% else %}
                                                         <option value="" selected disabled hidden>Choose</option>
-                                                        <option value="male">Male</option>
-                                                        <option value="female">Female</option>
-                                                        <option value="other">Other</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Other">Other</option>
                                                     {% endif %}
                                                 </select>
                                             </div>
@@ -145,56 +144,73 @@
                                         <div class="bot-border"></div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <div class="row">
-                                                <div class="col"></div>
-                                                <div class="col title fw-bold">Street:</div>
-                                            </div>
-                                        </div>
-                                        <div class="col form-group">
-                                            <input type="text" name="street" value="{{ user.street }}"
-                                                   id="search_location" class="form-control" style="width:15em"
-                                                   maxlength="128" id="id_street">
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="bot-border"></div>
-                                    </div>
+{#                                    <div class="row">#}
+{#                                        <div class="col-sm-5">#}
+{#                                            <div class="row">#}
+{#                                                <div class="col"></div>#}
+{#                                                <div class="col title fw-bold">Street:</div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col form-group">#}
+{#                                            <input type="text" name="street" value="{{ user.street }}"#}
+{#                                                   id="search_location" class="form-control" style="width:15em"#}
+{#                                                   maxlength="128" id="id_street" disabled>#}
+{#                                        </div>#}
+{#                                        <div class="clearfix"></div>#}
+{#                                        <div class="bot-border"></div>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="row">#}
+{#                                        <div class="col-sm-5">#}
+{#                                            <div class="row">#}
+{#                                                <div class="col"></div>#}
+{#                                                <div class="col title fw-bold">State:</div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col form-group">#}
+{#                                            <input type="text" name="street" value="{{ user.state }}"#}
+{#                                                   id="search_location" class="form-control" style="width:15em"#}
+{#                                                   maxlength="128" id="id_street" disabled>#}
+{#                                        </div>#}
+{#                                        <div class="clearfix"></div>#}
+{#                                        <div class="bot-border"></div>#}
+{#                                    </div>#}
+{##}
+{#                                    <div class="row">#}
+{#                                        <div class="col-sm-5">#}
+{#                                            <div class="row">#}
+{#                                                <div class="col"></div>#}
+{#                                                <div class="col title fw-bold">Country:</div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="col form-group">#}
+{#                                            <input type="text" name="street" value="{{ user.country }}"#}
+{#                                                   id="search_location" class="form-control" style="width:15em"#}
+{#                                                   maxlength="128" id="id_street" disabled>#}
+{#                                        </div>#}
+{#                                        <div class="clearfix"></div>#}
+{#                                        <div class="bot-border"></div>#}
+{#                                    </div>#}
 
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <div class="row">
                                                 <div class="col"></div>
-                                                <div class="col title fw-bold">State:</div>
+                                                <div class="col title fw-bold">Location :</div>
                                             </div>
                                         </div>
                                         <div class="col form-group">
-                                            <input type="text" name="street" value="{{ user.state }}"
-                                                   id="search_location" class="form-control" style="width:15em"
-                                                   maxlength="128" id="id_street">
+                                            <a href="{% url 'user_center:edit_location' %}" class="link-primary">Edit
+                                                Location</a>
                                         </div>
                                         <div class="clearfix"></div>
                                         <div class="bot-border"></div>
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col-sm-5">
-                                            <div class="row">
-                                                <div class="col"></div>
-                                                <div class="col title fw-bold">Country:</div>
-                                            </div>
-                                        </div>
-                                        <div class="col form-group">
-                                            <input type="text" name="street" value="{{ user.country }}"
-                                                   id="search_location" class="form-control" style="width:15em"
-                                                   maxlength="128" id="id_street">
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="bot-border"></div>
-                                    </div>
                                     <div class="col justify-content-center align-self-center text-center mt-3 form-group">
-                                        <a class="btn btn-success" href=""
-                                           role="button" type="submit">Submit</a>
+                                        <button class="btn btn-success"
+                                                role="button" type="submit">Submit
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -223,13 +239,13 @@
         </div>
     </footer>
 
-{#    Google Maps API Autosearch #}
-{#    <script>#}
-{#        function initMap() {#}
-{#            var input = document.getElementById('search_location');#}
-{#            var autocomplete = new google.maps.places.Autocomplete(input)#}
-{#        }#}
-{#    </script>#}
-{#    <script async defer#}
-{#            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>#}
+    {#    Google Maps API Autosearch #}
+    {#    <script>#}
+    {#        function initMap() {#}
+    {#            var input = document.getElementById('search_location');#}
+    {#            var autocomplete = new google.maps.places.Autocomplete(input)#}
+    {#        }#}
+    {#    </script>#}
+    {#    <script async defer#}
+    {#            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1REQSuSVU372fX246ZMlahmJyg53GSno&libraries=places&callback=initMap"></script>#}
 {% endblock %}
