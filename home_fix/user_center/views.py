@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from service.models import Order, Services
 from user_center.models import Transaction
 from user_center.query import provide_list_query
-from users.forms import CustomUserChangeForm
+from users.forms import CustomUserChangeForm, LocationForm
 from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
@@ -41,6 +41,27 @@ def profile_editor_view(request):
             )
     else:
         return redirect("basic:index")
+
+
+def edit_location(request):
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            form = LocationForm(request.POST, instance=request.user)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.save()
+                return redirect("user_center:profile")
+            else:
+                # add alert in future
+                return render(request, "users/edit_location.html")
+        #   illegal request. this user should not visit this page
+        else:
+            # logout(request)
+            return redirect("basic:index")
+    else:
+        # re = request
+        # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
+        return render(request, "user_center/edit_location.html")
 
 
 def request_view(request):
