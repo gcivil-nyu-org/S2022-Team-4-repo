@@ -85,11 +85,19 @@ def request_finish_view(request, order_id):
     if request.user.is_authenticated:
         request_user_id = request.user.id
         order = Order.objects.get(id=order_id)
-        # this order doesn't belong to this user
+
+        # from orders, get serivce details
+        service_id = order.service_id
+        service_details = Services.objects.get(id=service_id)
+        # in the service details, get provider id
+        provider_user_id = service_details.user_id
+        # using the providor ID, get the details to add coins.
+
         if order.user.id != request_user_id:
             return redirect("basic:index")
         else:
-            request_user = order.user
+            request_user = CustomUser.objects.get(id=provider_user_id)
+            # request_user = order.user
             order.status = "finished"
             order.save()
             transaction = order.transaction
