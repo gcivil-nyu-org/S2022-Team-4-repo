@@ -1,12 +1,16 @@
 import logging
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+import boto3
+from botocore.exceptions import ClientError
 from admin_system.models import Report
 from user_center.models import Transaction
 from users.models import CustomUser
 from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
+import sys
+from uuid import uuid4
 
 # Create your views here.
 
@@ -72,12 +76,23 @@ def request_service_confirm_view(request, service_id):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         service = Services.objects.get(id=service_id)
-        user.coin -= service.coins_charged
+        ##Commission logic here
+        tier = user.tier
+
+        commission = 0
+        if tier == 1:
+            commission = int(float(service.coins_charged) * 0.20)
+        elif tier == 2:
+            commission = int(float(service.coins_charged) * 0.05)
+
+        #        commission = int(float(service.coins_charged) * (0.05))
+        user.coin -= service.coins_charged + commission
         user.save()
         transaction = Transaction.objects.create(
             sender=user.email,
             receiver=service.user.email,
             amount=service.coins_charged,
+            commission_fee=commission,
             service_type=service.service_category,
             status="pending",
         )
@@ -99,14 +114,35 @@ def service_detail_view(request, service_id):
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
         message = ""
-        if user.coin < services[0].coins_charged:
+
+        # check tier
+        tier = user.tier
+
+        commission = 0
+        if tier == 1:
+            commission = int(float(services[0].coins_charged) * 0.20)
+        elif tier == 2:
+            commission = int(float(services[0].coins_charged) * 0.05)
+
+        if user.coin < (services[0].coins_charged + commission):
             message = "not enough coins"
         logging.warning(services)
         user.password = None
+
+        is_same = False
+        if services[0].user_id == user.id:
+            is_same = True
+
         return render(
             request,
             "service/service_detail.html",
-            context={"user": user, "services": services[0], "message": message},
+            context={
+                "is_same": is_same,
+                "user": user,
+                "services": services[0],
+                "message": message,
+                "commission": commission,
+            },
         )
     else:
         return redirect("basic:index")
@@ -137,10 +173,29 @@ def report_view(request, service_id):
     if request.user.is_authenticated:
         service = Services.objects.get(id=service_id)
         reporter = CustomUser.objects.get(id=request.user.id)
-        content = request.POST.get("discription")
+        content = request.POST.get("description")
         Report.objects.create(service=service, reporter=reporter, content=content)
         return redirect(
             reverse("service:service_detail", kwargs={"service_id": service_id})
         )
     else:
         return redirect("basic:index")
+
+
+@csrf_exempt
+def false_view(request):
+    file = request.FILES["file"]
+    name = str(uuid4().int)
+    session = boto3.Session(
+        aws_access_key_id="AKIAXO2D75YYWPK622XB",
+        aws_secret_access_key="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",
+    )
+
+    s3 = session.resource("s3")
+
+    object = s3.Object("homefix", name + ".jpg")
+
+    object.put(Body=file)
+    logging.warning("https://homefix.s3.amazonaws.com/" + name + ".jpg")
+    response_data = {"link": "https://homefix.s3.amazonaws.com/" + name + ".jpg"}
+    return JsonResponse(response_data, status=200)

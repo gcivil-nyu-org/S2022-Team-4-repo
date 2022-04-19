@@ -52,8 +52,8 @@
             <div class="modal-body">
               <form action="/forum/" method="POST"> {% csrf_token %}
               <div class="form-group">
-                <label for="exampleFormControlTextarea1">Post Your Question Here</label>
-                <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+                <label for="exampleFormControlTextarea1">Post Your Question Here(500 Chars)</label>
+                <textarea class="form-control" id="content" name="content" rows="3" maxlength="500"></textarea>
               </div>
             </div>
             <div class="modal-footer">

@@ -6,8 +6,9 @@
 {% endblock %}
 {% block title %}Offer Services | Homefix{% endblock %}
 {% block body %}
+    <br><br>
     <center>
-        <h1 class="display-7 fw-bold lead mb-4">CREATE SERVICES</h1>
+        <h1 class="display-5 fw-bold lead mb-4">CREATE SERVICES</h1>
     </center>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -25,7 +26,7 @@
                     </div>
                 </div>
                 <label class="form-label">Description</label>
-                <textarea></textarea>
+                <textarea id="textarea"></textarea>
             </div>
         </div>
     </div>
@@ -37,7 +38,14 @@
 
     <!-- Initialize the editor. -->
     <script>
-        let editor = new FroalaEditor('textarea');
+        let editor = new FroalaEditor('textarea', {
+    theme: 'dark',
+    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+    imageUploadURL: false,
+    fileUpload: false,
+    events: {
+    }
+  });
     </script>
 
     <!-- Location Searchbar -->

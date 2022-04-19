@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from service.models import Order, Services
 from user_center.models import Transaction
 from user_center.query import provide_list_query
-from users.forms import CustomUserChangeForm
+from users.forms import CustomUserChangeForm, LocationChangeForm
 from users.models import CustomUser
 from django.db import connection
 from django.db.models import Q
@@ -43,6 +43,27 @@ def profile_editor_view(request):
         return redirect("basic:index")
 
 
+def edit_location(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = LocationChangeForm(request.POST, instance=request.user)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.save()
+                return redirect("user_center:profile")
+            else:
+                # add alert in future
+                return render(request, "user_center/edit_location.html")
+        else:
+            # re = request
+            # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
+            return render(request, "user_center/edit_location.html")
+    #   illegal request. this user should not visit this page
+    else:
+        # logout(request)
+        return redirect("basic:index")
+
+
 def request_view(request):
     if request.user.is_authenticated:
         user_id = request.user.id
@@ -64,11 +85,19 @@ def request_finish_view(request, order_id):
     if request.user.is_authenticated:
         request_user_id = request.user.id
         order = Order.objects.get(id=order_id)
-        # this order doesn't belong to this user
+
+        # from orders, get serivce details
+        service_id = order.service_id
+        service_details = Services.objects.get(id=service_id)
+        # in the service details, get provider id
+        provider_user_id = service_details.user_id
+        # using the providor ID, get the details to add coins.
+
         if order.user.id != request_user_id:
             return redirect("basic:index")
         else:
-            request_user = order.user
+            request_user = CustomUser.objects.get(id=provider_user_id)
+            # request_user = order.user
             order.status = "finished"
             order.save()
             transaction = order.transaction
@@ -179,16 +208,23 @@ def provide_cancel_view(request, order_id):
         service_user_id = request.user.id
         order = Order.objects.get(id=order_id)
         service = order.service
+
         if service.user.id != service_user_id:
             return redirect("basic:index")
         order.status = "cancel"
         service.visible = True
         transaction = order.transaction
         user = order.user
+        tier = user.tier
+        commission = 0
         if transaction is not None:
             transaction.status = "cancel"
             transaction.save()
-            user.coin += transaction.amount
+            if tier == 1:
+                commission = int(float(transaction.amount) * 0.20)
+            elif tier == 2:
+                commission = int(float(transaction.amount) * 0.05)
+            user.coin += transaction.amount + commission
         user.save()
         order.save()
         service.save()

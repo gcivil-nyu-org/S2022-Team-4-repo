@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from users.forms import CustomUserCreationForm, LocationForm
+from users.forms import CustomUserCreationForm, LocationChangeForm
 
 
 class TestForms(TestCase):
@@ -23,7 +23,7 @@ class TestForms(TestCase):
         self.assertEquals(form2.is_valid(), False)
 
     def test_location_form(self):
-        form = LocationForm(
+        form = LocationChangeForm(
             data={
                 "country": "country",
                 "lat": 111,
@@ -34,7 +34,7 @@ class TestForms(TestCase):
             }
         )
         self.assertEquals(form.is_valid(), False)
-        form = LocationForm(
+        form = LocationChangeForm(
             data={
                 "country": "country",
                 "lat": 111,

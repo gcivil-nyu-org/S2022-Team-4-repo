@@ -6,7 +6,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 
 from user_center.models import Transaction
-from .forms import CustomUserCreationForm, LocationForm, CustomUserChangeForm
+from .forms import CustomUserCreationForm, LocationChangeForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -99,7 +99,7 @@ def set_location(request, user_id):
     context = {"user_id": user_id}
     if request.method == "POST":
         if request.user.id == user_id and request.user.is_authenticated:
-            form = LocationForm(request.POST, instance=request.user)
+            form = LocationChangeForm(request.POST, instance=request.user)
             if form.is_valid():
                 user = form.save(commit=False)
                 user.save()
@@ -109,7 +109,7 @@ def set_location(request, user_id):
                 return render(request, "users/set_location.html", context)
         #   illegal request. this user should not visit this page
         else:
-            logout(request)
+            # logout(request)
             return redirect("basic:index")
     else:
         # re = request

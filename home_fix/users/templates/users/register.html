@@ -83,7 +83,7 @@
                         </div>
                         <div class="input-group form-outline mb-3">
                             <input type="password" placeholder="Re-type Password"
-                                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" id="password2" name="password2"
+                                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,20}$" id="password2" name="password2"
                                    class="form-control form-control" required/>
                             <button class="btn btn-outline-primary" type="button" onclick="toggle2()">
                                 <i class="fa-solid fa-eye-slash" id="eye2"></i>
@@ -96,7 +96,8 @@
                             {% endif %}
                         </div>
                         <div id="passwordHelpBlock" class="form-text">
-                            Your password must be 8-20 characters long, contain letters, symbols and numbers.
+                            {# Try it out: https://regex101.com/r/yW4aZ3/171 #}
+                            Your password must be 8-20 characters long, contain uppercase and lowercase letters, symbols and numbers.
                         </div>
                         <br>
                         <!-- Submit button -->

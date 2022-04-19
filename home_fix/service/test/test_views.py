@@ -1,7 +1,9 @@
 from django.test import TestCase
 from django.urls import reverse
 
+from service.models import Services
 from users.models import CustomUser
+from utils import auth_test
 
 
 class TestViews(TestCase):
@@ -44,3 +46,22 @@ class TestViews(TestCase):
         )
         response = self.client.get(reverse("service:request_service"))
         self.assertTemplateUsed(response, "service/request_services.html")
+
+    def test_report_view(self):
+        # didn't login
+        service = Services.objects.create(user=self.test_user)
+        response = self.client.get(
+            reverse("service:report", kwargs={"service_id": service.id})
+        )
+        self.assertEquals(response.status_code, 302)
+
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.post(
+            reverse("service:report", kwargs={"service_id": service.id}),
+            {"description": "xxx"},
+        )
+        self.assertEquals(response.status_code, 302)
