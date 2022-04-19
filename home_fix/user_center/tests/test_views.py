@@ -132,6 +132,35 @@ class TestViews(TestCase):
         self.assertRedirects(response, reverse("user_center:provide"))
 
     def test_notification_view(self):
-        auth_test(self, "user_center:profile")
+        auth_test(self, "user_center:notifications")
         response = self.client.get(reverse("user_center:notifications"))
         self.assertTemplateUsed(response, "user_center/notifications.html")
+
+    def test_edit_location(self):
+        auth_test(self, "user_center:edit_location")
+        response = self.client.get(reverse("user_center:edit_location"))
+        self.assertTemplateUsed(response, "user_center/edit_location.html")
+        response = self.client.post(
+            reverse("user_center:edit_location"),
+            {
+                "country": "xx",
+                "lat": "1.1",
+                "long": "1.1",
+                "state": "1234sdf",
+                "street": "sfd",
+                "zip": 10005,
+            },
+        )
+        self.assertRedirects(response, reverse("user_center:profile"))
+        response = self.client.post(
+            reverse("user_center:edit_location"),
+            {
+                "country": "xx",
+                "lat": "1.1",
+                "long": "1.1",
+                "state": "1234sdf",
+                "street": "sfd",
+                "zip": "xxx",
+            },
+        )
+        self.assertTemplateUsed(response, "user_center/edit_location.html")
