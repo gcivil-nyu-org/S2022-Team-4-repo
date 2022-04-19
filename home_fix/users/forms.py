@@ -40,7 +40,7 @@ class CustomUserCreationForm(UserCreationForm):
         return self.data.get("last_name")
 
 
-class LocationForm(UserChangeForm):
+class LocationChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ("country", "lat", "long", "state", "street", "zip")

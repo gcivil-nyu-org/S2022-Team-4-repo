@@ -152,7 +152,7 @@ def report_view(request, service_id):
     if request.user.is_authenticated:
         service = Services.objects.get(id=service_id)
         reporter = CustomUser.objects.get(id=request.user.id)
-        content = request.POST.get("discription")
+        content = request.POST.get("description")
         Report.objects.create(service=service, reporter=reporter, content=content)
         return redirect(
             reverse("service:service_detail", kwargs={"service_id": service_id})
