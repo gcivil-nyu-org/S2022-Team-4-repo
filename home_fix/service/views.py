@@ -72,12 +72,15 @@ def request_service_confirm_view(request, service_id):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         service = Services.objects.get(id=service_id)
-        user.coin -= service.coins_charged
+        ##Commission logic here
+        commission = int(float(service.coins_charged) * (0.05))
+        user.coin -= service.coins_charged + commission
         user.save()
         transaction = Transaction.objects.create(
             sender=user.email,
             receiver=service.user.email,
             amount=service.coins_charged,
+            commission_fee=commission,
             service_type=service.service_category,
             status="pending",
         )
@@ -103,10 +106,22 @@ def service_detail_view(request, service_id):
             message = "not enough coins"
         logging.warning(services)
         user.password = None
+
+        is_same = False
+        if services[0].user_id == user.id:
+            is_same = True
+
+        commission = int(float(services[0].coins_charged) * 0.05)
         return render(
             request,
             "service/service_detail.html",
-            context={"user": user, "services": services[0], "message": message},
+            context={
+                "is_same": is_same,
+                "user": user,
+                "services": services[0],
+                "message": message,
+                "commission": commission,
+            },
         )
     else:
         return redirect("basic:index")

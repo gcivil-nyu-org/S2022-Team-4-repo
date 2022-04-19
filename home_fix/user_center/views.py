@@ -209,7 +209,8 @@ def provide_cancel_view(request, order_id):
         if transaction is not None:
             transaction.status = "cancel"
             transaction.save()
-            user.coin += transaction.amount
+            commission = int(float(transaction.amount) * 0.05)
+            user.coin += transaction.amount + commission
         user.save()
         order.save()
         service.save()
