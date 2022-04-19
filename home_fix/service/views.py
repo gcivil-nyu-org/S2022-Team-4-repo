@@ -1,12 +1,16 @@
 import logging
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-
+import boto3
+from botocore.exceptions import ClientError
 from admin_system.models import Report
 from user_center.models import Transaction
 from users.models import CustomUser
 from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
+import sys
+from uuid import uuid4
 
 # Create your views here.
 
@@ -159,3 +163,22 @@ def report_view(request, service_id):
         )
     else:
         return redirect("basic:index")
+
+
+@csrf_exempt
+def false_view(request):
+    file = request.FILES["file"]
+    name = str(uuid4().int)
+    session = boto3.Session(
+        aws_access_key_id="AKIAXO2D75YYWPK622XB",
+        aws_secret_access_key="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",
+    )
+
+    s3 = session.resource("s3")
+
+    object = s3.Object("homefix", name + ".jpg")
+
+    object.put(Body=file)
+    logging.warning("https://homefix.s3.amazonaws.com/" + name + ".jpg")
+    response_data = {"link": "https://homefix.s3.amazonaws.com/" + name + ".jpg"}
+    return JsonResponse(response_data, status=200)
