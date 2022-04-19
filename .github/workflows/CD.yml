@@ -18,4 +18,4 @@ jobs:
         heroku_app_name : homefix-dev
         heroku_api_key: d9fd30af-92c8-4394-81dd-ed92100791f2
         heroku_email: 'yz7726@nyu.edu'
-        branch: "develop"
+        branch: "main"
