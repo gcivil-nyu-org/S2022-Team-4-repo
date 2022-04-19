@@ -58,9 +58,15 @@
                 {{services.country}}
             </div>
             <div class="form-outline mb-4">
+                {%if not is_same %}
                 <b> <label class="form-label" for="country">Service Charge</label></b>
                 <br>
-                <p><p>{{services.coins_charged}} + </p> <p style="color: red;">{{commission}}.00 (Commssion Fee)</p></p>
+                <p><p>{{services.coins_charged}} </p><p style="color: red;">+ {{commission}}.00 (Commssion Fee)</p></p>
+                {% else %}
+                <b> <label class="form-label" for="country">Coins Charged by You</label></b>
+                <br>
+                <p><p>{{services.coins_charged}} </p>
+                {% endif %}
             </div>
         </div>
         <div id="map"></div>

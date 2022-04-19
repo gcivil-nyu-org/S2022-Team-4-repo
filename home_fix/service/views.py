@@ -77,7 +77,15 @@ def request_service_confirm_view(request, service_id):
         user = CustomUser.objects.get(id=user_id)
         service = Services.objects.get(id=service_id)
         ##Commission logic here
-        commission = int(float(service.coins_charged) * (0.05))
+        tier = user.tier
+
+        commission = 0
+        if tier == 1:
+            commission = int(float(service.coins_charged) * 0.20)
+        elif tier == 2:
+            commission = int(float(service.coins_charged) * 0.05)
+
+        #        commission = int(float(service.coins_charged) * (0.05))
         user.coin -= service.coins_charged + commission
         user.save()
         transaction = Transaction.objects.create(

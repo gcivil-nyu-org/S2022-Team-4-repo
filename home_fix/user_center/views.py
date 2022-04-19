@@ -208,16 +208,22 @@ def provide_cancel_view(request, order_id):
         service_user_id = request.user.id
         order = Order.objects.get(id=order_id)
         service = order.service
+
         if service.user.id != service_user_id:
             return redirect("basic:index")
         order.status = "cancel"
         service.visible = True
         transaction = order.transaction
         user = order.user
+        tier = user.tier
+        commission = 0
         if transaction is not None:
             transaction.status = "cancel"
             transaction.save()
-            commission = int(float(transaction.amount) * 0.05)
+            if tier == 1:
+                commission = int(float(transaction.amount) * 0.20)
+            elif tier == 2:
+                commission = int(float(transaction.amount) * 0.05)
             user.coin += transaction.amount + commission
         user.save()
         order.save()
