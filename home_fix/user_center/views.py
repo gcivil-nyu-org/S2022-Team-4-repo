@@ -44,24 +44,24 @@ def profile_editor_view(request):
 
 
 def edit_location(request):
-    if request.method == "POST":
-        if request.user.is_authenticated:
-            form = LocationForm(request.POST, instance=request.user)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            form = LocationChangeForm(request.POST, instance=request.user)
             if form.is_valid():
                 user = form.save(commit=False)
                 user.save()
                 return redirect("user_center:profile")
             else:
                 # add alert in future
-                return render(request, "users/edit_location.html")
-        #   illegal request. this user should not visit this page
+                return render(request, "user_center/edit_location.html")
         else:
-            # logout(request)
-            return redirect("basic:index")
+            # re = request
+            # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
+            return render(request, "user_center/edit_location.html")
+    #   illegal request. this user should not visit this page
     else:
-        # re = request
-        # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
-        return render(request, "user_center/edit_location.html")
+        # logout(request)
+        return redirect("basic:index")
 
 
 def request_view(request):
