@@ -106,7 +106,17 @@ def service_detail_view(request, service_id):
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
         message = ""
-        if user.coin < services[0].coins_charged:
+
+        # check tier
+        tier = user.tier
+
+        commission = 0
+        if tier == 1:
+            commission = int(float(services[0].coins_charged) * 0.20)
+        elif tier == 2:
+            commission = int(float(services[0].coins_charged) * 0.05)
+
+        if user.coin < (services[0].coins_charged + commission):
             message = "not enough coins"
         logging.warning(services)
         user.password = None
@@ -115,7 +125,6 @@ def service_detail_view(request, service_id):
         if services[0].user_id == user.id:
             is_same = True
 
-        commission = int(float(services[0].coins_charged) * 0.05)
         return render(
             request,
             "service/service_detail.html",
