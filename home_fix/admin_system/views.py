@@ -14,10 +14,15 @@ def report_list_view(request):
             )
         else:
             report_id = request.POST.get("report_id")
-            report = Report.objects.get(id=report_id)
+            list1 = Report.objects.all().order_by("-timestamp")
+            try:
+                report = Report.objects.get(id=report_id)
+            except Report.DoesNotExist:
+                return render(
+                    request, "admin_system/report.html", context={"reports": list1}
+                )
             report.status = "solved"
             report.save()
-            list1 = Report.objects.all().order_by("-timestamp")
             return render(
                 request, "admin_system/report.html", context={"reports": list1}
             )
