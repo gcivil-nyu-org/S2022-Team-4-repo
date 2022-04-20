@@ -119,11 +119,7 @@ class TestViews(TestCase):
         self.assertRedirects(response, reverse("basic:index"))
 
     def test_default(self):
-        response = self.client.login(
-            email=self.test_user.email, password=self.test_user.password
-        )
-        print("this is response")
-        print(response)
+        self.client.login(email=self.test_user.email, password=self.test_user.password)
 
     def test_set_location_get(self):
         response = self.client.get(reverse("users:set_location", kwargs={"user_id": 1}))

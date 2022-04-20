@@ -44,7 +44,6 @@ def offer_service_view(request):
         if find != -1:
             a = a[:find]
         # can add some params validation
-        print(request.POST)
         Services.objects.create(
             service_category=request.POST["category"],
             user=request.user,
