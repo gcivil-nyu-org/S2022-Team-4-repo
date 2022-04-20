@@ -54,10 +54,22 @@ class TestViews(TestCase):
         response = self.client.get(reverse("user_center:transaction"))
         self.assertTemplateUsed(response, "user_center/transaction.html")
 
-    # def test_request_finish_view(self):
-    #
-    #     auth_test(self, "user_center:request_finish")
-    #     response = self.client.get(reverse("user_center:transaction", kwargs={"order_id": 1}))
+    def test_request_finish_view(self):
+        service = Services.objects.create(user=self.test_user)
+        order = Order.objects.create(service=service, user=self.test_user)
+        response = self.client.get(
+            reverse("user_center:request_finish", kwargs={"order_id": order.id})
+        )
+        self.assertEquals(response.status_code, 302)
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(
+            reverse("user_center:request_finish", kwargs={"order_id": 1})
+        )
+        self.assertEquals(response.status_code, 302)
 
     def test_profile_view(self):
         auth_test(self, "user_center:profile")
@@ -164,3 +176,10 @@ class TestViews(TestCase):
             },
         )
         self.assertTemplateUsed(response, "user_center/edit_location.html")
+
+    # def test_read_notification_view(self):
+    #     auth_test(self, "user_center:read_notifications")
+    #     try:
+    #         self.client.post(reverse("user_center:read_notifications"), {"id": 1})
+    #     except ValueError:
+    #         print("xxxx")

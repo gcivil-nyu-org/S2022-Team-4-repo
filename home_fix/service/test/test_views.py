@@ -65,3 +65,73 @@ class TestViews(TestCase):
             {"description": "xxx"},
         )
         self.assertEquals(response.status_code, 302)
+
+    def test_offer_service_view(self):
+        # it should redirect to index
+        response = self.client.get(reverse("service:offer_service"))
+        self.assertRedirects(response, reverse("basic:index"))
+
+        # it should render offer_service page
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(reverse("service:offer_service"))
+        self.assertTemplateUsed(response, "service/offer_services.html")
+
+        # it should create a service
+        response = self.client.post(
+            reverse("service:offer_service"),
+            data={
+                "category": "null",
+                "description": "nul",
+                "coins": 1,
+                "address": "sss",
+                "state": "xx",
+                "country": "xxx",
+                "postalcode": 10001,
+                "long": 1.1,
+                "lat": 1.1,
+            },
+        )
+        self.assertRedirects(response, reverse("service:request_service"))
+
+    def test_services_locations(self):
+        auth_test(self, "service:services_locations")
+        response = self.client.get(reverse("service:services_locations"))
+        self.assertTemplateUsed(response, "service/services_locations.html")
+
+    def test_service_detail_view(self):
+        Services.objects.create(user=self.test_user)
+        # not login
+        response = self.client.get(
+            reverse("service:service_detail", kwargs={"service_id": 0})
+        )
+        self.assertEquals(response.status_code, 302)
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(
+            reverse("service:service_detail", kwargs={"service_id": 1})
+        )
+        self.assertTemplateUsed(response, "service/service_detail.html")
+
+    def test_request_service_confirm_view(self):
+        Services.objects.create(user=self.test_user)
+        # not login
+        response = self.client.get(
+            reverse("service:request_service_confirm", kwargs={"service_id": 0})
+        )
+        self.assertEquals(response.status_code, 302)
+        # login
+        self.client.post(
+            reverse("users:login"),
+            data={"email": self.email_login, "password": self.password},
+        )
+        response = self.client.get(
+            reverse("service:request_service_confirm", kwargs={"service_id": 1})
+        )
+        self.assertEquals(response.status_code, 302)

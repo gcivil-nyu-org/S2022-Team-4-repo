@@ -104,8 +104,8 @@ def request_finish_view(request, order_id):
             if transaction is not None:
                 transaction.status = "finished"
                 transaction.save()
-            request_user.coin += transaction.amount
-            request_user.save()
+                request_user.coin += transaction.amount
+                request_user.save()
             return redirect("user_center:request")
     else:
         return redirect("basic:index")
@@ -254,9 +254,13 @@ def notification_view(request):
 
 @csrf_exempt
 def read_notification_view(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.method == "POST":
         id = request.POST["id"]
-        notification = Notifications.objects.get(id=id)
+        try:
+            notification = Notifications.objects.get(id=id)
+        except Notifications.DoesNotExist:
+            # do something
+            return
         if request.user == notification.user:
             if notification.read == 2:
                 notification.read = 3
