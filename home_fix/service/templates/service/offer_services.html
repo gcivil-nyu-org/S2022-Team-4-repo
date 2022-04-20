@@ -14,7 +14,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      rel="stylesheet">
     <div class="container my-5">
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-6">
@@ -130,6 +132,27 @@
             // can fetch lat and long from google
             var lat = document.getElementById('lat').value;
             var long = document.getElementById('long').value;
+            toastr.options.positionClass= "toast-bottom-center";
+            if(description.length==0)
+            {
+                toastr.warning('Please fill description')
+                return;
+            }
+            else if(category.length==0)
+            {
+                toastr.warning('Please fill in category')
+                return;
+            }
+            else if(coins.length==0)
+            {
+                toastr.warning('Please enter the amount of coins')
+                return;
+            }
+            else if(address.length==0 || state.length==0 || postalcode.length==0 || country.length==0 || lat==0 || long==0)
+            {
+                toastr.warning('Please enter your address')
+                return;
+            }
             $.ajax({
                 type: "POST",
                 url: "/service/offer_service/",
