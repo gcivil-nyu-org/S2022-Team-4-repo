@@ -4,8 +4,9 @@ from django.conf import settings
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-
+from datetime import timedelta, datetime
 from user_center.models import Transaction
+from utils import get_client_ip
 from .forms import CustomUserCreationForm, LocationChangeForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,10 +17,12 @@ from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
-from .models import CustomUser, Product
+from .models import CustomUser, Product, LoginRecord
 from home_fix.settings import EMAIL_HOST_USER
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
 # stripe.TaxRate.create(
 #     display_name="Commission Fee",
 #     inclusive=False,
@@ -81,7 +84,15 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST.get("email")
         password = request.POST.get("password")
+        last_time = datetime.now()
+        time_slot = timedelta(minutes=5)
 
+        failure_time = LoginRecord.objects.filter(
+            timestamp__range=(last_time - time_slot, last_time)
+        ).count()
+        if failure_time >= 5:
+            err = "You fail too many times, so your count has been blocked for a while"
+            return render(request, "users/login.html", {"error": err})
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -89,6 +100,8 @@ def login_view(request):
             return redirect("basic:index")
         else:
             err = "Username or password is incorrect"
+            ip = get_client_ip(request)
+            LoginRecord.objects.create(ip=ip)
             return render(request, "users/login.html", {"error": err})
 
     return render(request, "users/login.html")
@@ -132,7 +145,6 @@ def pricing_view(request):
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
-            user.coin += 100
             user.save()
             return redirect("basic:index")
     else:

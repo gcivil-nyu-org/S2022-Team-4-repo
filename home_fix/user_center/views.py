@@ -31,10 +31,17 @@ def profile_editor_view(request):
         user = CustomUser.objects.get(id=user_id)
         user.password = None
         if request.method == "POST":
+
             form = CustomUserChangeForm(request.POST, instance=request.user)
             if form.is_valid():
                 form.save()
-            return redirect("user_center:profile")
+                return redirect("user_center:profile")
+            else:
+                return render(
+                    request,
+                    "user_center/profile_editor.html",
+                    context={"info": "wrong paramters"},
+                )
         else:
             return render(
                 request, "user_center/profile_editor.html", context={"user": user}
@@ -117,7 +124,7 @@ def transaction_view(request):
         user = CustomUser.objects.get(id=user_id)
         transactions = Transaction.objects.filter(
             Q(sender=user.email) | Q(receiver=user.email)
-        )
+        ).order_by("-timestamp")
         return render(
             request,
             "user_center/transaction.html",
