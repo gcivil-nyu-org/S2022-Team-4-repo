@@ -42,11 +42,14 @@ def search_hardware(request):
             continue
         temp.append(float(i.lat))
         temp.append(float(i.long))
+        temp.append(i.first_name)
+        temp.append(i.email)
+        temp.append(i.street)
         locations.append(temp)
     userloc = [float(request.user.lat), float(request.user.long)]
 
     return render(
         request,
         "map/locs_hardware.html",
-        context={"base": locations, "user_loc": userloc},
+        context={"base": locations, "user_loc": userloc, "users": users},
     )
