@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from cgitb import handler
 from django.contrib import admin
 from django.urls import path, include
 
@@ -29,3 +30,6 @@ urlpatterns = [
     path("forum/", include("forum.urls")),
     path("admin_system/", include("admin_system.urls")),
 ]
+
+handler404 = "basic.views.handle_not_found"
+# handler500= "basic.views.handle_not_found"
