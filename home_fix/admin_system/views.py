@@ -5,6 +5,11 @@ from service.models import Services
 from users.models import CustomUser, Product
 
 
+#
+# def admin_homepage(request):
+#     return render(request, "admin_system/index.html")
+
+
 def report_list_view(request):
     if request.user.is_authenticated and request.user.is_staff:
         if request.method == "GET":
@@ -14,6 +19,7 @@ def report_list_view(request):
             )
         else:
             report_id = request.POST.get("report_id")
+            report_action = request.POST.get("report_action")
             list1 = Report.objects.all().order_by("-timestamp")
             try:
                 report = Report.objects.get(id=report_id)
@@ -21,13 +27,20 @@ def report_list_view(request):
                 return render(
                     request, "admin_system/report.html", context={"reports": list1}
                 )
-            report.status = "solved"
-            report.save()
+            if report_action == "0":
+                service = report.service
+                service.visible = False
+                service.save()
+                report.status = "deleted"
+                report.save()
+            if report_action == "1":
+                report.status = "withdraw"
+                report.save()
             return render(
                 request, "admin_system/report.html", context={"reports": list1}
             )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def user_list_view(request):
@@ -40,4 +53,4 @@ def user_list_view(request):
             context={"users": users, "product": product},
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")

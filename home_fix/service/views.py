@@ -29,7 +29,7 @@ def request_service_view(request):
             context={"user": user, "services": services},
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 @csrf_exempt
@@ -63,11 +63,20 @@ def offer_service_view(request):
             user_id = request.user.id
             user = CustomUser.objects.get(id=user_id)
             user.password = None
+            tier = user.tier
+            print(tier)
+            print("Printing the tier")
+            can_create = True
+            if tier == -1:
+                can_create = False
+
             return render(
-                request, "service/offer_services.html", context={"user": user}
+                request,
+                "service/offer_services.html",
+                context={"user": user, "can_create": can_create},
             )
         else:
-            return redirect("basic:index")
+            return redirect("users:login")
 
 
 def request_service_confirm_view(request, service_id):
@@ -104,7 +113,7 @@ def request_service_confirm_view(request, service_id):
         )
         return redirect("user_center:request")
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def service_detail_view(request, service_id):
@@ -144,7 +153,7 @@ def service_detail_view(request, service_id):
             },
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def services_locations(request):
@@ -178,7 +187,7 @@ def report_view(request, service_id):
             reverse("service:service_detail", kwargs={"service_id": service_id})
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 @csrf_exempt
