@@ -131,7 +131,6 @@ def pricing_view(request):
     if request.method == "POST":
         try:
             tier = int(request.POST.get("tier"))
-            print(tier)
         except ValueError:
             return redirect("basic:index")
         if tier not in [-1, 1, 2, 3]:
@@ -141,15 +140,11 @@ def pricing_view(request):
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
             if user.tier == 1:
-                user.coins = 100
+                user.coin = 100
             user.save()
             return redirect("basic:index")
     else:
         user = CustomUser.objects.get(id=request.user.id)
-        # transactions = Transaction.objects.filter(
-        #   Q(sender=user.email) | Q(receiver=user.email)
-        # ).order_by("-timestamp")
-
         used_free = 0
         print(user.tier)
         if user.tier < 0:
@@ -223,6 +218,8 @@ class CreateCheckoutSessionView(View):
 # Stripe webhook
 @csrf_exempt
 def stripe_webhook(request):
+    print("I AM IN CSRF")
+
     payload = request.body
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None
