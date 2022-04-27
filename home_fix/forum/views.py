@@ -5,10 +5,6 @@ from django.contrib.auth import get_user_model
 from users.models import CustomUser
 
 # Create your views here.
-def index(request):
-    return HttpResponse("Hello Geeks")
-
-
 def forum(request):
     # profile = Profile.objects.all()
     # print("Test")

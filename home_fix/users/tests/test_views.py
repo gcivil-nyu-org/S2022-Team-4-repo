@@ -189,7 +189,7 @@ class TestViews(TestCase):
     def test_pricing_view_get(self):
         # not login
         response = self.client.get(reverse("users:pricing"))
-        self.assertRedirects(response, reverse("basic:index"))
+        self.assertRedirects(response, reverse("users:login"))
         # login
         self.client.post(
             reverse("users:login"),

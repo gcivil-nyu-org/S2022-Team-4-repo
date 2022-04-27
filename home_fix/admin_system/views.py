@@ -31,7 +31,7 @@ def report_list_view(request):
                 request, "admin_system/report.html", context={"reports": list1}
             )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def user_list_view(request):
@@ -44,4 +44,4 @@ def user_list_view(request):
             context={"users": users, "product": product},
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")

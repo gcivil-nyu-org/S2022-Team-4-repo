@@ -1,5 +1,5 @@
 import stripe
-
+from django.utils import timezone
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.views import View
@@ -74,7 +74,7 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST.get("email")
         password = request.POST.get("password")
-        last_time = datetime.now()
+        last_time = timezone.now()
         time_slot = timedelta(minutes=5)
 
         failure_time = LoginRecord.objects.filter(
@@ -117,7 +117,7 @@ def set_location(request, user_id):
         #   illegal request. this user should not visit this page
         else:
             # logout(request)
-            return redirect("basic:index")
+            return redirect("users:login")
     else:
         # re = request
         # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
@@ -127,7 +127,7 @@ def set_location(request, user_id):
 # Pricing
 def pricing_view(request):
     if not request.user.is_authenticated:
-        return redirect("basic:index")
+        return redirect("users:login")
     if request.method == "POST":
         try:
             tier = int(request.POST.get("tier"))

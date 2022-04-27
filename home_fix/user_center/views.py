@@ -22,7 +22,7 @@ def profile_view(request):
         user.password = None
         return render(request, "user_center/profile.html", context={"user": user})
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def profile_editor_view(request):
@@ -47,7 +47,7 @@ def profile_editor_view(request):
                 request, "user_center/profile_editor.html", context={"user": user}
             )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def edit_location(request):
@@ -68,7 +68,7 @@ def edit_location(request):
     #   illegal request. this user should not visit this page
     else:
         # logout(request)
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def request_view(request):
@@ -85,7 +85,7 @@ def request_view(request):
             context={"order_list": order_list, "info": request.info},
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def request_finish_view(request, order_id):
@@ -115,7 +115,7 @@ def request_finish_view(request, order_id):
                 request_user.save()
             return redirect("user_center:request")
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def transaction_view(request):
@@ -131,9 +131,8 @@ def transaction_view(request):
             context={"transactions": transactions},
         )
         # get a list of transaction
-
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def provide_view(request):
@@ -170,9 +169,8 @@ def provide_view(request):
             "user_center/my_provide_page.html",
             context={"provide_list": result},
         )
-
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def provide_accept_view(request, order_id):
@@ -193,9 +191,8 @@ def provide_accept_view(request, order_id):
         )
         return redirect("user_center:provide")
         # get a list of transaction
-
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def provide_delete_view(request, service_id):
@@ -207,7 +204,7 @@ def provide_delete_view(request, service_id):
         service.delete()
         return redirect("user_center:provide")
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def provide_cancel_view(request, order_id):
@@ -238,7 +235,7 @@ def provide_cancel_view(request, order_id):
         return redirect("user_center:provide")
 
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 def notification_view(request):
@@ -256,7 +253,7 @@ def notification_view(request):
             context={"user": user, "notification": notification},
         )
     else:
-        return redirect("basic:index")
+        return redirect("users:login")
 
 
 @csrf_exempt
@@ -280,14 +277,4 @@ def read_notification_view(request):
                 notification.read = 2
         notification.save()
     else:
-        return redirect("basic:index")
-
-
-#
-# def contact_view(request):
-#     if request.user.is_authenticated:
-#         user_id = request.user.id
-#         user = CustomUser.objects.get(id=user_id)
-#         print(user)
-#     else:
-#         return redirect("basic:index")
+        return redirect("users:login")
