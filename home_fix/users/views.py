@@ -22,18 +22,6 @@ from home_fix.settings import EMAIL_HOST_USER
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
-
-# stripe.TaxRate.create(
-#     display_name="Commission Fee",
-#     inclusive=False,
-#     percentage=7.25,
-#     country="US",
-#     state="NY",
-#     jurisdiction="US - NY",
-#     description="NY Sales Tax",
-# )
-
-
 # Create your views here.
 
 # Regitration / Sign Up

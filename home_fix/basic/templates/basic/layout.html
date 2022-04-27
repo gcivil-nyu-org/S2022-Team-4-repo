@@ -31,71 +31,90 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-<!--Navbar-->
-<header class="p-3 bg-dark text-white shadow">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a class="navbar-brand" href="{% url 'basic:index' %}" style="color: white;">
-                <strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{% url 'map:search_hardware' %}" class="nav-link px-2 text-white">Maps</a></li>
-                <li><a href="{% url 'users:pricing' %}" class="nav-link px-2 text-white">Pricing</a></li>
-                <li><a href="{% url 'forum:Forum' %}" class="nav-link px-2 text-white">Forums</a></li>
-                <li><a href="{% url 'users:about' %}" class="nav-link px-2 text-white">About</a></li>
-            </ul>
-
-            {% if user.is_authenticated %}
-            {% if not user.is_staff %}
-            <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
-                <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
-            </a>
-            {% endif %}
-            <div class="dropdown">
-                <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
-                   id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32"
-                         class="rounded-circle">
-                </a>
-                <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                    {% if user.is_staff %}
-                    <li><a class="dropdown-item" href="{% url 'admin_system:report' %}">Reports</a></li>
-                    <li><a class="dropdown-item" href="{% url 'admin_system:user' %}">Users</a></li>
-                    {% else %}
-                    <li><a class="dropdown-item" href="{% url 'user_center:profile' %}">Profile</a></li>
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'user_center:transaction' %}">Transactions</a>
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'user_center:request' %}">My Requests</a></li>
-                    <li><a class="dropdown-item" href="{% url 'user_center:provide' %}">My Services</a></li>
-                    {% endif %}
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="{% url 'users:logout' %}">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-                    </a>
-                    </li>
-
-                </ul>
+{% if user.is_staff %}
+    <!--Admin Navbar-->
+    <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="{% url 'basic:index' %}"><strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong></a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        {#    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">#}
+        <div class="navbar-nav">
+            <div class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="{% url 'users:logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
             </div>
-
-            {% else %}
-
-            <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2"
-                        onclick="location.href='{% url 'users:login' %}'">Login
-                </button>
-                <button type="button" class="btn btn-warning"
-                        onclick="location.href='{% url 'users:register' %}'">Sign-up
-                </button>
-            </div>
-
-            {% endif %}
         </div>
-    </div>
-</header>
+    </header>
+
+{% else %}
+    <!--Navbar-->
+    <header class="p-3 bg-dark text-white shadow">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="navbar-brand" href="{% url 'basic:index' %}" style="color: white;">
+                    <strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="{% url 'map:search_hardware' %}" class="nav-link px-2 text-white">Maps</a></li>
+                    <li><a href="{% url 'users:pricing' %}" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="{% url 'forum:Forum' %}" class="nav-link px-2 text-white">Forums</a></li>
+                    <li><a href="{% url 'users:about' %}" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                {% if user.is_authenticated %}
+                    {% if not user.is_staff %}
+                        <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
+                            <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
+                        </a>
+                    {% endif %}
+                    <div class="dropdown">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="My Pic" width="32" height="32"
+                                 class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            {% if user.is_staff %}
+                                <li><a class="dropdown-item" href="{% url 'admin_system:report' %}">Reports</a></li>
+                                <li><a class="dropdown-item" href="{% url 'admin_system:user' %}">Users</a></li>
+                            {% else %}
+                                <li><a class="dropdown-item" href="{% url 'user_center:profile' %}">Profile</a></li>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'user_center:transaction' %}">Transactions</a>
+                                </li>
+                                <li><a class="dropdown-item" href="{% url 'user_center:request' %}">My Requests</a></li>
+                                <li><a class="dropdown-item" href="{% url 'user_center:provide' %}">My Services</a></li>
+                            {% endif %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'users:logout' %}">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                            </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                {% else %}
+
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-light me-2"
+                                onclick="location.href='{% url 'users:login' %}'">Login
+                        </button>
+                        <button type="button" class="btn btn-warning"
+                                onclick="location.href='{% url 'users:register' %}'">Sign-up
+                        </button>
+                    </div>
+
+                {% endif %}
+            </div>
+        </div>
+    </header>
+{% endif %}
 {% block body %} {% endblock %}
 
 <!-- Bootstrap Scripts -->
