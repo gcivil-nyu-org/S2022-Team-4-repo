@@ -10,7 +10,6 @@
     <center>
         <h1 class="display-5 fw-bold lead mb-4">CREATE SERVICES</h1>
     </center>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -179,10 +178,18 @@
             });
         }
     </script>
+    {% if can_create == True %}
     <center>
         <button type="submit" class="btn btn-outline-primary btn-block mb-4 shadow" onclick="createService()">Create
         </button>
     </center>
+    <br><br>
+    {% else %}
+    <center>
+    <button type="button" class="btn btn-warning btn-lg px-4 gap-3"> <a class="service" style="text-decoration: None; color: black;" href="{% url 'users:pricing' %}"> <h4>BUY A PLAN TO CREATE SERVICE</h4></a></button>
+    </center>
+    <br><br>
+    {% endif %}
     <script>
         window.onload = (event) => {
 

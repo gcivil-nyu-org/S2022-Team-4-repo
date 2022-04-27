@@ -63,8 +63,17 @@ def offer_service_view(request):
             user_id = request.user.id
             user = CustomUser.objects.get(id=user_id)
             user.password = None
+            tier = user.tier
+            print(tier)
+            print("Printing the tier")
+            can_create = True
+            if tier == -1:
+                can_create = False
+
             return render(
-                request, "service/offer_services.html", context={"user": user}
+                request,
+                "service/offer_services.html",
+                context={"user": user, "can_create": can_create},
             )
         else:
             return redirect("basic:index")
