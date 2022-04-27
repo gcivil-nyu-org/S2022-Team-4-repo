@@ -1,11 +1,12 @@
 import stripe
-
+from django.utils import timezone
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-
+from datetime import timedelta, datetime
 from user_center.models import Transaction
+from utils import get_client_ip
 from .forms import CustomUserCreationForm, LocationChangeForm, CustomUserChangeForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,20 +17,12 @@ from .tokens import account_activation_token
 from django.utils.encoding import force_bytes, force_str
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
-from .models import CustomUser, Product
+from .models import CustomUser, Product, LoginRecord
 from home_fix.settings import EMAIL_HOST_USER
+from django.db.models import Q
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-# stripe.TaxRate.create(
-#     display_name="Commission Fee",
-#     inclusive=False,
-#     percentage=7.25,
-#     country="US",
-#     state="NY",
-#     jurisdiction="US - NY",
-#     description="NY Sales Tax",
-# )
-
 
 # Create your views here.
 
@@ -81,7 +74,15 @@ def login_view(request):
     if request.method == "POST":
         username = request.POST.get("email")
         password = request.POST.get("password")
+        last_time = timezone.now()
+        time_slot = timedelta(minutes=5)
 
+        failure_time = LoginRecord.objects.filter(
+            timestamp__range=(last_time - time_slot, last_time)
+        ).count()
+        if failure_time >= 5:
+            err = "You fail too many times, so your count has been blocked for a while"
+            return render(request, "users/login.html", {"error": err})
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -89,6 +90,8 @@ def login_view(request):
             return redirect("basic:index")
         else:
             err = "Username or password is incorrect"
+            ip = get_client_ip(request)
+            LoginRecord.objects.create(ip=ip)
             return render(request, "users/login.html", {"error": err})
 
     return render(request, "users/login.html")
@@ -103,14 +106,18 @@ def set_location(request, user_id):
             if form.is_valid():
                 user = form.save(commit=False)
                 user.save()
-                return redirect("users:pricing")
+                TheUser = CustomUser.objects.get(id=request.user.id)
+                TheUser.tier = -1
+                TheUser.coin = 0
+                TheUser.save()
+                return redirect("basic:index")
             else:
                 # add alert in future
                 return render(request, "users/set_location.html", context)
         #   illegal request. this user should not visit this page
         else:
             # logout(request)
-            return redirect("basic:index")
+            return redirect("users:login")
     else:
         # re = request
         # if request.user.id == int(form.data.get("id")) and request.user.is_authenticated:
@@ -120,22 +127,33 @@ def set_location(request, user_id):
 # Pricing
 def pricing_view(request):
     if not request.user.is_authenticated:
-        return redirect("basic:index")
+        return redirect("users:login")
     if request.method == "POST":
         try:
             tier = int(request.POST.get("tier"))
         except ValueError:
             return redirect("basic:index")
-        if tier not in [1]:
+        if tier not in [-1, 1, 2, 3]:
             # wrong params
             return redirect("basic:index")
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
-            user.coin += 100
+            if user.tier == 1:
+                user.coin = 100
             user.save()
             return redirect("basic:index")
     else:
+        user = CustomUser.objects.get(id=request.user.id)
+        used_free = 0
+        print(user.tier)
+        if user.tier < 0:
+            print("USER DO NOT HAVE FREE YET bla")
+            used_free = 0
+        else:
+            print("USER ALREADY HAS TAKEN FREE")
+            used_free = 1
+
         product1 = Product.objects.get(tier=1)
         product2 = Product.objects.get(tier=2)
         product3 = Product.objects.get(tier=3)
@@ -148,6 +166,7 @@ def pricing_view(request):
                 "product2": product2,
                 "product3": product3,
                 "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
+                "used_free": used_free,
             },
         )
 
@@ -199,6 +218,8 @@ class CreateCheckoutSessionView(View):
 # Stripe webhook
 @csrf_exempt
 def stripe_webhook(request):
+    print("I AM IN CSRF")
+
     payload = request.body
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
     event = None

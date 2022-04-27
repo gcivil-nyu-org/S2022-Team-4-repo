@@ -15,6 +15,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField("first name", max_length=128, blank=True)
     last_name = models.CharField("last name", max_length=128, blank=True)
     gender = models.CharField("gender", max_length=32, blank=True)
+    profile_pic = models.ImageField(null=True, blank=True)
     street = models.CharField("street", max_length=64, blank=True, null=True)
     state = models.CharField("state", max_length=64, blank=True, null=True)
     country = models.CharField("country", max_length=64, blank=True, null=True)
@@ -30,7 +31,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(default=timezone.now)
     tier = models.IntegerField(default=1)
     coin = models.DecimalField(
-        max_digits=20, decimal_places=2, default=0.0, blank=True, null=True
+        max_digits=20, decimal_places=2, default=100, blank=True, null=True
     )
     # coins = models.IntegerField(default=0)
     # set email as primary key
@@ -60,3 +61,8 @@ class Product(models.Model):
 
     # def get_display_price(self):  # diplay price in dollars
     #     return "{0:.2f}".format(self.price / 100)
+
+
+class LoginRecord(models.Model):
+    ip = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)

@@ -69,7 +69,7 @@ class TestViews(TestCase):
     def test_offer_service_view(self):
         # it should redirect to index
         response = self.client.get(reverse("service:offer_service"))
-        self.assertRedirects(response, reverse("basic:index"))
+        self.assertRedirects(response, reverse("users:login"))
 
         # it should render offer_service page
         # login
