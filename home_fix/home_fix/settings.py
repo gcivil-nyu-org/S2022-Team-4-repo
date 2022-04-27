@@ -164,7 +164,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 
-SITE_ID = 4
+SITE_ID = 5
 LOGIN_REDIRECT_URL = "/users/register/"
 
 # Additional configuration settings

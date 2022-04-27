@@ -19,6 +19,8 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import get_user_model
 from .models import CustomUser, Product, LoginRecord
 from home_fix.settings import EMAIL_HOST_USER
+from django.db.models import Q
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -116,7 +118,11 @@ def set_location(request, user_id):
             if form.is_valid():
                 user = form.save(commit=False)
                 user.save()
-                return redirect("users:pricing")
+                TheUser = CustomUser.objects.get(id=request.user.id)
+                TheUser.tier = -1
+                TheUser.coin = 0
+                TheUser.save()
+                return redirect("basic:index")
             else:
                 # add alert in future
                 return render(request, "users/set_location.html", context)
@@ -137,17 +143,34 @@ def pricing_view(request):
     if request.method == "POST":
         try:
             tier = int(request.POST.get("tier"))
+            print(tier)
         except ValueError:
             return redirect("basic:index")
-        if tier not in [1]:
+        if tier not in [-1, 1, 2, 3]:
             # wrong params
             return redirect("basic:index")
         else:
             user = CustomUser.objects.get(id=request.user.id)
             user.tier = tier
+            if user.tier == 1:
+                user.coins = 100
             user.save()
             return redirect("basic:index")
     else:
+        user = CustomUser.objects.get(id=request.user.id)
+        # transactions = Transaction.objects.filter(
+        #   Q(sender=user.email) | Q(receiver=user.email)
+        # ).order_by("-timestamp")
+
+        used_free = 0
+        print(user.tier)
+        if user.tier < 0:
+            print("USER DO NOT HAVE FREE YET bla")
+            used_free = 0
+        else:
+            print("USER ALREADY HAS TAKEN FREE")
+            used_free = 1
+
         product1 = Product.objects.get(tier=1)
         product2 = Product.objects.get(tier=2)
         product3 = Product.objects.get(tier=3)
@@ -160,6 +183,7 @@ def pricing_view(request):
                 "product2": product2,
                 "product3": product3,
                 "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,
+                "used_free": used_free,
             },
         )
 
