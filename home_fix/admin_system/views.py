@@ -4,6 +4,10 @@ from admin_system.models import Report
 from service.models import Services
 from users.models import CustomUser, Product
 
+#
+# def admin_homepage(request):
+#     return render(request, "admin_system/index.html")
+
 
 def report_list_view(request):
     if request.user.is_authenticated and request.user.is_staff:
