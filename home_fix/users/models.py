@@ -15,6 +15,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField("first name", max_length=128, blank=True)
     last_name = models.CharField("last name", max_length=128, blank=True)
     gender = models.CharField("gender", max_length=32, blank=True)
+    profile_pic = models.ImageField(null=True, blank=True)
     street = models.CharField("street", max_length=64, blank=True, null=True)
     state = models.CharField("state", max_length=64, blank=True, null=True)
     country = models.CharField("country", max_length=64, blank=True, null=True)
