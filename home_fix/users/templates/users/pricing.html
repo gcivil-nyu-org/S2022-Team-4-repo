@@ -56,6 +56,7 @@
                                 <li>20% commission fee</li>
                                 <li>Available to request service</li>
                             </ul>
+                            {% if used_free == 0 %}
                             <form action="{% url 'users:pricing' %}" method="post">
                                 {% csrf_token %}
                                 {#                                <button type="button" id="checkout-button" class="w-100 btn btn-lg btn-outline-primary">Checkout</button>#}
@@ -63,6 +64,9 @@
                                 >Select
                                 </button>
                             </form>
+                            {% else %}
+                            <p>You have used up your free subscription tier! Please buy the paid subscription plans!</p>
+                            {% endif%}
                         </div>
                     </div>
                 </div>
