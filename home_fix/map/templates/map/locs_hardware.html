@@ -63,11 +63,11 @@
 
            markerus.addListener('mouseover', function() {  
           
-              infowindow.open(map, this);
+              {#infowindow.open(map, this);#}
               //map.setCenter(marker.getPosition());
           });
           markerus.addListener('mouseout', function() {
-              infowindow.close();
+              {#infowindow.close();#}
           });
     }
     let request = {
