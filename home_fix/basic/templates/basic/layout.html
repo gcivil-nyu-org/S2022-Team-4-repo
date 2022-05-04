@@ -66,8 +66,11 @@
 
                 {% if user.is_authenticated %}
                     {% if not user.is_staff %}
+                        <a href="{% url 'users:pricing' %}" class="nav-link text-warning">
+                            <i class="fa-solid fa-coins mx-1"></i>{{ user.coin|floatformat }} Coins
+                        </a>
                         <a href="{% url 'user_center:notifications' %}" class="nav-link text-white">
-                            <i class="fa-solid fa-bell" onclick="location.href='#'"></i>
+                            <i class="fa-solid fa-bell mx-1"></i>
                         </a>
                     {% endif %}
                     <div class="dropdown">
