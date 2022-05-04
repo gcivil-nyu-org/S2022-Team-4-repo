@@ -298,3 +298,7 @@ def actilink(request):
 
 def about_page(request):
     return render(request, "users/about.html")
+
+
+def privacy_page(request):
+    return render(request, "users/privacy_policy.html")
