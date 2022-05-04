@@ -161,9 +161,11 @@ def provide_view(request):
             if row["status"] == "pending":
                 row["status"] = "picked"
             if row["request_user_id"] is not None:
+                row["user"] = CustomUser.objects.get(id=row["request_user_id"])
                 row["request_user_id"] = CustomUser.objects.get(
                     id=row["request_user_id"]
                 ).first_name
+
         return render(
             request,
             "user_center/my_provide_page.html",
