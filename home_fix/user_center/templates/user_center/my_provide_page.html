@@ -15,6 +15,7 @@
                     <th scope="col">Create Time</th>
                     <th scope="col">Request Time</th>
                     <th scope="col">Requester</th>
+                    <th scope="col">Requester Address</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
 
@@ -28,6 +29,8 @@
                     <td>{{ provide.service_time }}</td>
                     <td>{{ provide.order_time }}</td>
                     <td>{{ provide.request_user_id }}</td>
+                    <td><a href="http://maps.google.com/maps?q={{ provide.user.lat }},{{ provide.user.long }}" target="_blank">{{ provide.user.street }},</br>{{ provide.user.state }},</br>{{ provide.user.country }}</a>
+                    </td>
                     <td>{{ provide.status }}</td>
                     <td>
                         <div class="col justify-content-center align-self-center text-center">

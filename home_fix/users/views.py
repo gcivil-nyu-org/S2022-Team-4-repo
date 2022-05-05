@@ -299,3 +299,7 @@ def about_page(request):
 def csrf_failure(request, reason=""):
     logout(request)
     return redirect("users:login")
+
+
+def privacy_page(request):
+    return render(request, "users/privacy_policy.html")
