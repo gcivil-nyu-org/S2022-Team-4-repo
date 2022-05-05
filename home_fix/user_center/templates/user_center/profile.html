@@ -167,6 +167,10 @@
                                         </div>
                                     </div>
                                     <div class="col">
+                                         {% if user.tier == -1 %}
+                                            No Subscription
+                                        {% endif %}
+
                                         {% if user.tier == 1 %}
                                             Starter
                                         {% endif %}

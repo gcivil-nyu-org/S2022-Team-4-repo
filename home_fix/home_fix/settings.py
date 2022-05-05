@@ -199,7 +199,7 @@ django_heroku.settings(locals(), test_runner=False)
 
 # Google Maps Config
 GOOGLE_MAPS_API_KEY = config("GOOGLE_MAPS_API_KEY")
-
+CSRF_FAILURE_VIEW = "users.views.csrf_failure"
 # Stripe Config
 STRIPE_PUBLIC_KEY = config("STRIPE_PUBLIC_KEY")
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")

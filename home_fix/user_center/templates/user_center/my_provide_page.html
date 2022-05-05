@@ -23,7 +23,8 @@
             <tbody>
             {% for provide in provide_list %}
                 <tr>
-                    <th scope="row">{{ provide.service_category }}</th>
+                    <th scope="row"><a href="{% url 'service:service_detail' provide.service_id  %}"
+                               />{{ provide.service_category }}</th>
                     <td>{{ provide.service_time }}</td>
                     <td>{{ provide.order_time }}</td>
                     <td>{{ provide.request_user_id }}</td>
