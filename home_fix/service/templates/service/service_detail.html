@@ -72,7 +72,7 @@
         <div id="map"></div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div>
-
+                {% if service.visible %}
                 {%if not is_same %}
                 {%if message %}
                 <button type="button" class="btn btn-warning btn-lg px-4 gap-3"
@@ -88,11 +88,14 @@
                         onclick="">Report Service
                 </button>
                 {% endif %}
-
+                {% endif %}
                 {% if is_same %}
                 <h4> You created this Service </h4>
 
                 {% endif %}
+                <button type="button" class="btn btn-outline-dark btn-lg px-4"
+                        onclick="window.history.back()">Back
+                </button>
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
