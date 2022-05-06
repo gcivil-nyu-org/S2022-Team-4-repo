@@ -64,8 +64,8 @@
 
                                     <div class="clearfix"></div>
                                     <hr style="margin:5px 0 5px 0;">
-                                    {% if info%}
-                                    <div> {{info}}</div>
+                                    {% if info %}
+                                        <div> {{ info }}</div>
                                     {% endif %}
                                     <div class="row">
                                         <div class="col-sm-5">
@@ -113,15 +113,23 @@
                                                         <option value="Male" selected>Male</option>
                                                         <option value="Female">Female</option>
                                                         <option value="Other">Other</option>
+                                                        <option value="">I don't wish to answer</option>
                                                     {% elif user.gender == 'Female' %}
                                                         <option value="Female" selected>Female</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Other">Other</option>
+                                                        <option value="">I don't wish to answer</option>
+                                                    {% elif user.gender == 'Other' %}
+                                                        <option value="Other" selected>Other</option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="">I don't wish to answer</option>
                                                     {% else %}
                                                         <option value="" selected disabled hidden>Choose</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                         <option value="Other">Other</option>
+                                                        <option value="">I don't wish to answer</option>
                                                     {% endif %}
                                                 </select>
                                             </div>
@@ -181,13 +189,13 @@
                 <div class="col-auto">
                     <div class="small m-0 text-white">Copyright &copy; Homefix 2022</div>
                 </div>
-                    <div class="col-auto">
-                        <a class="link-light small" href="{% url 'users:privacy' %}">Privacy</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="{% url 'users:privacy' %}">Terms</a>
-                        <span class="text-white mx-1">&middot;</span>
-                        <a class="link-light small" href="{% url 'users:about' %}">Contact</a>
-                    </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="{% url 'users:privacy' %}">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="{% url 'users:privacy' %}">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="{% url 'users:about' %}">Contact</a>
+                </div>
             </div>
         </div>
     </footer>

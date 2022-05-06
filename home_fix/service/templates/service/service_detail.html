@@ -90,8 +90,8 @@
                 {% endif %}
 
                 {% if is_same %}
-                <h4> You created this Service </h4>
-
+{#                <h4> You created this Service </h4>#}
+                    <a class="btn btn-danger" href="{% url 'service:request_service_delete' services.id %}" role="button"><i class="fa-solid fa-trash"></i> Delete</a>
                 {% endif %}
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                      aria-labelledby="exampleModalLabel" aria-hidden="true">
