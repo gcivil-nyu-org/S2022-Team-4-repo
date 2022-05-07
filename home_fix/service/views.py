@@ -132,6 +132,10 @@ def service_detail_view(request, service_id):
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
+        try:
+            order = Order.objects.get(service=services[0])
+        except Order.DoesNotExist:
+            order = None
         message = ""
 
         # check tier
@@ -158,6 +162,7 @@ def service_detail_view(request, service_id):
             context={
                 "is_same": is_same,
                 "user": user,
+                "order": order,
                 "services": services[0],
                 "message": message,
                 "commission": commission,
