@@ -11,7 +11,7 @@
                          class="img-fluid" alt="Phone image">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                    <h1 class="mb-4"><strong>Welcome Back!</strong></h1>
+                    <h1 class="mb-4"><strong>Welcome!</strong></h1>
                     <form method="POST" action="">
                         {% csrf_token %}
                         <!-- Email -->
@@ -36,7 +36,7 @@
                             </div>
                         {% endif %}
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-outline-primary mb-4 shadow">Login</button>
+                        <button type="submit" class="btn btn-primary mb-4">Login</button>
                     </form>
 
                     <a href="{% url 'password_reset' %}">Forgot password?</a>
@@ -45,10 +45,10 @@
                     <hr class="my-3">
 
                     <div class="d-grid gap-3 col-6 mx-auto">
-                        <a class="btn btn-primary btn-lg btn-block shadow" style="background-color: #3b5998" href="#!"
-                           role="button">
-                            <i class="fab fa-facebook-f me-2"></i>Login with Meta
-                        </a>
+{#                        <a class="btn btn-primary btn-lg btn-block shadow" style="background-color: #3b5998" href="#!"#}
+{#                           role="button">#}
+{#                            <i class="fab fa-facebook-f me-2"></i>Login with Meta#}
+{#                        </a>#}
                         <a class="btn btn-light btn-lg btn-block shadow" href="{% provider_login_url 'google' %}"
                            role="button">
                             <i class="fa-brands fa-google"></i> Login with Google</a>
