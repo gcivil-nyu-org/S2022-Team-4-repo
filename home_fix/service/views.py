@@ -106,7 +106,7 @@ def request_service_confirm_view(request, service_id):
         )
         Order.objects.create(user=user, service=service, transaction=transaction)
 
-        service.visible = False
+        service.visible = True
         service.save()
         Notifications.objects.create(
             user=user, service=service, status="pending", read=False
@@ -116,11 +116,26 @@ def request_service_confirm_view(request, service_id):
         return redirect("users:login")
 
 
+def request_service_delete_view(request, service_id):
+    if request.user.is_authenticated:
+        print("Boom")
+        service = Services.objects.get(id=service_id)
+        service.visible = False
+        service.save()
+        return redirect("service:request_service")
+    else:
+        return redirect("users:login")
+
+
 def service_detail_view(request, service_id):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
+        try:
+            order = Order.objects.get(service=services[0])
+        except Order.DoesNotExist:
+            order = None
         message = ""
 
         # check tier
@@ -147,6 +162,7 @@ def service_detail_view(request, service_id):
             context={
                 "is_same": is_same,
                 "user": user,
+                "order": order,
                 "services": services[0],
                 "message": message,
                 "commission": commission,

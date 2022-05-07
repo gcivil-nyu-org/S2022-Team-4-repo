@@ -94,7 +94,11 @@
                                             <div class="col title fw-bold">Gender :</div>
                                         </div>
                                     </div>
+                                    {% if user.gender == "" %}
+                                    <div class="col" align="left">Not set</div>
+                                    {% else %}
                                     <div class="col" align="left">{{ user.gender }}</div>
+                                    {% endif %}
                                     <div class="clearfix"></div>
                                     <div class="bot-border"></div>
                                 </div>

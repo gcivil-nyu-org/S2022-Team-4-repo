@@ -4,173 +4,199 @@
 {% endblock %}
 {% block title %}Offer Services | Homefix{% endblock %}
 {% block body %}
-<style>
-    #map {
-        height: 400px;
-        /* The height is 400 pixels */
-        width: 50%;
-        /* The width is the width of the web page */
-    }
-</style>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<br><br>
-<center>
-    <h1 class="display-5 fw-bold lead mb-4">SERVICE DETAILS</h1>
-</center>
+    <style>
+        #map {
+            height: 400px;
+            /* The height is 400 pixels */
+            width: 50%;
+            /* The width is the width of the web page */
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <br><br>
+    <center>
+        <h1 class="display-5 fw-bold lead mb-4">SERVICE DETAILS</h1>
+    </center>
 
-<div class="container my-5">
-    <div class="row height d-flex justify-content-center align-items-center">
-        <div class="col-md-6">
-            <div class="form">
-                <b> <label class="form-label" for="category">Category</label></b>
-                <div class="input-group mb-3">
-                    {{services.service_category}}
-                </div>
-            </div>
-            <b> <label class="form-label">Description</label></b>
-            <div>{{services.service_description | safe}}</div>
-            <div class="form-outline mb-4">
-                <b><label class="form-label" for="address">Street</label></b>
-                <br>
-                {{services.street}}
-            </div>
-            <!-- Row 2: State and Postal Code -->
-            <div class="row mb-4">
-                <div class="col">
-                    <div class="form-outline">
-                        <b> <label class="form-label" for="state">State</label></b>
-                        <br>
-                        {{services.state}}
+    <div class="container my-5">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="form">
+                    <b> <label class="form-label" for="category">Category</label></b>
+                    <div class="input-group mb-3">
+                        {{ services.service_category }}
                     </div>
                 </div>
-                <div class="col">
-                    <div class="form-outline">
-                        <b> <label class="form-label" for="postalcode">Post Code</label></b>
-                        <br>
-                        {{services.zip}}
+                <b> <label class="form-label">Description</label></b>
+                <div>{{ services.service_description | safe }}</div>
+                <div class="form-outline mb-4">
+                    <b><label class="form-label" for="address">Street</label></b>
+                    <br>
+                    {{ services.street }}
+                </div>
+                <!-- Row 2: State and Postal Code -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="form-outline">
+                            <b> <label class="form-label" for="state">State</label></b>
+                            <br>
+                            {{ services.state }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-outline">
+                            <b> <label class="form-label" for="postalcode">Post Code</label></b>
+                            <br>
+                            {{ services.zip }}
+                        </div>
                     </div>
                 </div>
+                <!-- Row 3: Country -->
+                <div class="form-outline mb-4">
+                    <b> <label class="form-label" for="country">Country</label></b>
+                    <br>
+                    {{ services.country }}
+                </div>
+                <div class="form-outline mb-4">
+                    {% if not is_same %}
+                        <b> <label class="form-label" for="country">Service Charge</label></b>
+                        <br>
+                        <p>{{ services.coins_charged }} + <span
+                                class="text-danger">{{ commission }}.00 (Commssion Fee)</span></p>
+                        {#                        <p style="color: red;"></p>#}
+                    {% else %}
+                        <b> <label class="form-label" for="country">Coins Charged</label></b>
+                        <br>
+                        <p>{{ services.coins_charged }} </p>
+                    {% endif %}
+                </div>
             </div>
-            <!-- Row 3: Country -->
-            <div class="form-outline mb-4">
-                <b> <label class="form-label" for="country">Country</label></b>
-                <br>
-                {{services.country}}
-            </div>
-            <div class="form-outline mb-4">
-                {%if not is_same %}
-                <b> <label class="form-label" for="country">Service Charge</label></b>
-                <br>
-                <p><p>{{services.coins_charged}} </p><p style="color: red;">+ {{commission}}.00 (Commssion Fee)</p></p>
-                {% else %}
-                <b> <label class="form-label" for="country">Coins Charged by You</label></b>
-                <br>
-                <p><p>{{services.coins_charged}} </p>
-                {% endif %}
-            </div>
-        </div>
-        <div id="map"></div>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <div>
-                {% if service.visible %}
-                {%if not is_same %}
-                {%if message %}
-                <button type="button" class="btn btn-warning btn-lg px-4 gap-3"
-                > {{message}}
-                </button>
-                {% else %}
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3"
-                        onclick="location.href='{% url 'service:request_service_confirm' services.id%}'">Take
-                </button>
-                {% endif %}
-                <button type="button" class="btn btn-outline-dark btn-lg px-4" data-toggle="modal"
-                        data-target="#exampleModal"
-                        onclick="">Report Service
-                </button>
-                {% endif %}
-                {% endif %}
-                {% if is_same %}
-                <h4> You created this Service </h4>
-
-                {% endif %}
-                <button type="button" class="btn btn-outline-dark btn-lg px-4"
-                        onclick="window.history.back()">Back
-                </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Report</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+            <div id="map"></div>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <div>
+                    {% if services.visible %}
+                        {% if not is_same %}
+                            {% if message %}
+                                <button type="button" class="btn btn-warning px-4 gap-3"
+                                > {{ message }}
                                 </button>
-                            </div>
-                            <form role="form" method="post" role="form" id="report_form"
-                                  action="{% url 'service:report' services.id%}">
-                                {% csrf_token %}
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="id_description" class="col-form-label">We will review your report in
-                                            1-3 days:</label>
-                                        <textarea type="text" class="form-control" id="id_description"
-                                                  name="description"></textarea>
+                            {% else %}
+                                {% if order %}
+                                    {% if order.status == 'pending' or order.status == 'in progress' %}
+                                        {#                                    <div class="btn-group" role="group" aria-label="Basic outlined example">#}
+                                        <button type="button" class="btn btn-primary btn-md" disabled
+                                                onclick="location.href='{% url 'service:request_service_confirm' services.id %}'">
+                                            <i class="fa-solid fa-spinner"></i> Work in progress
+                                        </button>
+                                    {% else %}
+                                        {#                                    <div class="btn-group" role="group" aria-label="Basic outlined example">#}
+                                        <button type="button" class="btn btn-primary btn-md"
+                                                onclick="location.href='{% url 'service:request_service_confirm' services.id %}'">
+                                            <i class="fa-solid fa-hand-pointer"></i> Take
+                                        </button>
+                                    {% endif %}
+                                {% else %}
+                                    {#                                <div class="btn-group" role="group" aria-label="Basic outlined example">#}
+                                    <button type="button" class="btn btn-primary btn-md mx-2"
+                                            onclick="location.href='{% url 'service:request_service_confirm' services.id %}'">
+                                        <i class="fa-solid fa-hand-pointer"></i> Take
+                                    </button>
+                                {% endif %}
+                            {% endif %}
+                            {#                            {% endif %}#}
+                            <button type="button" class="btn btn-danger btn-md mx-2" data-toggle="modal"
+                                    data-target="#exampleModal"
+                                    onclick=""><i class="fa-solid fa-circle-exclamation"></i> Report
+                            </button>
+                        {% else %}
+                            {#                            <div class="btn-group" role="group" aria-label="Basic outlined example">#}
+                            <a class="btn btn-danger btn-md mx-2"
+                               href="{% url 'service:request_service_delete' services.id %}"
+                               role="button"><i class="fa-solid fa-trash"></i> Delete</a>
+                        {% endif %}
+                    {% endif %}
+                    <button type="button" class="btn btn-dark btn-md"
+                            onclick="window.history.back()"><i class="fa-solid fa-arrow-rotate-left"></i> Go Back
+                    </button>
+                    {#                    </div>#}
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+                                    {#                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+                                    {#                                        <span aria-hidden="true">&times;</span>#}
+                                    {#                                    </button>#}
+                                    <button type="button" class="btn-close" data-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <form role="form" method="post" role="form" id="report_form"
+                                      action="{% url 'service:report' services.id %}">
+                                    {% csrf_token %}
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="id_description" class="col-form-label">We will review your
+                                                report in
+                                                1-3 days:</label>
+                                            <textarea type="text" class="form-control" id="id_description"
+                                                      name="description"></textarea>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="reset" class="btn btn-secondary" data-dismiss="modal"
-                                            onclick="formReset()"
-                                    >Close
-                                    </button>
-                                    <button class="btn btn-primary" type="submit">
-                                        Save changes
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="modal-footer">
+                                        <button type="reset" class="btn btn-secondary" data-dismiss="modal"
+                                                onclick="formReset()"
+                                        >Close
+                                        </button>
+                                        <button class="btn btn-primary" type="submit">
+                                            Save changes
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script>let map;
-var lat = "{{services.lat}}"
-lat = parseFloat(lat)
-var long = "{{services.long}}"
-long = parseFloat(long)
+    <script>let map;
+    var lat = "{{services.lat}}"
+    lat = parseFloat(lat)
+    var long = "{{services.long}}"
+    long = parseFloat(long)
 
-function initMap() {
-    const mapOptions = {
-        zoom: 14,
-        center: {lat: lat, lng: long},
-    };
+    function initMap() {
+        const mapOptions = {
+            zoom: 14,
+            center: {lat: lat, lng: long},
+        };
 
-    map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    const marker = new google.maps.Marker({
-        position: {lat: lat, lng: long},
-        map: map,
-    });
-    const infowindow = new google.maps.InfoWindow({
-        content: "<p>Marker Location:" + marker.getPosition() + "</p>",
-    });
+        const marker = new google.maps.Marker({
+            position: {lat: lat, lng: long},
+            map: map,
+        });
+        const infowindow = new google.maps.InfoWindow({
+            content: "<p>Marker Location:" + marker.getPosition() + "</p>",
+        });
 
-    google.maps.event.addListener(marker, "click", () => {
-        infowindow.open(map, marker);
-    });
+        google.maps.event.addListener(marker, "click", () => {
+            infowindow.open(map, marker);
+        });
 
-}
+    }
 
-function formReset() {
-    document.getElementById("report_form").reset();
-}
+    function formReset() {
+        document.getElementById("report_form").reset();
+    }
 
 
-</script>
-<script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
-        async>
-</script>
+    </script>
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=&v=weekly"
+            async>
+    </script>
 
 {% endblock %}
