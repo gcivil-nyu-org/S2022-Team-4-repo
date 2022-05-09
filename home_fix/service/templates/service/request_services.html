@@ -102,7 +102,7 @@
                 <div class="row gx-5">
                     <!-- HARD CODED THE POSTS THAT HAVE TO BE CREATED DYNAMICALLY LATER USING JS/PY-->
                     {% for service in services %}
-                        <div class="col-lg-4 mb-5">
+                        <div class="col-lg-4 mb-5 service" name="{{service.service_category}}">
                             <div class="card h-100 shadow border-0">
                                 <img class="card-img-top"
                                      src="https://i.ibb.co/cLV0h0T/pexels-la-miko-3616761.jpg"
@@ -132,43 +132,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-{#                                    <a class="service" style="text-decoration: None; color: black; padding:1%"#}
-{#                                       name="{{ service.service_category }}"#}
-{#                                       href="{% url 'service:service_detail' service.id %}">#}
-{#                                        <div class="card shadow border-0 col-md-8 offset-md-2" style="width: 65%">#}
-{#                                            <div class="card-body p-4">#}
-{#                                                <div class="badge bg-success bg-gradient rounded-pill mb-2 offset-md-1">{{ service.service_category }}</div>#}
-{#                                                <button type="button" id="{{ service }}"#}
-{#                                                        onclick="location.href='{% url 'service:request_service_delete' service.id %}';"#}
-{#                                                        class="btn-close position-absolute top-0 end-0" aria-label="Close"></button>#}
-{#                                                <div class="h5 card-title mb-3 col-md-8 offset-md-2">{{ service.service_category }}</div>#}
-{#                                                <div class="card-text mb-0 col-md-8 offset-md-2">#}
-{#                                                    {{ service.service_description| safe }}#}
-{#                                                </div>#}
-{#                                                <div class="card-text mb-0 col-md-8 offset-md-2">#}
-{#                                                    <button type="button" class="btn btn-primary">Primary</button>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0 col-md-4 offset-md-1">#}
-{#                                                <div class="d-flex align-items-end justify-content-between">#}
-{#                                                    <div class="d-flex align-items-center">#}
-{#                                                        <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"#}
-{#                                                             alt="..."/>#}
-{#                                                        <div class="small">#}
-{#                                                            <div class="text-muted"><i#}
-{#                                                                    class="fa-solid fa-coins mx-1 text-warning"></i>{{ service.coins_charged|floatformat }}#}
-{#                                                                Coins#}
-{#                                                            </div>#}
-{#                                                            <div class="fw-bold">{{ service.user.first_name }}</div>#}
-{#                                                        </div>#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </a>#}
                     {% endfor %}
                 </div>
             </div>
@@ -187,7 +150,7 @@
             filter = input.value.toUpperCase();
             var elements = document.getElementsByClassName("service");
             for (var i = 0; i < elements.length; i++) {
-                txtValue = elements[i].name;
+                txtValue = elements[i].attributes.name.value;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
                     elements[i].style.display = "";
                 } else {
