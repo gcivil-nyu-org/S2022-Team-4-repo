@@ -107,6 +107,8 @@ def request_finish_view(request, order_id):
             # request_user = order.user
             order.status = "finished"
             order.save()
+            # service_details.id = service_details.id+1
+            # service_details.save()
             transaction = order.transaction
             if transaction is not None:
                 transaction.status = "finished"

@@ -30,6 +30,7 @@
             </thead>
             <tbody>
             {% for order in order_list %}
+                {% if order.service.visible %}
                 <tr>
                     <td>{{ order.id }}</td>
                     <td><a href="{% url 'service:service_detail' order.service.id  %}"
@@ -47,6 +48,7 @@
                          {%endif%}
                     </td>
                 </tr>
+                {%endif%}
             {% endfor %}
             </tbody>
         </table>
