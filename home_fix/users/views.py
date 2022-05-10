@@ -86,6 +86,9 @@ def login_view(request, err=""):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            if user.is_frozen:
+                err = "Your Account has been blocked, please contact admin homefix@gmail.com"
+                return render(request, "users/login.html", {"error": err})
             login(request, user)
             return redirect("basic:index")
         else:

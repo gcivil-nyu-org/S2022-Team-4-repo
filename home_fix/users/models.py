@@ -27,6 +27,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         "latitude", max_digits=22, decimal_places=16, blank=True, null=True
     )
     is_staff = models.BooleanField(default=False)
+    is_frozen = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     tier = models.IntegerField(default=-1)
