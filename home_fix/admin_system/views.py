@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from admin_system.models import Report
 from service.models import Services
 from users.models import CustomUser, Product
-
+from django.contrib.auth import logout
 
 #
 # def admin_homepage(request):
@@ -54,3 +54,23 @@ def user_list_view(request):
         )
     else:
         return redirect("users:login")
+
+
+def user_froze_view(request, user_id):
+    if not request.user.is_authenticated and not request.user.is_staff:
+        logout(request.user)
+        return redirect("user:login")
+    user = CustomUser.objects.get(id=user_id)
+    user.is_frozen = True
+    user.save()
+    return redirect("admin_system:user")
+
+
+def user_unfroze_view(request, user_id):
+    if not request.user.is_authenticated and not request.user.is_staff:
+        logout(request.user)
+        return redirect("user:login")
+    user = CustomUser.objects.get(id=user_id)
+    user.is_frozen = False
+    user.save()
+    return redirect("admin_system:user")

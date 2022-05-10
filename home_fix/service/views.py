@@ -2,14 +2,11 @@ import logging
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import boto3
-from botocore.exceptions import ClientError
 from admin_system.models import Report
 from user_center.models import Transaction
 from users.models import CustomUser
 from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import get_user_model
-import sys
 from uuid import uuid4
 
 # Create your views here.

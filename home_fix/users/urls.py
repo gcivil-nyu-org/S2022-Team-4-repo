@@ -5,6 +5,7 @@ from .views import CreateCheckoutSessionView
 app_name = "users"
 urlpatterns = [
     path("login/", views.login_view, name="login"),
+    path("login/<str:err>", views.login_view, name="login_error"),
     path("register/", views.register_view, name="register"),
     path("set_location/<int:user_id>/", views.set_location, name="set_location"),
     path("pricing/", views.pricing_view, name="pricing"),
