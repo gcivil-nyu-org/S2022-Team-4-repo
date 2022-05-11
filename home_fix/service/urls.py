@@ -13,6 +13,11 @@ urlpatterns = [
         name="request_service_confirm",
     ),
     path(
+        "request_service_delete/<int:service_id>",
+        views.request_service_delete_view,
+        name="request_service_delete",
+    ),
+    path(
         "service_detail/<int:service_id>",
         views.service_detail_view,
         name="service_detail",

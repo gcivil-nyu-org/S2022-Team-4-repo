@@ -94,7 +94,11 @@
                                             <div class="col title fw-bold">Gender :</div>
                                         </div>
                                     </div>
+                                    {% if user.gender == "" %}
+                                    <div class="col" align="left">Not set</div>
+                                    {% else %}
                                     <div class="col" align="left">{{ user.gender }}</div>
+                                    {% endif %}
                                     <div class="clearfix"></div>
                                     <div class="bot-border"></div>
                                 </div>
@@ -167,6 +171,10 @@
                                         </div>
                                     </div>
                                     <div class="col">
+                                         {% if user.tier == -1 %}
+                                            No Subscription
+                                        {% endif %}
+
                                         {% if user.tier == 1 %}
                                             Starter
                                         {% endif %}
@@ -201,13 +209,13 @@
                 <div class="col-auto">
                     <div class="small m-0 text-white">Copyright &copy; Homefix 2022</div>
                 </div>
-                <div class="col-auto">
-                    <a class="link-light small" href="#!">Privacy</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="#!">Terms</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="#!">Contact</a>
-                </div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="{% url 'users:privacy' %}">Privacy</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="{% url 'users:privacy' %}">Terms</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="{% url 'users:about' %}">Contact</a>
+                    </div>
             </div>
         </div>
     </footer>

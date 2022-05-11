@@ -107,6 +107,8 @@ def request_finish_view(request, order_id):
             # request_user = order.user
             order.status = "finished"
             order.save()
+            # service_details.id = service_details.id+1
+            # service_details.save()
             transaction = order.transaction
             if transaction is not None:
                 transaction.status = "finished"
@@ -161,9 +163,11 @@ def provide_view(request):
             if row["status"] == "pending":
                 row["status"] = "picked"
             if row["request_user_id"] is not None:
+                row["user"] = CustomUser.objects.get(id=row["request_user_id"])
                 row["request_user_id"] = CustomUser.objects.get(
                     id=row["request_user_id"]
                 ).first_name
+
         return render(
             request,
             "user_center/my_provide_page.html",

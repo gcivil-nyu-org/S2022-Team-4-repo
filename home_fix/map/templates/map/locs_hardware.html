@@ -1,12 +1,105 @@
-{% extends "basic/layout.html" %}
-{% block title %} Hardware Stores | Homefix {% endblock %}
-{% block body %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+            crossorigin="anonymous"
+    />
+
+    <!-- Fontawesome CDN -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Axios CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/users/login.1a5e022838e5.css"/>
+
+    
+    <title> Hardware Stores | Homefix </title>
+</head>
+<body>
+
+    <!--Navbar-->
+    <header class="p-3 bg-dark text-white shadow">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a class="navbar-brand" href="/" style="color: white;">
+                    <strong><i class="fa-solid fa-screwdriver-wrench"></i> Homefix</strong>
+                </a>
+
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/service/request_service/" class="nav-link px-2 text-white">Request Service</a></li>
+                    <li><a href="/map/searchhard/" class="nav-link px-2 text-white">Maps</a></li>
+                    <li><a href="/users/pricing/" class="nav-link px-2 text-white">Pricing</a></li>
+                    <li><a href="/forum/" class="nav-link px-2 text-white">Forums</a></li>
+                    <li><a href="/users/about/" class="nav-link px-2 text-white">About</a></li>
+                </ul>
+
+                
+                    
+                        <a href="/users/pricing/" class="nav-link text-warning">
+                            <i class="fa-solid fa-coins mx-1"></i>0 Coins
+                        </a>
+                        <a href="/user_center/notifications/" class="nav-link text-white">
+                            <i class="fa-solid fa-bell mx-1"></i>
+                        </a>
+                    
+                    <div class="dropdown">
+                        <a href="#" class="d-block link-light text-decoration-none dropdown-toggle"
+                           id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="My Pic" width="32" height="32"
+                                 class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            
+                                <li><a class="dropdown-item" href="/user_center/profile/">Profile</a></li>
+                                </li>
+                                <li><a class="dropdown-item" href="/user_center/transaction/">Transactions</a>
+                                </li>
+                                <li><a class="dropdown-item" href="/user_center/request/">My Requests</a></li>
+                                <li><a class="dropdown-item" href="/user_center/provide/">My Services</a></li>
+                            
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="/users/logout/">
+                                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+                            </a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                
+            </div>
+        </div>
+    </header>
+
+
 
 <style>
   #map {
-    height: 400px;
+    display: block;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 600px;
     /* The height is 400 pixels */
-    width: 100%;
+    width: 80%;
     /* The width is the width of the web page */
   }
 </style>
@@ -26,13 +119,17 @@
     },
 
     };
+
+    
   function initMap() {
+
+    
     //const sydney = new google.map.LatLng(-33.867, 151.195);
     var directionsService = new google.maps.DirectionsService();
   var directionsRenderer = new google.maps.DirectionsRenderer();
     infowindow = new google.maps.InfoWindow();
-    var userlocations = eval("{{base|safe}}")
-    var locations = eval("{{user_loc|safe}}");
+    var userlocations = eval("[[40.664742, -73.989639, 'Bharath Sai', 'chi.bharathsai@gmail.com', '577 5th Ave, 4F, 4F'], [40.729675, -73.996925, 'test', 'bc3177@nyu.edu', 'New York University']]")
+    var locations = eval("[40.664742, -73.989639]");
     var uluru = { lat: locations[0], lng: locations[1] };
     
     
@@ -48,7 +145,7 @@
       map: map,
     });
     for (var i = 0; i < userlocations.length; i++) {
-      console.log(userlocations[i])
+      // console.log(userlocations[i])
       uluruusers = { lat: userlocations[i][0], lng: userlocations[i][1] };
       var markerus = new google.maps.Marker({
         position: uluruusers,
@@ -63,16 +160,19 @@
 
            markerus.addListener('mouseover', function() {  
           
-              infowindow.open(map, this);
+              
               //map.setCenter(marker.getPosition());
           });
           markerus.addListener('mouseout', function() {
-              infowindow.close();
+              
           });
     }
+    // console.log(rag);
+    // var rag=document.getElementById('demo').innerHTML;
+    // console.log(rag);
     let request = {
       location: uluru,
-      radius: '500',
+      radius: '1',
       query: 'Harware Stores'
     };
 
@@ -80,7 +180,18 @@
     service.textSearch(request, (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK && results) {
         for (let i = 0; i < results.length; i++) {
-          console.log(results[i]);
+          var status=results[i].opening_hours.open_now;
+          if(status === true){
+              var opn='Open Now';
+            
+            }else{
+              var opn='Closed Now';
+            }
+          // console.log(results[i]);
+          // var texthard=document.getElementById('hardware');
+          var url="https://www.google.com/maps/search/?api=1&query="+ results[i].geometry.location.lat()+"%2C"+results[i].geometry.location.lng();
+         
+          // texthard.innerHTML=texthard.innerHTML+'   <div class="card" style="width: 18rem;">  <div class="card-body"> <h5 class="card-title">   '+results[i].name+"</h5> </br> Status: "+opn+" </br> <a href='"+url+"' target='_blank' class='btn btn-primary'>Directions</a> </div> </div>";
           let mkr = { lat: results[i].geometry.location.lat(), lng: results[i].geometry.location.lng() };
           let marker = new google.maps.Marker({
             position: mkr,
@@ -90,8 +201,10 @@
 
             
           });
+          
           const infowindow = new google.maps.InfoWindow({
-            content: results[i].name+" </br> Status:"+results[i].opening_hours.open_now,
+            
+            content: results[i].name+" </br> Status: "+opn+" </br> </br><a href='"+url+"' target='_blank' class='btn btn-primary'>Directions</a> </div> </div>",
 
           });
 
@@ -102,6 +215,7 @@
               //map.setCenter(marker.getPosition());
           });
           marker.addListener('mouseout', function() {
+              sleep(3);
               infowindow.close();
           });
           marker.addListener('click', function() {
@@ -117,7 +231,7 @@
             if (status == 'OK') {
               directionsRenderer.setDirections(result);
             }else{
-              console.log("shit");
+              // console.log("shit");
             }
             });
           });
@@ -125,14 +239,49 @@
         }
       }
     });
+
+
   }
   
 
 
 </script>
-<h3>Near by Hardware Stores</h3>
+</br>
+<center><h3>Near by Hardware Stores</h3></center>
+
 <div id="map"></div>
 <script
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5T-eiKa6XvYLkvOV00GYiCKTcFyeUOnE&callback=initMap&libraries=places&v=weekly"
   async></script>
-{% endblock %}
+  <!-- <button onclick="initMap()">Search</button> -->
+  <!-- <div class="card" style="width: 18rem;">
+    
+    <div class="card-body">
+      <h5 class="card-title">Card title</h5>
+      <p class="card-text" id="hardware">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div> -->
+  <!-- <div id="hardware">
+    <p></p>
+  </div> -->
+<center><p>The Map shows the locations of the users and hardware stores. All the hardware stores on the map are respective to user location.</br> Click on the Hardware store to see the directions to the store and also more info about it.</p></center>
+
+
+<!-- Bootstrap Scripts -->
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"
+></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+ 
+</body>
+</html>

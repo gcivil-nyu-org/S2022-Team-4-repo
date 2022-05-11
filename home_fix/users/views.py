@@ -68,7 +68,7 @@ def register_view(request):
 
 
 # Login
-def login_view(request):
+def login_view(request, err=""):
     if request.user.is_authenticated:
         return redirect("basic:index")
     if request.method == "POST":
@@ -86,6 +86,9 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            if user.is_frozen:
+                err = "Your Account has been blocked, please contact admin homefix@gmail.com"
+                return render(request, "users/login.html", {"error": err})
             login(request, user)
             return redirect("basic:index")
         else:
@@ -94,7 +97,7 @@ def login_view(request):
             LoginRecord.objects.create(ip=ip)
             return render(request, "users/login.html", {"error": err})
 
-    return render(request, "users/login.html")
+    return render(request, "users/login.html", {"error": err})
 
 
 #   Set location
@@ -106,10 +109,6 @@ def set_location(request, user_id):
             if form.is_valid():
                 user = form.save(commit=False)
                 user.save()
-                TheUser = CustomUser.objects.get(id=request.user.id)
-                TheUser.tier = -1
-                TheUser.coin = 0
-                TheUser.save()
                 return redirect("basic:index")
             else:
                 # add alert in future
@@ -298,3 +297,12 @@ def actilink(request):
 
 def about_page(request):
     return render(request, "users/about.html")
+
+
+def csrf_failure(request, reason=""):
+    logout(request)
+    return redirect("users:login")
+
+
+def privacy_page(request):
+    return render(request, "users/privacy_policy.html")

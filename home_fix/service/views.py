@@ -2,14 +2,11 @@ import logging
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import boto3
-from botocore.exceptions import ClientError
 from admin_system.models import Report
 from user_center.models import Transaction
 from users.models import CustomUser
 from service.models import Notifications, Services, Order
 from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth import get_user_model
-import sys
 from uuid import uuid4
 
 # Create your views here.
@@ -106,7 +103,7 @@ def request_service_confirm_view(request, service_id):
         )
         Order.objects.create(user=user, service=service, transaction=transaction)
 
-        service.visible = False
+        service.visible = True
         service.save()
         Notifications.objects.create(
             user=user, service=service, status="pending", read=False
@@ -116,11 +113,31 @@ def request_service_confirm_view(request, service_id):
         return redirect("users:login")
 
 
+def request_service_delete_view(request, service_id):
+    if request.user.is_authenticated:
+        service = Services.objects.get(id=service_id)
+        service.visible = False
+        service.save()
+        return redirect("service:request_service")
+    else:
+        return redirect("users:login")
+
+
 def service_detail_view(request, service_id):
     if request.user.is_authenticated:
         user_id = request.user.id
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
+        try:
+            # order = list(Order.objects.filter(service=services[0]).all())
+            # order = Order.objects.get(service=services[0])
+            order_list = Order.objects.filter(service=service_id).order_by("-timestamp")
+            if len(order_list) > 0:
+                order = order_list[0]
+            else:
+                order = None
+        except Order.DoesNotExist:
+            order = None
         message = ""
 
         # check tier
@@ -147,6 +164,7 @@ def service_detail_view(request, service_id):
             context={
                 "is_same": is_same,
                 "user": user,
+                "order": order,
                 "services": services[0],
                 "message": message,
                 "commission": commission,

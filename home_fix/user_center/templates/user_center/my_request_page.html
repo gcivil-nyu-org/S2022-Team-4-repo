@@ -8,11 +8,11 @@
     </center>
     <br><br>
     {% if request.info %}
-    <center>
-        <div class="btn-outline-danger">
-            {{ request.info }}
-        </div>
-    </center>
+        <center>
+            <div class="btn-outline-danger">
+                {{ request.info }}
+            </div>
+        </center>
     {% endif %}
 
     <div class="container">
@@ -30,22 +30,31 @@
             </thead>
             <tbody>
             {% for order in order_list %}
-                <tr>
-                    <td>{{ order.id }}</td>
-                    <td>{{ order.service.id }}</td>
-                    <td>{{ order.service.user }}</td>
-                    <td>{{ order.timestamp }}</td>
-                    <td>{{ order.service.coins_charged}}</td>
-                    <td>{{ order.status }}</td>
-                    <td>
-                          {% if order.status == "in progress" %}
-                        <div class="col justify-content-center align-self-center text-center">
-                            <button type="button" class="btn btn-primary"><a style="color: white" href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a>
-                            </button>
-                        </div>
-                         {%endif%}
-                    </td>
-                </tr>
+                {% if order.service.visible %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+{#                    {{ order.service.status }}#}
+                        {% if order.status == 'finished' %}
+                            <td>{{ order.service.id }}</td>
+                        {% else %}
+                            <td><a href="{% url 'service:service_detail' order.service.id %}"
+                            />{{ order.service.id }}</td>
+                        {% endif %}
+                        <td>{{ order.service.user }}</td>
+                        <td>{{ order.timestamp }}</td>
+                        <td>{{ order.service.coins_charged }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>
+                            {% if order.status == "in progress" %}
+                                <div class="col justify-content-center align-self-center text-center">
+                                    <button type="button" class="btn btn-primary"><a style="color: white"
+                                                                                     href="{% url 'user_center:request_finish' order.id %}">COMPLETE</a>
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
             {% endfor %}
             </tbody>
         </table>
