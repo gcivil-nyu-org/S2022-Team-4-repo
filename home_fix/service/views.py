@@ -130,7 +130,12 @@ def service_detail_view(request, service_id):
         services = list(Services.objects.filter(id=service_id).all())
         try:
             # order = list(Order.objects.filter(service=services[0]).all())
-            order = Order.objects.get(service=services[0])
+            # order = Order.objects.get(service=services[0])
+            order_list = Order.objects.filter(service=service_id).order_by("-timestamp")
+            if len(order_list) > 0:
+                order = order_list[0]
+            else:
+                order = None
         except Order.DoesNotExist:
             order = None
         message = ""
