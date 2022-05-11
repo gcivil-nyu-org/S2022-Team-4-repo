@@ -13,7 +13,7 @@ def simple_middleware(get_response):
             err = (
                 "Your Account has been blocked, please contact admin homefix@gmail.com"
             )
-            return redirect("users:login_error", {"err": err})
+            return redirect("users:login_error",err)
         response = get_response(request)
         return response
 
