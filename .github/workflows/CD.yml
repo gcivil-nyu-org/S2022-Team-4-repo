@@ -15,6 +15,7 @@ jobs:
     - name: login
       uses: akhileshns/heroku-deploy@v3.12.12
       with:
+        heroku_app_name : home-fix
         heroku_email: 'yz7726@nyu.edu'
         heroku_api_key: b7eeb0c1-a15a-4f7d-bfa6-3334e7d94190
         branch: "main"
