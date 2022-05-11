@@ -2,7 +2,7 @@ name: Django CI
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -15,7 +15,5 @@ jobs:
     - name: login
       uses: akhileshns/heroku-deploy@v3.12.12
       with:
-        heroku_app_name : homefix-dev
-        heroku_api_key: b7eeb0c1-a15a-4f7d-bfa6-3334e7d94190
         heroku_email: 'yz7726@nyu.edu'
-        branch: "develop"
+        branch: "main"
