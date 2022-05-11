@@ -115,7 +115,6 @@ def request_service_confirm_view(request, service_id):
 
 def request_service_delete_view(request, service_id):
     if request.user.is_authenticated:
-        print("Boom")
         service = Services.objects.get(id=service_id)
         service.visible = False
         service.save()
@@ -130,6 +129,7 @@ def service_detail_view(request, service_id):
         user = CustomUser.objects.get(id=user_id)
         services = list(Services.objects.filter(id=service_id).all())
         try:
+            # order = list(Order.objects.filter(service=services[0]).all())
             order = Order.objects.get(service=services[0])
         except Order.DoesNotExist:
             order = None
